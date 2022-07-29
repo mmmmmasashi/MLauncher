@@ -23,6 +23,7 @@ namespace MLauncher
         public MainWindow()
         {
             InitializeComponent();
+            this.MainTextBox.Focus();
         }
     }
 }

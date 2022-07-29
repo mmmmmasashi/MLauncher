@@ -7,6 +7,6 @@
         mc:Ignorable="d"
         Title="MLauncher" Width="500" SizeToContent="Height">
     <Grid>
-        <TextBox Height="24" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="MainTextBox" Height="24" VerticalContentAlignment="Center"/>
     </Grid>
 </Window>
