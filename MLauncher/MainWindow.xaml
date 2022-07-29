@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         Title="MLauncher" Width="500" SizeToContent="Height">
     <Grid>
-        <TextBox x:Name="MainTextBox" Height="24" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="MainTextBox" Height="24" VerticalContentAlignment="Center"
+                 AllowDrop="True"
+                 PreviewDragEnter="TextBox_DragEnter" PreviewDragOver="TextBox_DragEnter" PreviewDrop="TextBox_Drop"/>
     </Grid>
 </Window>

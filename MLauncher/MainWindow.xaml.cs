@@ -25,5 +25,17 @@ namespace MLauncher
             InitializeComponent();
             this.MainTextBox.Focus();
         }
+
+        private void TextBox_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effects = DragDropEffects.Copy;
+            e.Handled = true;
+        }
+
+        private void TextBox_Drop(object sender, DragEventArgs e)
+        {
+            var textArray = (string[])e.Data.GetData(DataFormats.FileDrop);
+        }
+
     }
 }
