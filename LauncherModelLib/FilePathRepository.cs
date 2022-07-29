@@ -18,12 +18,15 @@ namespace LauncherModelLib
 
         public List<FilePath> GetAll()
         {
+            if (!File.Exists(_savedFilePath)) return new List<FilePath>();
             var lines = File.ReadAllLines(_savedFilePath);
             return lines.Select(line => new FilePath(line)).ToList();
         }
 
         public void Save(FilePath filePath)
         {
+            var all = GetAll();
+            if (all.Contains(filePath)) return;
             File.AppendAllText(_savedFilePath, filePath.Path + "\r\n");
         }
     }

@@ -22,7 +22,6 @@ namespace LauncherModelLibTest
         [TestMethod]
         public void リポジトリは保存したパスをすべて読み出せる()
         {
-
             List<FilePath> all = _repository.GetAll();
             Assert.AreEqual(2, all.Count);
             Assert.AreEqual(new FilePath(@"C:\directory\filepath1.txt"), all[0]);
@@ -37,7 +36,14 @@ namespace LauncherModelLibTest
             Assert.AreEqual(2, all.Count);
             Assert.AreEqual(new FilePath(@"C:\directory\filepath1.txt"), all[0]);
             Assert.AreEqual(new FilePath(@"C:\directory\filepath2.txt"), all[1]);
+        }
 
+        [TestMethod]
+        public void 重複したパスは登録せず無視する()
+        {
+            _repository.Save(new FilePath(@"C:\directory\filepath1.txt"));//保存済のパス
+            List<FilePath> all = _repository.GetAll();
+            Assert.AreEqual(2, all.Count);
         }
     }
 }
