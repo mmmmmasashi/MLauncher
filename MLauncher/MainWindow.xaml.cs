@@ -53,12 +53,7 @@ namespace MLauncher
             if (e.Key == Key.Return)
             {
                 FilePath matchedPath = _repository.Search(MainTextBox.Text);
-                if (matchedPath == null) return;
-
-                Process process = new Process();
-                process.StartInfo.FileName = matchedPath.Path;
-                process.StartInfo.UseShellExecute = true;//関連付けられたファイルを開く
-                process.Start();
+                ProcessRunner.Run(matchedPath);
             }
         }
     }
