@@ -57,7 +57,7 @@ namespace MLauncher
 
                 Process process = new Process();
                 process.StartInfo.FileName = matchedPath.Path;
-                process.StartInfo.UseShellExecute = true;
+                process.StartInfo.UseShellExecute = true;//関連付けられたファイルを開く
                 process.Start();
             }
         }
