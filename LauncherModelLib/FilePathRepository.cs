@@ -32,7 +32,8 @@ namespace LauncherModelLib
 
         public FilePath Search(string text)
         {
-            return new FilePath(@"C:\SampleDir\sample.txt");
+            var all = GetAll();
+            return all.First(filePath => filePath.Contains(text));
         }
     }
 }
