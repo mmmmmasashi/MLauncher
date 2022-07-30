@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using LauncherModelLib;
+
 namespace MLauncher
 {
     /// <summary>
@@ -20,8 +22,11 @@ namespace MLauncher
     /// </summary>
     public partial class MainWindow : Window
     {
+        IFilePathRepository _repository;
         public MainWindow()
         {
+            _repository = new FilePathRepository("path_list.txt");
+
             InitializeComponent();
             this.MainTextBox.Focus();
         }
@@ -35,6 +40,11 @@ namespace MLauncher
         private void TextBox_Drop(object sender, DragEventArgs e)
         {
             var textArray = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+            foreach (var text in textArray)
+            {
+                _repository.Save(new FilePath(text));
+            }
         }
 
     }
