@@ -29,5 +29,10 @@ namespace LauncherModelLib
             if (all.Contains(filePath)) return;
             File.AppendAllText(_savedFilePath, filePath.Path + "\r\n");
         }
+
+        public FilePath Search(string text)
+        {
+            return new FilePath(@"C:\SampleDir\sample.txt");
+        }
     }
 }

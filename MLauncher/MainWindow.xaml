@@ -9,6 +9,7 @@
     <Grid>
         <TextBox x:Name="MainTextBox" Height="24" VerticalContentAlignment="Center"
                  AllowDrop="True"
-                 PreviewDragEnter="TextBox_DragEnter" PreviewDragOver="TextBox_DragEnter" PreviewDrop="TextBox_Drop"/>
+                 PreviewDragEnter="TextBox_DragEnter" PreviewDragOver="TextBox_DragEnter" PreviewDrop="TextBox_Drop"
+                 KeyDown="TextBox_KeyDown"/>
     </Grid>
 </Window>
