@@ -30,9 +30,14 @@ namespace LauncherModelLib
             File.AppendAllText(_savedFilePath, filePath.Path + "\r\n");
         }
 
-        public FilePath Search(string text)
+        /// <summary>
+        /// 検索文字列を含むパスを返す。
+        /// 見つからない場合はnull
+        /// </summary>
+        public FilePath? Search(string text)
         {
             var all = GetAll();
+            if (!all.Any(path => path.Contains(text))) return null;//Not found
             return all.First(filePath => filePath.Contains(text));
         }
     }

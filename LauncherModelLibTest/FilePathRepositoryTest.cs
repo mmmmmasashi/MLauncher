@@ -1,4 +1,6 @@
 ﻿using LauncherModelLib;
+using System;
+using Xunit;
 
 namespace LauncherModelLibTest
 {
@@ -52,6 +54,12 @@ namespace LauncherModelLibTest
         {
             FilePath matchedPath = _repository.Search("filepath2");
             Assert.Equal(new FilePath(@"C:\directory\filepath2.txt"), matchedPath);
+        }
+
+        [Fact]
+        public void 存在しない場合はnullが帰る()
+        {
+            Assert.Null(_repository.Search("not_existing_text"));
         }
     }
 }

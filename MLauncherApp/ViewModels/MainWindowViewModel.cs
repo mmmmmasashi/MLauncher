@@ -31,6 +31,8 @@ namespace MLauncherApp.ViewModels
         public DelegateCommand<DragEventArgs> DropCommand      { get; }
         public DelegateCommand<Key?>  KeyDownCommand   { get; }
 
+        public MainWindowViewModel() : this(new MessageService()) { }
+
         public MainWindowViewModel(IMessageService messageService)
         {
             _messageService = messageService;
@@ -62,7 +64,13 @@ namespace MLauncherApp.ViewModels
             if (key == null) return;
             if (key == Key.Return)
             {
-                FilePath matchedPath = _repository.Search(TextBoxText);
+                FilePath? matchedPath = _repository.Search(TextBoxText);
+                if (matchedPath == null)
+                {
+                    _messageService.ShowMessageBox("一致するパスが存在しません");
+                    return;
+                }
+
                 ProcessRunner.Run(matchedPath);
             }
         }

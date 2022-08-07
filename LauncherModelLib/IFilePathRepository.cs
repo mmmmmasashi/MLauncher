@@ -10,6 +10,6 @@ namespace LauncherModelLib
     {
         void Save(FilePath filePath);
         List<FilePath> GetAll();
-        FilePath Search(string text);
+        FilePath? Search(string text);
     }
 }
