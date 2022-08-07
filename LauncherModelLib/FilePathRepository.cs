@@ -31,13 +31,20 @@ namespace LauncherModelLib
         }
 
         /// <summary>
-        /// 検索文字列を含むパスを返す。
-        /// 見つからない場合はnull
+        /// 完全一致するパスが一つでもあるか
         /// </summary>
-        public FilePath? Search(string text)
+        public bool AnyHit(string userInput)
+        {
+            return (GetAll().Any(path => path.Contains(userInput)));
+        }
+
+        /// <summary>
+        /// 検索文字列を含むパスを返す。
+        /// 見つからない場合は例外
+        /// </summary>
+        public FilePath Search(string text)
         {
             var all = GetAll();
-            if (!all.Any(path => path.Contains(text))) return null;//Not found
             return all.First(filePath => filePath.Contains(text));
         }
     }

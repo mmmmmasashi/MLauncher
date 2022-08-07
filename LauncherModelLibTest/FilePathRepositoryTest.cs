@@ -57,9 +57,12 @@ namespace LauncherModelLibTest
         }
 
         [Fact]
-        public void 存在しない場合はnullが帰る()
+        public void 存在しない場合は例外()
         {
-            Assert.Null(_repository.Search("not_existing_text"));
+            Assert.Throws<InvalidOperationException>(() =>
+            {
+                _repository.Search("not_existing_text");
+            });
         }
     }
 }

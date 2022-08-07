@@ -77,12 +77,12 @@ namespace MLauncherApp.ViewModels
                     return;
                 }
 
-                FilePath? matchedPath = _repository.Search(userInput);
-                if (matchedPath == null)
+                if(!_repository.AnyHit(userInput))
                 {
                     _messageService.ShowMessageBox("一致するパスが存在しません");
                     return;
                 }
+                FilePath matchedPath = _repository.Search(userInput);
                 _runnerService.Run(matchedPath);
             }
         }
