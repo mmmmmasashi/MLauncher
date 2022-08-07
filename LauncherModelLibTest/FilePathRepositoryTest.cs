@@ -45,5 +45,12 @@ namespace LauncherModelLibTest
             List<FilePath> all = _repository.GetAll();
             Assert.AreEqual(2, all.Count);
         }
+
+        [TestMethod]
+        public void 文字列で完全一致検索ができて_一致したファイルパスを返す()
+        {
+            FilePath matchedPath = _repository.Search("filepath2");
+            Assert.AreEqual(new FilePath(@"C:\directory\filepath2.txt"), matchedPath);
+        }
     }
 }

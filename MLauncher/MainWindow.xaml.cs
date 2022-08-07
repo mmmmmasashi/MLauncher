@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,5 +48,13 @@ namespace MLauncher
             }
         }
 
+        private void TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                FilePath matchedPath = _repository.Search(MainTextBox.Text);
+                ProcessRunner.Run(matchedPath);
+            }
+        }
     }
 }

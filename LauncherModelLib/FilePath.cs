@@ -14,5 +14,10 @@
             return obj is FilePath path &&
                    Path == path.Path;
         }
+
+        public bool Contains(string text)
+        {
+            return Path.Contains(text);
+        }
     }
 }

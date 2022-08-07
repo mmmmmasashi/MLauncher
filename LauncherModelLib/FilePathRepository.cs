@@ -29,5 +29,11 @@ namespace LauncherModelLib
             if (all.Contains(filePath)) return;
             File.AppendAllText(_savedFilePath, filePath.Path + "\r\n");
         }
+
+        public FilePath Search(string text)
+        {
+            var all = GetAll();
+            return all.First(filePath => filePath.Contains(text));
+        }
     }
 }
