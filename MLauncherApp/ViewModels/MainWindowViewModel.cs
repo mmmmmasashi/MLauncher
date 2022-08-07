@@ -1,6 +1,7 @@
 ﻿using LauncherModelLib;
 using Prism.Commands;
 using Prism.Mvvm;
+using System;
 using System.Windows;
 using System.Windows.Input;
 
@@ -32,31 +33,33 @@ namespace MLauncherApp.ViewModels
         {
             _repository = new FilePathRepository("path_list.txt");
 
-            DragEnterCommand = new DelegateCommand<DragEventArgs>(e =>
+            DragEnterCommand    = new DelegateCommand<DragEventArgs>(MouseOverEvent);
+            DropCommand         = new DelegateCommand<DragEventArgs>(DropEvent);
+            KeyDownCommand      = new DelegateCommand<KeyEventArgs>(KeyDownEvent);
+        }
+
+        private void MouseOverEvent(DragEventArgs e)
+        {
+            e.Effects = DragDropEffects.Copy;
+            e.Handled = true;
+        }
+
+        private void DropEvent(DragEventArgs e)
+        {
+            var textArray = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+            foreach (var text in textArray)
             {
-                e.Effects = DragDropEffects.Copy;
-                e.Handled = true;
-            });
-
-            DropCommand = new DelegateCommand<DragEventArgs>(e =>
+                _repository.Save(new FilePath(text));
+            }
+        }
+        private void KeyDownEvent(KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
             {
-                var textArray = (string[])e.Data.GetData(DataFormats.FileDrop);
-
-                foreach (var text in textArray)
-                {
-                    _repository.Save(new FilePath(text));
-                }
-
-            });
-
-            KeyDownCommand = new DelegateCommand<KeyEventArgs>(e =>
-            {
-                if (e.Key == Key.Return)
-                {
-                    FilePath matchedPath = _repository.Search(TextBoxText);
-                    ProcessRunner.Run(matchedPath);
-                }
-            });
+                FilePath matchedPath = _repository.Search(TextBoxText);
+                ProcessRunner.Run(matchedPath);
+            }
         }
     }
 }
