@@ -21,7 +21,7 @@
                     <prism:InvokeCommandAction Command="{Binding DropCommand}"/>
                 </i:EventTrigger>
                 <i:EventTrigger EventName="KeyDown">
-                    <prism:InvokeCommandAction Command="{Binding KeyDownCommand}"/>
+                    <prism:InvokeCommandAction Command="{Binding KeyDownCommand}" TriggerParameterPath="Key"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </TextBox>
