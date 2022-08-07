@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MLauncherApp", "MLauncherAp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LauncherModelLibTest", "LauncherModelLibTest\LauncherModelLibTest.csproj", "{7346EB72-41D5-4677-84AC-D75EA1E2D529}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLauncherAppTest", "MLauncherAppTest\MLauncherAppTest.csproj", "{D4848D0C-15D0-4B9D-A15F-AF4B07FCA198}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{7346EB72-41D5-4677-84AC-D75EA1E2D529}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7346EB72-41D5-4677-84AC-D75EA1E2D529}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7346EB72-41D5-4677-84AC-D75EA1E2D529}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4848D0C-15D0-4B9D-A15F-AF4B07FCA198}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4848D0C-15D0-4B9D-A15F-AF4B07FCA198}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4848D0C-15D0-4B9D-A15F-AF4B07FCA198}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4848D0C-15D0-4B9D-A15F-AF4B07FCA198}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
