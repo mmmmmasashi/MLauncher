@@ -10,6 +10,7 @@ namespace MLauncherApp.Views
         public MainWindow()
         {
             InitializeComponent();
+            MainTextBox.Focus();
         }
     }
 }
