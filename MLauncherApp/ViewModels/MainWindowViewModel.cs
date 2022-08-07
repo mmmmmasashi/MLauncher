@@ -10,10 +10,13 @@ namespace MLauncherApp.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
-        private string _title = "MLauncher";
-        private IMessageService _messageService;
-        IFilePathRepository _repository;
+        const string RegisteredPathTextFile = "path_list.txt";//TODO:可変にする。今は固定でexeの隣に保存している
 
+        private IMessageService _messageService;
+        private IRunnerService _runnerService;
+        private IFilePathRepository _repository;
+
+        private string _title = "MLauncher";
         public string Title
         {
             get { return _title; }
@@ -31,12 +34,14 @@ namespace MLauncherApp.ViewModels
         public DelegateCommand<DragEventArgs> DropCommand      { get; }
         public DelegateCommand<Key?>  KeyDownCommand   { get; }
 
-        public MainWindowViewModel() : this(new MessageService()) { }
+        public MainWindowViewModel() : this(new MessageService(), new RunnerService()) { }
 
-        public MainWindowViewModel(IMessageService messageService)
+        public MainWindowViewModel(IMessageService messageService, IRunnerService runnerService)
         {
             _messageService = messageService;
-            _repository = new FilePathRepository("path_list.txt");
+            _runnerService  = runnerService;
+
+            _repository = new FilePathRepository(RegisteredPathTextFile);
             TextBoxText = "";
 
             DragEnterCommand    = new DelegateCommand<DragEventArgs>(MouseOverEvent);
@@ -64,14 +69,21 @@ namespace MLauncherApp.ViewModels
             if (key == null) return;
             if (key == Key.Return)
             {
-                FilePath? matchedPath = _repository.Search(TextBoxText);
+                string userInput = TextBoxText;
+                if (userInput == null) return;
+                if (userInput == "/list")
+                {
+                    _runnerService.Run(new FilePath(RegisteredPathTextFile));
+                    return;
+                }
+
+                FilePath? matchedPath = _repository.Search(userInput);
                 if (matchedPath == null)
                 {
                     _messageService.ShowMessageBox("一致するパスが存在しません");
                     return;
                 }
-
-                ProcessRunner.Run(matchedPath);
+                _runnerService.Run(matchedPath);
             }
         }
     }

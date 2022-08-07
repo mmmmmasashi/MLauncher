@@ -7,9 +7,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LauncherModelLib", "Launche
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MLauncherApp", "MLauncherApp\MLauncherApp.csproj", "{AF4879A3-7D13-48F4-BF6B-A9689FB00D72}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LauncherModelLibTest", "LauncherModelLibTest\LauncherModelLibTest.csproj", "{7346EB72-41D5-4677-84AC-D75EA1E2D529}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LauncherModelLibTest", "LauncherModelLibTest\LauncherModelLibTest.csproj", "{7346EB72-41D5-4677-84AC-D75EA1E2D529}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLauncherAppTest", "MLauncherAppTest\MLauncherAppTest.csproj", "{D4848D0C-15D0-4B9D-A15F-AF4B07FCA198}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MLauncherAppTest", "MLauncherAppTest\MLauncherAppTest.csproj", "{D4848D0C-15D0-4B9D-A15F-AF4B07FCA198}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ソリューション項目", "ソリューション項目", "{FF1DE959-927A-499A-B274-EE543C709A34}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
