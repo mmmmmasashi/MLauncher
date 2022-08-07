@@ -1,17 +1,18 @@
-using LauncherModelLib;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+ï»¿using LauncherModelLib;
 
 namespace LauncherModelLibTest
 {
-    [TestClass]
+
     public class FilePathRepositoryTest
     {
         private IFilePathRepository _repository;
 
-        [TestInitialize]
-        public void ƒtƒ@ƒCƒ‹ƒpƒX2‚Â•Û‘¶‚³‚ê‚½ƒŠƒ|ƒWƒgƒŠ‚ğ—pˆÓ()
+        public FilePathRepositoryTest()
         {
-            Directory.Delete(@"TestDir", true);
+            if (Directory.Exists("TestDir"))
+            {
+                Directory.Delete(@"TestDir", true);
+            }
             Directory.CreateDirectory(@"TestDir");
 
             _repository = new FilePathRepository(@"TestDir\SavedFile.txt");
@@ -19,38 +20,38 @@ namespace LauncherModelLibTest
             _repository.Save(new FilePath(@"C:\directory\filepath2.txt"));
         }
 
-        [TestMethod]
-        public void ƒŠƒ|ƒWƒgƒŠ‚Í•Û‘¶‚µ‚½ƒpƒX‚ğ‚·‚×‚Ä“Ç‚İo‚¹‚é()
+        [Fact]
+        public void ãƒªãƒã‚¸ãƒˆãƒªã¯ä¿å­˜ã—ãŸãƒ‘ã‚¹ã‚’ã™ã¹ã¦èª­ã¿å‡ºã›ã‚‹()
         {
             List<FilePath> all = _repository.GetAll();
-            Assert.AreEqual(2, all.Count);
-            Assert.AreEqual(new FilePath(@"C:\directory\filepath1.txt"), all[0]);
-            Assert.AreEqual(new FilePath(@"C:\directory\filepath2.txt"), all[1]);
+            Assert.Equal(2, all.Count);
+            Assert.Equal(new FilePath(@"C:\directory\filepath1.txt"), all[0]);
+            Assert.Equal(new FilePath(@"C:\directory\filepath2.txt"), all[1]);
         }
 
-        [TestMethod]
-        public void ƒŠƒ|ƒWƒgƒŠ‚Íƒtƒ@ƒCƒ‹‚Å‰i‘±‰»‚³‚ê‚Ä‚¢‚é()
+        [Fact]
+        public void ãƒªãƒã‚¸ãƒˆãƒªã¯ãƒ•ã‚¡ã‚¤ãƒ«ã§æ°¸ç¶šåŒ–ã•ã‚Œã¦ã„ã‚‹()
         {
             var anotherRepository = new FilePathRepository(@"TestDir\SavedFile.txt");
             var all = anotherRepository.GetAll();
-            Assert.AreEqual(2, all.Count);
-            Assert.AreEqual(new FilePath(@"C:\directory\filepath1.txt"), all[0]);
-            Assert.AreEqual(new FilePath(@"C:\directory\filepath2.txt"), all[1]);
+            Assert.Equal(2, all.Count);
+            Assert.Equal(new FilePath(@"C:\directory\filepath1.txt"), all[0]);
+            Assert.Equal(new FilePath(@"C:\directory\filepath2.txt"), all[1]);
         }
 
-        [TestMethod]
-        public void d•¡‚µ‚½ƒpƒX‚Í“o˜^‚¹‚¸–³‹‚·‚é()
+        [Fact]
+        public void é‡è¤‡ã—ãŸãƒ‘ã‚¹ã¯ç™»éŒ²ã›ãšç„¡è¦–ã™ã‚‹()
         {
-            _repository.Save(new FilePath(@"C:\directory\filepath1.txt"));//•Û‘¶Ï‚ÌƒpƒX
+            _repository.Save(new FilePath(@"C:\directory\filepath1.txt"));//ä¿å­˜æ¸ˆã®ãƒ‘ã‚¹
             List<FilePath> all = _repository.GetAll();
-            Assert.AreEqual(2, all.Count);
+            Assert.Equal(2, all.Count);
         }
 
-        [TestMethod]
-        public void •¶š—ñ‚ÅŠ®‘Sˆê’vŒŸõ‚ª‚Å‚«‚Ä_ˆê’v‚µ‚½ƒtƒ@ƒCƒ‹ƒpƒX‚ğ•Ô‚·()
+        [Fact]
+        public void æ–‡å­—åˆ—ã§å®Œå…¨ä¸€è‡´æ¤œç´¢ãŒã§ãã¦_ä¸€è‡´ã—ãŸãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ã‚’è¿”ã™()
         {
             FilePath matchedPath = _repository.Search("filepath2");
-            Assert.AreEqual(new FilePath(@"C:\directory\filepath2.txt"), matchedPath);
+            Assert.Equal(new FilePath(@"C:\directory\filepath2.txt"), matchedPath);
         }
     }
 }
