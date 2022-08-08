@@ -10,6 +10,5 @@ namespace MLauncherApp.Service
     public interface IMessageService
     {
         void ShowMessageBox(string message);
-        void ShowPathListWindow(List<FilePath> filePaths);
     }
 }

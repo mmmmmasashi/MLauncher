@@ -1,4 +1,5 @@
 ﻿using LauncherModelLib;
+using MLauncherApp.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +14,6 @@ namespace MLauncherApp.Service
         public void ShowMessageBox(string message)
         {
             MessageBox.Show(message);
-        }
-
-        public void ShowPathListWindow(List<FilePath> filePaths)
-        {
         }
     }
 }

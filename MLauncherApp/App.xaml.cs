@@ -23,6 +23,8 @@ namespace MLauncherApp
             containerRegistry.RegisterSingleton<IMessageService, MessageService>();
             containerRegistry.RegisterSingleton<IRunnerService, RunnerService>();
 
+            containerRegistry.RegisterDialog<PathListControl>();
+
         }
     }
 }

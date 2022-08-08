@@ -2,6 +2,7 @@ using LauncherModelLib;
 using MLauncherApp.Service;
 using MLauncherApp.ViewModels;
 using Moq;
+using Prism.Services.Dialogs;
 using System;
 using System.Windows.Input;
 using Xunit;
@@ -10,6 +11,7 @@ namespace MLauncherAppTest
 {
     public class MainWindowTest
     {
+        private Mock<IDialogService> _dialogServiceMoc;
         private Mock<IMessageService> _serviceMoc;
         private Mock<IRunnerService> _runnerServiceMoc;
         private Mock<IFilePathRepository> _repositoryMoc;
@@ -17,13 +19,14 @@ namespace MLauncherAppTest
 
         public MainWindowTest()
         {
+            _dialogServiceMoc = new Mock<IDialogService>();
             _serviceMoc = new Mock<IMessageService>();
             _runnerServiceMoc = new Mock<IRunnerService>();
             _repositoryMoc = new Mock<IFilePathRepository>();
 
             _repositoryMoc.Setup(repo => repo.FilePath).Returns(new FilePath("path_list.txt"));
 
-            _vm = new MainWindowViewModel(_serviceMoc.Object, _runnerServiceMoc.Object, _repositoryMoc.Object);
+            _vm = new MainWindowViewModel(_serviceMoc.Object, _runnerServiceMoc.Object, _repositoryMoc.Object, _dialogServiceMoc.Object);
         }
 
         [Fact]
@@ -61,11 +64,13 @@ namespace MLauncherAppTest
             _vm.TextBoxText = "Name";
             _vm.KeyDownCommand.Execute(Key.Enter);
 
-            _serviceMoc.Verify(messageService => messageService.ShowPathListWindow(new List<FilePath>
-            {
-                new FilePath(@"C:\Dir\Name1.txt"),
-                new FilePath(@"C:\Dir\Name2.txt"),
-            }), Times.Once);
+            _dialogServiceMoc.Verify(
+                service => service.ShowDialog(
+                    "PathListControl",
+                    It.IsAny<DialogParameters>(),
+                    It.IsAny<Action<IDialogResult>>()
+                    ),
+                Times.Once);
         }
     }
 }

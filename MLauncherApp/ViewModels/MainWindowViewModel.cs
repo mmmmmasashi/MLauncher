@@ -1,7 +1,9 @@
 ﻿using LauncherModelLib;
 using MLauncherApp.Service;
+using MLauncherApp.Views;
 using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +14,7 @@ namespace MLauncherApp.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
+        private IDialogService _dialogService;
         private IMessageService _messageService;
         private IRunnerService _runnerService;
         private IFilePathRepository _repository;
@@ -34,8 +37,9 @@ namespace MLauncherApp.ViewModels
         public DelegateCommand<DragEventArgs> DropCommand      { get; }
         public DelegateCommand<Key?>  KeyDownCommand   { get; }
 
-        public MainWindowViewModel(IMessageService messageService, IRunnerService runnerService, IFilePathRepository filePathRepository)
+        public MainWindowViewModel(IMessageService messageService, IRunnerService runnerService, IFilePathRepository filePathRepository, IDialogService dialogService)
         {
+            _dialogService = dialogService;
             _messageService = messageService;
             _runnerService  = runnerService;
             _repository = filePathRepository;
@@ -87,7 +91,18 @@ namespace MLauncherApp.ViewModels
                 }
                 else
                 {
-                    _messageService.ShowPathListWindow(matchedPathList);
+                    var parameters = new DialogParameters();
+                    parameters.Add(nameof(PathListControlViewModel.PathList), matchedPathList);
+                    _dialogService.ShowDialog(
+                        nameof(PathListControl),
+                        parameters,
+                        (result) =>
+                        {
+                            if (!result.Parameters.GetValue<bool>(nameof(PathListControlViewModel.IsSelected))) return;
+                            FilePath filePathSelected = result.Parameters.GetValue<FilePath>(nameof(PathListControlViewModel.SelectedPath));
+                            _runnerService.Run(filePathSelected);
+                        }
+                    );
                 }
             }
         }
