@@ -16,19 +16,14 @@ namespace LauncherModelLib
         public FilePathRepository(string savedFilePath)
         {
             this._savedFilePath = savedFilePath;
-        }
-
-        private List<FilePath> GetAll()
-        {
-            if (!File.Exists(_savedFilePath)) return new List<FilePath>();
-            var lines = File.ReadAllLines(_savedFilePath);
-            return lines.Select(line => new FilePath(line)).ToList();
+            _filePathList = Load();
         }
 
         public void Save(FilePath filePath)
         {
-            var all = GetAll();
-            if (all.Contains(filePath)) return;
+            if (_filePathList.Contains(filePath)) return;
+            
+            _filePathList.Add(filePath);
             File.AppendAllText(_savedFilePath, filePath.Path + "\r\n");
         }
 
@@ -37,8 +32,14 @@ namespace LauncherModelLib
         /// </summary>
         public List<FilePath> Search(string text)
         {
-            var all = GetAll();
-            return all.Where(filePath => filePath.Contains(text)).ToList();
+            return _filePathList.Where(filePath => filePath.Contains(text)).ToList();
+        }
+
+        private List<FilePath> Load()
+        {
+            if (!File.Exists(_savedFilePath)) return new List<FilePath>();
+            var lines = File.ReadAllLines(_savedFilePath);
+            return lines.Select(line => new FilePath(line)).ToList();
         }
     }
 }
