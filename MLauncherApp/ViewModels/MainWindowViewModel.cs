@@ -75,19 +75,20 @@ namespace MLauncherApp.ViewModels
                     return;
                 }
 
-                List<FilePath> matchedPath = _repository.Search(userInput);
-                if (matchedPath.Count == 0)
+                List<FilePath> matchedPathList = _repository.Search(userInput);
+                if (matchedPathList.Count == 0)
                 {
                     _messageService.ShowMessageBox("一致するパスが存在しません");
                     return;
                 }
-                
-                if (matchedPath.Count == 1)
+                else if (matchedPathList.Count == 1)
                 {
-                    _runnerService.Run(matchedPath[0]);
+                    _runnerService.Run(matchedPathList[0]);
                 }
-
-                throw new NotImplementedException("複数ヒットするケース");
+                else
+                {
+                    _messageService.ShowPathListWindow(matchedPathList);
+                }
             }
         }
     }

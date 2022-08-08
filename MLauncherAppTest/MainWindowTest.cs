@@ -51,9 +51,21 @@ namespace MLauncherAppTest
         [Fact]
         public void 複数候補がある時はファイルパスリストウィンドウを開く()
         {
+            //Nameで検索したらName1.txt, Name2.txtにヒットするケース
+            _repositoryMoc.Setup(repo => repo.Search("Name")).Returns(new List<FilePath>()
+            {
+                new FilePath(@"C:\Dir\Name1.txt"),
+                new FilePath(@"C:\Dir\Name2.txt"),
+            });
 
-            //_repositoryMoc.Setup(repo => repo.)
-            //throw new NotImplementedException();
+            _vm.TextBoxText = "Name";
+            _vm.KeyDownCommand.Execute(Key.Enter);
+
+            _serviceMoc.Verify(messageService => messageService.ShowPathListWindow(new List<FilePath>
+            {
+                new FilePath(@"C:\Dir\Name1.txt"),
+                new FilePath(@"C:\Dir\Name2.txt"),
+            }), Times.Once);
         }
     }
 }
