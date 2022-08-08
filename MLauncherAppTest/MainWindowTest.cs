@@ -20,13 +20,16 @@ namespace MLauncherAppTest
             _serviceMoc = new Mock<IMessageService>();
             _runnerServiceMoc = new Mock<IRunnerService>();
             _repositoryMoc = new Mock<IFilePathRepository>();
-            
+
+            _repositoryMoc.Setup(repo => repo.FilePath).Returns(new FilePath("path_list.txt"));
+
             _vm = new MainWindowViewModel(_serviceMoc.Object, _runnerServiceMoc.Object, _repositoryMoc.Object);
         }
 
         [Fact]
         public void リストに存在しない名前を検索した時_存在しませんとエラーメッセージが出る()
         {
+            _repositoryMoc.Setup(repo => repo.Search(It.IsAny<string>())).Returns(new List<FilePath>());
 
             _vm.TextBoxText = "not_exist_name";
             _vm.KeyDownCommand.Execute(Key.Enter);
@@ -43,6 +46,14 @@ namespace MLauncherAppTest
             _vm.KeyDownCommand.Execute(Key.Enter);
 
             _runnerServiceMoc.Verify(x => x.Run(new FilePath("path_list.txt")), Times.Once);
+        }
+
+        [Fact]
+        public void 複数候補がある時はファイルパスリストウィンドウを開く()
+        {
+
+            //_repositoryMoc.Setup(repo => repo.)
+            //throw new NotImplementedException();
         }
     }
 }

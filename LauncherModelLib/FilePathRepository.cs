@@ -18,7 +18,7 @@ namespace LauncherModelLib
             this._savedFilePath = savedFilePath;
         }
 
-        public List<FilePath> GetAll()
+        private List<FilePath> GetAll()
         {
             if (!File.Exists(_savedFilePath)) return new List<FilePath>();
             var lines = File.ReadAllLines(_savedFilePath);
@@ -33,21 +33,12 @@ namespace LauncherModelLib
         }
 
         /// <summary>
-        /// 完全一致するパスが一つでもあるか
-        /// </summary>
-        public bool AnyHit(string userInput)
-        {
-            return (GetAll().Any(path => path.Contains(userInput)));
-        }
-
-        /// <summary>
         /// 検索文字列を含むパスを返す。
-        /// 見つからない場合は例外
         /// </summary>
-        public FilePath Search(string text)
+        public List<FilePath> Search(string text)
         {
             var all = GetAll();
-            return all.First(filePath => filePath.Contains(text));
+            return all.Where(filePath => filePath.Contains(text)).ToList();
         }
     }
 }

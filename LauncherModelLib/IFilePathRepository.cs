@@ -11,8 +11,6 @@ namespace LauncherModelLib
         FilePath FilePath { get; }
 
         void Save(FilePath filePath);
-        List<FilePath> GetAll();
-        FilePath Search(string text);
-        bool AnyHit(string userInput);
+        List<FilePath> Search(string text);
     }
 }

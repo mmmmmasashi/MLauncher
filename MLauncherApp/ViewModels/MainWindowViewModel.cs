@@ -3,6 +3,8 @@ using MLauncherApp.Service;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -73,13 +75,19 @@ namespace MLauncherApp.ViewModels
                     return;
                 }
 
-                if(!_repository.AnyHit(userInput))
+                List<FilePath> matchedPath = _repository.Search(userInput);
+                if (matchedPath.Count == 0)
                 {
                     _messageService.ShowMessageBox("一致するパスが存在しません");
                     return;
                 }
-                FilePath matchedPath = _repository.Search(userInput);
-                _runnerService.Run(matchedPath);
+                
+                if (matchedPath.Count == 1)
+                {
+                    _runnerService.Run(matchedPath[0]);
+                }
+
+                throw new NotImplementedException("複数ヒットするケース");
             }
         }
     }
