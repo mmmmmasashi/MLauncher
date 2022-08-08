@@ -11,6 +11,8 @@ namespace LauncherModelLib
         private string _savedFilePath;
         private List<FilePath> _filePathList = new List<FilePath>();
 
+        public FilePath FilePath => new FilePath(_savedFilePath);
+
         public FilePathRepository(string savedFilePath)
         {
             this._savedFilePath = savedFilePath;

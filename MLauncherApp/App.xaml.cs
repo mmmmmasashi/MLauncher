@@ -1,4 +1,6 @@
-﻿using MLauncherApp.Views;
+﻿using LauncherModelLib;
+using MLauncherApp.Service;
+using MLauncherApp.Views;
 using Prism.Ioc;
 using System.Windows;
 
@@ -16,6 +18,10 @@ namespace MLauncherApp
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            const string RegisteredPathTextFile = "path_list.txt";//TODO:可変にする。今は固定でexeの隣に保存している
+            containerRegistry.RegisterInstance<IFilePathRepository>(new FilePathRepository(RegisteredPathTextFile));
+            containerRegistry.RegisterSingleton<IMessageService, MessageService>();
+            containerRegistry.RegisterSingleton<IRunnerService, RunnerService>();
 
         }
     }

@@ -10,8 +10,6 @@ namespace MLauncherApp.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
-        const string RegisteredPathTextFile = "path_list.txt";//TODO:可変にする。今は固定でexeの隣に保存している
-
         private IMessageService _messageService;
         private IRunnerService _runnerService;
         private IFilePathRepository _repository;
@@ -34,14 +32,12 @@ namespace MLauncherApp.ViewModels
         public DelegateCommand<DragEventArgs> DropCommand      { get; }
         public DelegateCommand<Key?>  KeyDownCommand   { get; }
 
-        public MainWindowViewModel() : this(new MessageService(), new RunnerService()) { }
-
-        public MainWindowViewModel(IMessageService messageService, IRunnerService runnerService)
+        public MainWindowViewModel(IMessageService messageService, IRunnerService runnerService, IFilePathRepository filePathRepository)
         {
             _messageService = messageService;
             _runnerService  = runnerService;
+            _repository = filePathRepository;
 
-            _repository = new FilePathRepository(RegisteredPathTextFile);
             TextBoxText = "";
 
             DragEnterCommand    = new DelegateCommand<DragEventArgs>(MouseOverEvent);
@@ -73,7 +69,7 @@ namespace MLauncherApp.ViewModels
                 if (userInput == null) return;
                 if (userInput == "/list")
                 {
-                    _runnerService.Run(new FilePath(RegisteredPathTextFile));
+                    _runnerService.Run(_repository.FilePath);
                     return;
                 }
 
