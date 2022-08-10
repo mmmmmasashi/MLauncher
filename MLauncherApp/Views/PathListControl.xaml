@@ -1,12 +1,18 @@
 ﻿<UserControl x:Class="MLauncherApp.Views.PathListControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:prism="http://prismlibrary.com/"             
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <Grid>
         <StackPanel>
             <TextBlock Text="複数のパスがヒットしました。選択してください。"/>
-            <DataGrid ItemsSource="{Binding PathList}" AutoGenerateColumns="False">
+            <DataGrid ItemsSource="{Binding PathList}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedPathItem}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PreviewKeyDown">
+                        <prism:InvokeCommandAction Command="{Binding DataGridKeyDownCommand}" TriggerParameterPath="Key"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="パス" Binding="{Binding Path}"/>
                 </DataGrid.Columns>

@@ -93,16 +93,14 @@ namespace MLauncherApp.ViewModels
                 {
                     var parameters = new DialogParameters();
                     parameters.Add(nameof(PathListControlViewModel.PathList), matchedPathList);
-                    _dialogService.ShowDialog(
-                        nameof(PathListControl),
-                        parameters,
-                        (result) =>
+                    _dialogService.ShowDialog(nameof(PathListControl), parameters, (result) =>
+                    {
+                        if (result.Result == ButtonResult.OK)
                         {
-                            if (!result.Parameters.GetValue<bool>(nameof(PathListControlViewModel.IsSelected))) return;
-                            FilePath filePathSelected = result.Parameters.GetValue<FilePath>(nameof(PathListControlViewModel.SelectedPath));
+                            var filePathSelected = result.Parameters.GetValue<FilePath>(nameof(PathListControlViewModel.SelectedPathItem));
                             _runnerService.Run(filePathSelected);
                         }
-                    );
+                    });
                 }
             }
         }
