@@ -24,6 +24,10 @@ namespace MLauncherAppTest
             _runnerServiceMoc = new Mock<IRunnerService>();
             _repositoryMoc = new Mock<IFilePathRepository>();
 
+            //Setupで上書きしなければ、何も空のリポジトリとしておく
+            _repositoryMoc.Setup(repo => repo.Search(It.IsAny<string>())).Returns(new List<FilePath>());
+
+            //listコマンド用にパスを用意しておく
             _repositoryMoc.Setup(repo => repo.FilePath).Returns(new FilePath("path_list.txt"));
 
             _vm = new MainWindowViewModel(_serviceMoc.Object, _runnerServiceMoc.Object, _repositoryMoc.Object, _dialogServiceMoc.Object);
@@ -113,6 +117,15 @@ namespace MLauncherAppTest
                     It.IsAny<Action<IDialogResult>>()
                     ),
                 Times.Once);
+        }
+
+        [Fact]
+        public void Enterを押すとテキストボックスはクリアされる_処理が完了するため()
+        {
+            _vm.TextBoxText = "some_text";
+            _vm.RunCommand.Execute();
+            Assert.Equal("", _vm.TextBoxText);
+
         }
     }
 }

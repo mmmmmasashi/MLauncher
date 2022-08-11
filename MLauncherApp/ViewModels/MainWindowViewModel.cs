@@ -49,8 +49,8 @@ namespace MLauncherApp.ViewModels
 
             DragEnterCommand    = new DelegateCommand<DragEventArgs>(MouseOverEvent);
             DropCommand         = new DelegateCommand<DragEventArgs>(DropEvent);
-            RunCommand = new DelegateCommand(() => DispatchRunEvent(false));
-            RunParentCommand = new DelegateCommand(() => DispatchRunEvent(true));
+            RunCommand = new DelegateCommand(() => Execute(false));
+            RunParentCommand = new DelegateCommand(() => Execute(true));
         }
 
         private void MouseOverEvent(DragEventArgs e)
@@ -73,10 +73,21 @@ namespace MLauncherApp.ViewModels
         /// テキストボックスに入力した内容を実行する
         /// </summary>
         /// <param name="callParent">指定したパスの親のパスを起動するオプション</param>
-        private void DispatchRunEvent(bool parentCall)
+        private void Execute(bool parentCall)
+        {
+            ProcessUserInput(parentCall);
+            ClearTextBox();
+        }
+
+        private void ClearTextBox()
+        {
+            TextBoxText = "";
+        }
+
+        private void ProcessUserInput(bool parentCall)
         {
             if (TextBoxText == null) return;
-            
+
             //特殊コマンド
             if (TextBoxText == "/list")
             {
