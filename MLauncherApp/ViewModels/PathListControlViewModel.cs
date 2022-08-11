@@ -1,4 +1,5 @@
 ﻿using LauncherModelLib;
+using MLauncherApp.Service;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
@@ -51,10 +52,8 @@ namespace MLauncherApp.ViewModels
 
         private void ReturnSelectedItem()
         {
-            //TODO:以下メソッドとかにまとめたい？
-            DialogParameters dialogParameters = new DialogParameters();
-            dialogParameters.Add(nameof(SelectedPathItem), SelectedPathItem);
-            DialogResult result = new DialogResult(ButtonResult.OK, dialogParameters);
+            var parameters = DialogParametersService.Create(nameof(SelectedPathItem), SelectedPathItem);
+            DialogResult result = new DialogResult(ButtonResult.OK, parameters);
 
             RequestClose.Invoke(result);
         }
