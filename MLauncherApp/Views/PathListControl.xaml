@@ -3,11 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-             prism:ViewModelLocator.AutoWireViewModel="True">
+             prism:ViewModelLocator.AutoWireViewModel="True" Loaded="LoadedEvent">
     <Grid>
         <StackPanel>
             <TextBlock Text="複数のパスがヒットしました。選択してください。"/>
-            <DataGrid ItemsSource="{Binding PathList}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedPathItem}">
+            <DataGrid ItemsSource="{Binding PathList}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedPathItem}" x:Name="MainDataGrid">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="PreviewKeyDown">
                         <prism:InvokeCommandAction Command="{Binding DataGridKeyDownCommand}" TriggerParameterPath="Key"/>

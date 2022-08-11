@@ -25,10 +25,18 @@ namespace MLauncherApp.ViewModels
 
         public string Title => "パス選択";
         public DelegateCommand<Key?> DataGridKeyDownCommand { get; }
+        public DelegateCommand LoadedCommand { get; }
 
         public PathListControlViewModel()
         {
             DataGridKeyDownCommand = new DelegateCommand<Key?>(DataGridKeyEvent);
+            LoadedCommand = new DelegateCommand(() =>
+            {
+                if (PathList.Count > 0)
+                {
+                    SelectedPathItem = PathList.First();
+                }
+            });
         }
 
         private void DataGridKeyEvent(Key? key)

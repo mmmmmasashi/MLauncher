@@ -13,5 +13,10 @@ namespace MLauncherApp.Views
         {
             InitializeComponent();
         }
+
+        private void LoadedEvent(object sender, System.Windows.RoutedEventArgs e)
+        {
+            MainDataGrid.Focus();
+        }
     }
 }
