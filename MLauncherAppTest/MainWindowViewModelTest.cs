@@ -9,7 +9,7 @@ using Xunit;
 
 namespace MLauncherAppTest
 {
-    public class MainWindowTest
+    public class MainWindowViewModelTest
     {
         private Mock<IDialogService> _dialogServiceMoc;
         private Mock<IMessageService> _serviceMoc;
@@ -17,7 +17,7 @@ namespace MLauncherAppTest
         private Mock<IFilePathRepository> _repositoryMoc;
         private MainWindowViewModel _vm;
 
-        public MainWindowTest()
+        public MainWindowViewModelTest()
         {
             _dialogServiceMoc = new Mock<IDialogService>();
             _serviceMoc = new Mock<IMessageService>();
