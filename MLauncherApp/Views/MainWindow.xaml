@@ -4,7 +4,7 @@
         xmlns:prism="http://prismlibrary.com/"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         prism:ViewModelLocator.AutoWireViewModel="True"
-        Title="{Binding Title}"  Width="500" SizeToContent="Height">
+        Title="{Binding Title}"  Width="500" SizeToContent="Height" ResizeMode="NoResize">
     <Grid>
         <TextBox x:Name="MainTextBox" Text="{Binding TextBoxText, UpdateSourceTrigger=PropertyChanged}" Height="24" VerticalContentAlignment="Center" AllowDrop="True">
             <TextBox.InputBindings>
