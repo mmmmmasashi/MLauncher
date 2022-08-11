@@ -15,14 +15,15 @@
                    Path == path.Path;
         }
 
-        public bool Contains(string text)
-        {
-            return Path.Contains(text);
-        }
 
         public override int GetHashCode()
         {
             return HashCode.Combine(Path);
+        }
+
+        public bool Contains(string text)
+        {
+            return Path.Contains(text);
         }
     }
 }
