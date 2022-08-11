@@ -35,7 +35,7 @@ namespace MLauncherApp.ViewModels
 
         public DelegateCommand<DragEventArgs> DragEnterCommand { get; }
         public DelegateCommand<DragEventArgs> DropCommand      { get; }
-        public DelegateCommand<Key?>  KeyDownCommand   { get; }
+        public DelegateCommand RunCommand { get; }
 
         public MainWindowViewModel(IMessageService messageService, IRunnerService runnerService, IFilePathRepository filePathRepository, IDialogService dialogService)
         {
@@ -48,7 +48,7 @@ namespace MLauncherApp.ViewModels
 
             DragEnterCommand    = new DelegateCommand<DragEventArgs>(MouseOverEvent);
             DropCommand         = new DelegateCommand<DragEventArgs>(DropEvent);
-            KeyDownCommand      = new DelegateCommand<Key?>(KeyDownEvent);
+            RunCommand = new DelegateCommand(DispatchRunEvent);
         }
 
         private void MouseOverEvent(DragEventArgs e)
@@ -66,16 +66,13 @@ namespace MLauncherApp.ViewModels
                 _repository.Save(new FilePath(text));
             }
         }
-        private void KeyDownEvent(Key? key)
-        {
-            string userInput = TextBoxText;
 
-            if (userInput == null) return;
-            if (key == null) return;
-            if (key != Key.Enter) return;
+        private void DispatchRunEvent()
+        {
+            if (TextBoxText == null) return;
             
             //特殊コマンド
-            if (userInput == "/list")
+            if (TextBoxText == "/list")
             {
                 _runnerService.Run(_repository.FilePath);
                 return;
@@ -83,7 +80,7 @@ namespace MLauncherApp.ViewModels
 
             //通常ケース
 
-            List<FilePath> matchedPathList = _repository.Search(userInput);
+            List<FilePath> matchedPathList = _repository.Search(TextBoxText);
             bool noHit = matchedPathList.Count == 0;
             if (noHit)
             {

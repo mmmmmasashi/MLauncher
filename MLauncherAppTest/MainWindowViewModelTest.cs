@@ -35,7 +35,7 @@ namespace MLauncherAppTest
             _repositoryMoc.Setup(repo => repo.Search(It.IsAny<string>())).Returns(new List<FilePath>());
 
             _vm.TextBoxText = "not_exist_name";
-            _vm.KeyDownCommand.Execute(Key.Enter);
+            _vm.RunCommand.Execute();
 
             _serviceMoc.Verify(x => x.ShowMessageBox("ˆê’v‚·‚éƒpƒX‚ª‘¶Ý‚µ‚Ü‚¹‚ñ"), Times.Once);
         }
@@ -46,7 +46,7 @@ namespace MLauncherAppTest
             _repositoryMoc.Setup(repo => repo.FilePath).Returns(new FilePath("path_list.txt"));
 
             _vm.TextBoxText = "/list";
-            _vm.KeyDownCommand.Execute(Key.Enter);
+            _vm.RunCommand.Execute();
 
             _runnerServiceMoc.Verify(x => x.Run(new FilePath("path_list.txt")), Times.Once);
         }
@@ -60,7 +60,7 @@ namespace MLauncherAppTest
             });
 
             _vm.TextBoxText = "target";
-            _vm.KeyDownCommand.Execute(Key.Enter);
+            _vm.RunCommand.Execute();
 
             _runnerServiceMoc.Verify(runner => runner.Run(new FilePath(@"C:\Dir\target.txt")));
         }
@@ -74,7 +74,7 @@ namespace MLauncherAppTest
         //    });
 
         //    _vm.TextBoxText = "target";
-        //    _vm.KeyDownCommand.Execute(Key.Enter);
+        //    _vm.RunCommand.Execute();
 
         //    _runnerServiceMoc.Verify(runner => runner.Run(new FilePath(@"C:\Dir\target.txt")));
         //}
@@ -90,7 +90,7 @@ namespace MLauncherAppTest
             });
 
             _vm.TextBoxText = "Name";
-            _vm.KeyDownCommand.Execute(Key.Enter);
+            _vm.RunCommand.Execute();
 
             _dialogServiceMoc.Verify(
                 service => service.ShowDialog(

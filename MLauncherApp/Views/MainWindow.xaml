@@ -7,6 +7,9 @@
         Title="{Binding Title}"  Width="500" SizeToContent="Height">
     <Grid>
         <TextBox x:Name="MainTextBox" Text="{Binding TextBoxText, UpdateSourceTrigger=PropertyChanged}" Height="24" VerticalContentAlignment="Center" AllowDrop="True">
+            <TextBox.InputBindings>
+                <KeyBinding Command="{Binding RunCommand}" Gesture="Enter"/>
+            </TextBox.InputBindings>
             <!--イベントをVMに飛ばす方法 https://stackoverflow.com/questions/32669964/where-to-put-events-when-using-mvvm-->
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="PreviewDragEnter">
@@ -19,9 +22,6 @@
                 </i:EventTrigger>
                 <i:EventTrigger EventName="PreviewDrop">
                     <prism:InvokeCommandAction Command="{Binding DropCommand}"/>
-                </i:EventTrigger>
-                <i:EventTrigger EventName="KeyDown">
-                    <prism:InvokeCommandAction Command="{Binding KeyDownCommand}" TriggerParameterPath="Key"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </TextBox>
