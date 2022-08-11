@@ -13,7 +13,7 @@ namespace MLauncherAppTest
     public class PathListControlViewModelTest
     {
         [Fact]
-        public void ファイルパスを選択した状態でRunのイベントが飛ぶとそのファイルパスが返される()
+        public void ファイルパスを選択した状態でEnterを押すとそのファイルパスが返される()
         {
             var vm = new PathListControlViewModel();
             vm.SelectedPathItem = new FilePath("filepath.txt");
@@ -27,5 +27,19 @@ namespace MLauncherAppTest
             vm.RunSelectedItemCommand.Execute();
         }
 
+        [Fact]
+        public void ファイルパスを選択した状態でCTRL_Enterを押すとその親のディレクトリのパスが返される()
+        {
+            var vm = new PathListControlViewModel();
+            vm.SelectedPathItem = new FilePath(@"C:\parent\filepath.txt");
+
+            vm.RequestClose += new Action<IDialogResult>(result =>
+            {
+                var filePathSelected = result.Parameters.GetValue<FilePath>("SelectedPathItem");
+                Assert.Equal(new FilePath(@"C:\parent"), filePathSelected);
+            });
+
+            vm.RunParentOfSelectedItemCommand.Execute();
+        }
     }
 }

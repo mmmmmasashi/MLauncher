@@ -9,6 +9,7 @@
             <DataGrid ItemsSource="{Binding PathList, Mode=OneWay}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedPathItem}" x:Name="MainDataGrid">
                 <DataGrid.InputBindings>
                     <KeyBinding Command="{Binding RunSelectedItemCommand}" Gesture="Enter"/>
+                    <KeyBinding Command="{Binding RunParentOfSelectedItemCommand}" Gesture="CTRL+Enter"/>
                     <MouseBinding Command="{Binding RunSelectedItemCommand}" Gesture="LeftDoubleClick"/>
                 </DataGrid.InputBindings>
                 <DataGrid.Columns>

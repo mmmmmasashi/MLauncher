@@ -26,11 +26,24 @@ namespace MLauncherApp.ViewModels
 
         public string Title => "パス選択";
         public DelegateCommand RunSelectedItemCommand { get; }
+        public DelegateCommand RunParentOfSelectedItemCommand { get; }
+        
         public DelegateCommand LoadedCommand { get; }
 
         public PathListControlViewModel()
         {
-            RunSelectedItemCommand = new DelegateCommand(ReturnSelectedItem);
+            RunParentOfSelectedItemCommand = new DelegateCommand(() =>
+            {
+                if (SelectedPathItem == null) return;
+                ReturnPath(SelectedPathItem.ParentPath);
+            });
+
+            RunSelectedItemCommand = new DelegateCommand(() =>
+            {
+                if (SelectedPathItem == null) return;
+                ReturnPath(SelectedPathItem);
+            });
+
             LoadedCommand = new DelegateCommand(() =>
             {
                 if (PathList.Count > 0)
@@ -40,11 +53,15 @@ namespace MLauncherApp.ViewModels
             });
         }
 
-        private void ReturnSelectedItem()
+        /// <summary>
+        /// 指定されたパスを呼び元に返してこのウィンドウはクローズする
+        /// </summary>
+        /// <param name="filePath"></param>
+        private void ReturnPath(FilePath filePath)
         {
-            if (SelectedPathItem == null) return;
+            if (filePath == null) return;
 
-            var parameters = DialogParametersService.Create(nameof(SelectedPathItem), SelectedPathItem);
+            var parameters = DialogParametersService.Create(nameof(SelectedPathItem), filePath);
             DialogResult result = new DialogResult(ButtonResult.OK, parameters);
 
             RequestClose.Invoke(result);
