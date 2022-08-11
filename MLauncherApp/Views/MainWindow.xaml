@@ -9,6 +9,7 @@
         <TextBox x:Name="MainTextBox" Text="{Binding TextBoxText, UpdateSourceTrigger=PropertyChanged}" Height="24" VerticalContentAlignment="Center" AllowDrop="True">
             <TextBox.InputBindings>
                 <KeyBinding Command="{Binding RunCommand}" Gesture="Enter"/>
+                <KeyBinding Command="{Binding RunParentCommand}" Gesture="CTRL+Enter"/>
             </TextBox.InputBindings>
             <!--イベントをVMに飛ばす方法 https://stackoverflow.com/questions/32669964/where-to-put-events-when-using-mvvm-->
             <i:Interaction.Triggers>

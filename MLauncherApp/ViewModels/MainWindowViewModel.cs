@@ -36,6 +36,7 @@ namespace MLauncherApp.ViewModels
         public DelegateCommand<DragEventArgs> DragEnterCommand { get; }
         public DelegateCommand<DragEventArgs> DropCommand      { get; }
         public DelegateCommand RunCommand { get; }
+        public DelegateCommand RunParentCommand { get; }
 
         public MainWindowViewModel(IMessageService messageService, IRunnerService runnerService, IFilePathRepository filePathRepository, IDialogService dialogService)
         {
@@ -48,7 +49,8 @@ namespace MLauncherApp.ViewModels
 
             DragEnterCommand    = new DelegateCommand<DragEventArgs>(MouseOverEvent);
             DropCommand         = new DelegateCommand<DragEventArgs>(DropEvent);
-            RunCommand = new DelegateCommand(DispatchRunEvent);
+            RunCommand = new DelegateCommand(() => DispatchRunEvent(false));
+            RunParentCommand = new DelegateCommand(() => DispatchRunEvent(true));
         }
 
         private void MouseOverEvent(DragEventArgs e)
@@ -67,7 +69,11 @@ namespace MLauncherApp.ViewModels
             }
         }
 
-        private void DispatchRunEvent()
+        /// <summary>
+        /// テキストボックスに入力した内容を実行する
+        /// </summary>
+        /// <param name="callParent">指定したパスの親のパスを起動するオプション</param>
+        private void DispatchRunEvent(bool parentCall)
         {
             if (TextBoxText == null) return;
             
@@ -91,7 +97,9 @@ namespace MLauncherApp.ViewModels
             bool onlyOnePathHit = matchedPathList.Count == 1;
             if (onlyOnePathHit)
             {
-                _runnerService.Run(matchedPathList[0]);
+                FilePath matchedPath = matchedPathList.First();
+                var targetFilePath = (parentCall) ? matchedPath.ParentPath : matchedPath;
+                _runnerService.Run(targetFilePath);
                 return;
             }
 

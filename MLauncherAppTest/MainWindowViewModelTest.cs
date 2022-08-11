@@ -65,19 +65,33 @@ namespace MLauncherAppTest
             _runnerServiceMoc.Verify(runner => runner.Run(new FilePath(@"C:\Dir\target.txt")));
         }
 
-        //[Fact]
-        //public void 一つしか候補がない状態でCtrlとEnterを同時押しするとそのファイルを開く()
-        //{
-        //    _repositoryMoc.Setup(repo => repo.Search("target")).Returns(new List<FilePath>()
-        //    {
-        //        new FilePath(@"C:\Dir\target.txt"),
-        //    });
+        [Fact]
+        public void ヒットしたパスがファイルパスの時に_CtrlとEnterを同時押しすると親ディレクトリを開く()
+        {
+            _repositoryMoc.Setup(repo => repo.Search("target")).Returns(new List<FilePath>()
+            {
+                new FilePath(@"C:\Dir\target.txt"),
+            });
 
-        //    _vm.TextBoxText = "target";
-        //    _vm.RunCommand.Execute();
+            _vm.TextBoxText = "target";
+            _vm.RunParentCommand.Execute();
 
-        //    _runnerServiceMoc.Verify(runner => runner.Run(new FilePath(@"C:\Dir\target.txt")));
-        //}
+            _runnerServiceMoc.Verify(runner => runner.Run(new FilePath(@"C:\Dir")));
+        }
+
+        [Fact]
+        public void ヒットしたパスがディレクトリパスの時に_CtrlとEnterを同時押しすると親ディレクトリを開く()
+        {
+            _repositoryMoc.Setup(repo => repo.Search("target")).Returns(new List<FilePath>()
+            {
+                new FilePath(@"C:\Dir\SubDir"),
+            });
+
+            _vm.TextBoxText = "target";
+            _vm.RunParentCommand.Execute();
+
+            _runnerServiceMoc.Verify(runner => runner.Run(new FilePath(@"C:\Dir")));
+        }
 
         [Fact]
         public void 複数候補がある時はファイルパスリストウィンドウを開く()

@@ -3,6 +3,7 @@
     public class FilePath
     {
         public string Path { get; }
+        public FilePath ParentPath { get => new FilePath(Directory.GetParent(Path)!.FullName); }
 
         public FilePath(string path)
         {
