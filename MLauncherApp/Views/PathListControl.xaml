@@ -2,20 +2,15 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"
-             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              prism:ViewModelLocator.AutoWireViewModel="True" Loaded="LoadedEvent">
     <Grid>
         <StackPanel>
             <TextBlock Text="複数のパスがヒットしました。選択してください。"/>
             <DataGrid ItemsSource="{Binding PathList, Mode=OneWay}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedPathItem}" x:Name="MainDataGrid">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="PreviewKeyDown">
-                        <prism:InvokeCommandAction Command="{Binding DataGridKeyDownCommand}" TriggerParameterPath="Key"/>
-                    </i:EventTrigger>
-                    <i:EventTrigger EventName="PreviewMouseDoubleClick">
-                        <prism:InvokeCommandAction Command="{Binding DoubleClickCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
+                <DataGrid.InputBindings>
+                    <KeyBinding Command="{Binding RunSelectedItemCommand}" Gesture="Enter"/>
+                    <MouseBinding Command="{Binding RunSelectedItemCommand}" Gesture="LeftDoubleClick"/>
+                </DataGrid.InputBindings>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="パス" Binding="{Binding Path, Mode=OneWay}"/>
                 </DataGrid.Columns>

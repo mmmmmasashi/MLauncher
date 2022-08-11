@@ -25,14 +25,12 @@ namespace MLauncherApp.ViewModels
         public bool IsSelected { get; } = false;
 
         public string Title => "パス選択";
-        public DelegateCommand<Key?> DataGridKeyDownCommand { get; }
+        public DelegateCommand RunSelectedItemCommand { get; }
         public DelegateCommand LoadedCommand { get; }
-        public DelegateCommand DoubleClickCommand { get; }
 
         public PathListControlViewModel()
         {
-            DoubleClickCommand = new DelegateCommand(ReturnSelectedItem);
-            DataGridKeyDownCommand = new DelegateCommand<Key?>(DataGridKeyEvent);
+            RunSelectedItemCommand = new DelegateCommand(ReturnSelectedItem);
             LoadedCommand = new DelegateCommand(() =>
             {
                 if (PathList.Count > 0)
@@ -42,16 +40,10 @@ namespace MLauncherApp.ViewModels
             });
         }
 
-        private void DataGridKeyEvent(Key? key)
-        {
-            if (key == null) return;
-            if (key != Key.Enter) return;
-
-            ReturnSelectedItem();
-        }
-
         private void ReturnSelectedItem()
         {
+            if (SelectedPathItem == null) return;
+
             var parameters = DialogParametersService.Create(nameof(SelectedPathItem), SelectedPathItem);
             DialogResult result = new DialogResult(ButtonResult.OK, parameters);
 
