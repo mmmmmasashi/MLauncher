@@ -7,14 +7,14 @@
     <Grid>
         <StackPanel>
             <TextBlock Text="複数のパスがヒットしました。選択してください。"/>
-            <DataGrid ItemsSource="{Binding PathList}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedPathItem}" x:Name="MainDataGrid">
+            <DataGrid ItemsSource="{Binding PathList, Mode=OneWay}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedPathItem}" x:Name="MainDataGrid">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="PreviewKeyDown">
                         <prism:InvokeCommandAction Command="{Binding DataGridKeyDownCommand}" TriggerParameterPath="Key"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="パス" Binding="{Binding Path}"/>
+                    <DataGridTextColumn Header="パス" Binding="{Binding Path, Mode=OneWay}"/>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>
