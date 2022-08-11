@@ -32,7 +32,7 @@ namespace MLauncherApp.ViewModels
             get { return _textBoxTest; }
             set { SetProperty(ref _textBoxTest, value); }
         }
-
+        public PathProvideService PathProvider { get; }
         public DelegateCommand<DragEventArgs> DragEnterCommand { get; }
         public DelegateCommand<DragEventArgs> DropCommand      { get; }
         public DelegateCommand RunCommand { get; }
@@ -40,6 +40,8 @@ namespace MLauncherApp.ViewModels
 
         public MainWindowViewModel(IMessageService messageService, IRunnerService runnerService, IFilePathRepository filePathRepository, IDialogService dialogService)
         {
+            PathProvider = new PathProvideService();
+
             _dialogService = dialogService;
             _messageService = messageService;
             _runnerService  = runnerService;

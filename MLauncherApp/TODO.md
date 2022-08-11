@@ -4,3 +4,5 @@
 - オートコンプリートが欲しい
     - [参考になりそう stackoverflow](https://stackoverflow.com/questions/950770/autocomplete-textbox-in-wpf)
     - [このOSSはどうか](https://github.com/quicoli/WPF-AutoComplete-TextBox)
+
+- 起動直後にFocus当たらなくなってしまった？
