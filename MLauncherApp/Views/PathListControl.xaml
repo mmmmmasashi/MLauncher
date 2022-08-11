@@ -12,6 +12,9 @@
                     <i:EventTrigger EventName="PreviewKeyDown">
                         <prism:InvokeCommandAction Command="{Binding DataGridKeyDownCommand}" TriggerParameterPath="Key"/>
                     </i:EventTrigger>
+                    <i:EventTrigger EventName="PreviewMouseDoubleClick">
+                        <prism:InvokeCommandAction Command="{Binding DoubleClickCommand}"/>
+                    </i:EventTrigger>
                 </i:Interaction.Triggers>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="パス" Binding="{Binding Path, Mode=OneWay}"/>

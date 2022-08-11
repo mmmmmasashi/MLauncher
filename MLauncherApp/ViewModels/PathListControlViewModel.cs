@@ -26,9 +26,11 @@ namespace MLauncherApp.ViewModels
         public string Title => "パス選択";
         public DelegateCommand<Key?> DataGridKeyDownCommand { get; }
         public DelegateCommand LoadedCommand { get; }
+        public DelegateCommand DoubleClickCommand { get; }
 
         public PathListControlViewModel()
         {
+            DoubleClickCommand = new DelegateCommand(ReturnSelectedItem);
             DataGridKeyDownCommand = new DelegateCommand<Key?>(DataGridKeyEvent);
             LoadedCommand = new DelegateCommand(() =>
             {
@@ -44,6 +46,11 @@ namespace MLauncherApp.ViewModels
             if (key == null) return;
             if (key != Key.Enter) return;
 
+            ReturnSelectedItem();
+        }
+
+        private void ReturnSelectedItem()
+        {
             //TODO:以下メソッドとかにまとめたい？
             DialogParameters dialogParameters = new DialogParameters();
             dialogParameters.Add(nameof(SelectedPathItem), SelectedPathItem);
