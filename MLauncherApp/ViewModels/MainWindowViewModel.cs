@@ -97,10 +97,9 @@ namespace MLauncherApp.ViewModels
                 _runnerService.Run(matchedPathList[0]);
                 return;
             }
-            
+
             //複数ヒット
-            var parameters = new DialogParameters();
-            parameters.Add(nameof(PathListControlViewModel.PathList), matchedPathList);
+            var parameters = DialogParametersService.Create(nameof(PathListControlViewModel.PathList), matchedPathList);
             _dialogService.ShowDialog(nameof(PathListControl), parameters, (result) =>
             {
                 if (result.Result == ButtonResult.OK)
