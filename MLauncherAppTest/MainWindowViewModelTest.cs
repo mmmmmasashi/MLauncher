@@ -65,6 +65,20 @@ namespace MLauncherAppTest
             _runnerServiceMoc.Verify(runner => runner.Run(new FilePath(@"C:\Dir\target.txt")));
         }
 
+        //[Fact]
+        //public void 一つしか候補がない状態でCtrlとEnterを同時押しするとそのファイルを開く()
+        //{
+        //    _repositoryMoc.Setup(repo => repo.Search("target")).Returns(new List<FilePath>()
+        //    {
+        //        new FilePath(@"C:\Dir\target.txt"),
+        //    });
+
+        //    _vm.TextBoxText = "target";
+        //    _vm.KeyDownCommand.Execute(Key.Enter);
+
+        //    _runnerServiceMoc.Verify(runner => runner.Run(new FilePath(@"C:\Dir\target.txt")));
+        //}
+
         [Fact]
         public void 複数候補がある時はファイルパスリストウィンドウを開く()
         {

@@ -68,41 +68,47 @@ namespace MLauncherApp.ViewModels
         }
         private void KeyDownEvent(Key? key)
         {
-            if (key == null) return;
-            if (key == Key.Return)
-            {
-                string userInput = TextBoxText;
-                if (userInput == null) return;
-                if (userInput == "/list")
-                {
-                    _runnerService.Run(_repository.FilePath);
-                    return;
-                }
+            string userInput = TextBoxText;
 
-                List<FilePath> matchedPathList = _repository.Search(userInput);
-                if (matchedPathList.Count == 0)
-                {
-                    _messageService.ShowMessageBox("一致するパスが存在しません");
-                    return;
-                }
-                else if (matchedPathList.Count == 1)
-                {
-                    _runnerService.Run(matchedPathList[0]);
-                }
-                else
-                {
-                    var parameters = new DialogParameters();
-                    parameters.Add(nameof(PathListControlViewModel.PathList), matchedPathList);
-                    _dialogService.ShowDialog(nameof(PathListControl), parameters, (result) =>
-                    {
-                        if (result.Result == ButtonResult.OK)
-                        {
-                            var filePathSelected = result.Parameters.GetValue<FilePath>(nameof(PathListControlViewModel.SelectedPathItem));
-                            _runnerService.Run(filePathSelected);
-                        }
-                    });
-                }
+            if (userInput == null) return;
+            if (key == null) return;
+            if (key != Key.Enter) return;
+            
+            //特殊コマンド
+            if (userInput == "/list")
+            {
+                _runnerService.Run(_repository.FilePath);
+                return;
             }
+
+            //通常ケース
+
+            List<FilePath> matchedPathList = _repository.Search(userInput);
+            bool noHit = matchedPathList.Count == 0;
+            if (noHit)
+            {
+                _messageService.ShowMessageBox("一致するパスが存在しません");
+                return;
+            }
+
+            bool onlyOnePathHit = matchedPathList.Count == 1;
+            if (onlyOnePathHit)
+            {
+                _runnerService.Run(matchedPathList[0]);
+                return;
+            }
+            
+            //複数ヒット
+            var parameters = new DialogParameters();
+            parameters.Add(nameof(PathListControlViewModel.PathList), matchedPathList);
+            _dialogService.ShowDialog(nameof(PathListControl), parameters, (result) =>
+            {
+                if (result.Result == ButtonResult.OK)
+                {
+                    var filePathSelected = result.Parameters.GetValue<FilePath>(nameof(PathListControlViewModel.SelectedPathItem));
+                    _runnerService.Run(filePathSelected);
+                }
+            });
         }
     }
 }
