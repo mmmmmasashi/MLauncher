@@ -1,4 +1,5 @@
-﻿using LauncherModelLib;
+﻿using AutoCompleteTextBox.Editors;
+using LauncherModelLib;
 using MLauncherApp.Service;
 using MLauncherApp.Views;
 using Prism.Commands;
@@ -32,15 +33,18 @@ namespace MLauncherApp.ViewModels
             get { return _textBoxTest; }
             set { SetProperty(ref _textBoxTest, value); }
         }
-        public PathProvideService PathProvider { get; }
+        public ISuggestionProvider PathSuggestionProvider { get; }
         public DelegateCommand<DragEventArgs> DragEnterCommand { get; }
         public DelegateCommand<DragEventArgs> DropCommand      { get; }
         public DelegateCommand RunCommand { get; }
         public DelegateCommand RunParentCommand { get; }
 
-        public MainWindowViewModel(IMessageService messageService, IRunnerService runnerService, IFilePathRepository filePathRepository, IDialogService dialogService)
+        public MainWindowViewModel(
+            IMessageService messageService, IRunnerService runnerService, 
+            IFilePathRepository filePathRepository, IDialogService dialogService,
+            ISuggestionProvider suggestionProvider)
         {
-            PathProvider = new PathProvideService();
+            PathSuggestionProvider = suggestionProvider;
 
             _dialogService = dialogService;
             _messageService = messageService;

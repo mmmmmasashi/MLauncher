@@ -9,7 +9,7 @@
     <Grid>
         <editors:AutoCompleteTextBox x:Name="MainTextBox" Text="{Binding TextBoxText, UpdateSourceTrigger=PropertyChanged}"
                                      Height="24" VerticalContentAlignment="Center" AllowDrop="True"
-                                     Provider="{Binding PathProvider}"
+                                     Provider="{Binding PathSuggestionProvider}"
                                      Watermark="検索文字列を入力して下さい">
             <editors:AutoCompleteTextBox.LoadingContent>
                 <TextBlock
