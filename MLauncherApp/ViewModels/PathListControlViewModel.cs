@@ -1,5 +1,6 @@
 ﻿using LauncherModelLib;
 using MLauncherApp.Service;
+using MLauncherIF;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
