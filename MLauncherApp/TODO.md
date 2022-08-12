@@ -1,5 +1,8 @@
 ﻿# TODO
-- Windowのスタイルがダサい
+- 候補検索
+    - 半角スペースでのand検索
+
+- - Windowのスタイルがダサい
 - 一度のEnter押すだけでキー入力が複数回きている？
 - オートコンプリートが欲しい
     - [参考になりそう stackoverflow](https://stackoverflow.com/questions/950770/autocomplete-textbox-in-wpf)

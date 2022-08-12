@@ -1,4 +1,5 @@
 ﻿using LauncherModelLib;
+using MLauncherIF;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,12 +11,19 @@ namespace LauncherModelLibTest
 {
     public class PathProvideServiceTest
     {
+        IPathSuggestionService _service;
+
+        public PathProvideServiceTest()
+        {
+            _service = new PathProvideService();
+        }
+
         [Fact]
         public void ファイルパス候補リストアップの疎通確認_これからリッチにする予定()
         {
-            PathProvideService service = new PathProvideService();
-            var suggestedCollection = service.GetSuggestions("sample");
+            var suggestedCollection = _service.GetSuggestions("sample");
             Assert.NotNull(suggestedCollection);
         }
+
     }
 }
