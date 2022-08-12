@@ -7,7 +7,10 @@ using System.Threading.Tasks;
 namespace MLauncherIF
 {
     /// <summary>
-    /// IFilePathRepositoryがFilePathに依存しているのでModelのライブラリからここに移動してきた。
+    /// ViewがFilePath情報を求めているわけだから、ここでもいいのか？
+    /// 
+    /// <経緯>
+    /// Modelに置いてあったIFilePathRepositoryがFilePathに依存しているのでModelのライブラリからここに移動してきた。
     /// ただ、個々が適切な置き場ではない気がしている。
     /// リファクタリングの途中過程として移動
     /// </summary>
@@ -26,7 +29,6 @@ namespace MLauncherIF
             return obj is FilePath path &&
                    Path == path.Path;
         }
-
 
         public override int GetHashCode()
         {
