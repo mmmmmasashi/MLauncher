@@ -33,7 +33,7 @@ namespace MLauncherApp.ViewModels
             get { return _textBoxTest; }
             set { SetProperty(ref _textBoxTest, value); }
         }
-        public ISuggestionProvider PathSuggestionProvider { get; }
+        public IPathSuggestionService PathSuggestionProvider { get; }
         public DelegateCommand<DragEventArgs> DragEnterCommand { get; }
         public DelegateCommand<DragEventArgs> DropCommand      { get; }
         public DelegateCommand RunCommand { get; }
@@ -42,7 +42,7 @@ namespace MLauncherApp.ViewModels
         public MainWindowViewModel(
             IMessageService messageService, IRunnerService runnerService, 
             IFilePathRepository filePathRepository, IDialogService dialogService,
-            ISuggestionProvider suggestionProvider)
+            IPathSuggestionService suggestionProvider)
         {
             PathSuggestionProvider = suggestionProvider;
 

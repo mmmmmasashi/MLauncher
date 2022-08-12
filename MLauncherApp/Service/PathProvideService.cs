@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MLauncherApp.Service
 {
-    public class PathProvideService : ISuggestionProvider
+    public class PathProvideService : IPathSuggestionService
     {
         private readonly List<string> numbers = new();
 

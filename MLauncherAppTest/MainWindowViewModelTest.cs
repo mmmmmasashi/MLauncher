@@ -1,3 +1,4 @@
+using AutoCompleteTextBox.Editors;
 using LauncherModelLib;
 using MLauncherApp.Service;
 using MLauncherApp.ViewModels;
@@ -15,6 +16,8 @@ namespace MLauncherAppTest
         private Mock<IMessageService> _serviceMoc;
         private Mock<IRunnerService> _runnerServiceMoc;
         private Mock<IFilePathRepository> _repositoryMoc;
+        private Mock<IPathSuggestionService> _suggestionService;
+
         private MainWindowViewModel _vm;
 
         public MainWindowViewModelTest()
@@ -23,6 +26,7 @@ namespace MLauncherAppTest
             _serviceMoc = new Mock<IMessageService>();
             _runnerServiceMoc = new Mock<IRunnerService>();
             _repositoryMoc = new Mock<IFilePathRepository>();
+            _suggestionService = new Mock<IPathSuggestionService>();
 
             //Setupで上書きしなければ、何も空のリポジトリとしておく
             _repositoryMoc.Setup(repo => repo.Search(It.IsAny<string>())).Returns(new List<FilePath>());
@@ -30,7 +34,7 @@ namespace MLauncherAppTest
             //listコマンド用にパスを用意しておく
             _repositoryMoc.Setup(repo => repo.FilePath).Returns(new FilePath("path_list.txt"));
 
-            _vm = new MainWindowViewModel(_serviceMoc.Object, _runnerServiceMoc.Object, _repositoryMoc.Object, _dialogServiceMoc.Object);
+            _vm = new MainWindowViewModel(_serviceMoc.Object, _runnerServiceMoc.Object, _repositoryMoc.Object, _dialogServiceMoc.Object, _suggestionService.Object);
         }
 
         [Fact]

@@ -21,7 +21,7 @@ namespace MLauncherApp
         {
             const string RegisteredPathTextFile = "path_list.txt";//TODO:可変にする。今は固定でexeの隣に保存している
             containerRegistry.RegisterInstance<IFilePathRepository>(new FilePathRepository(RegisteredPathTextFile));
-            containerRegistry.Register<ISuggestionProvider>((() => new PathProvideService()));
+            containerRegistry.Register<IPathSuggestionService>((() => new PathProvideService()));
             containerRegistry.RegisterSingleton<IMessageService, MessageService>();
             containerRegistry.RegisterSingleton<IRunnerService, RunnerService>();
 
