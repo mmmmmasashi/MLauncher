@@ -2,6 +2,7 @@
 using LauncherModelLib;
 using MLauncherApp.Service;
 using MLauncherApp.Views;
+using MLauncherIF;
 using Prism.Ioc;
 using System.Windows;
 

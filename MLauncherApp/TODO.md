@@ -6,3 +6,4 @@
     - [このOSSはどうか](https://github.com/quicoli/WPF-AutoComplete-TextBox)
 
 - 起動直後にFocus当たらなくなってしまった？
+- MLauncher --> ModelLibへの依存を切れたりする？

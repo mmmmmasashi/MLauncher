@@ -1,4 +1,4 @@
-﻿using AutoCompleteTextBox.Editors;
+﻿using MLauncherIF;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MLauncherApp.Service
+namespace LauncherModelLib
 {
     public class PathProvideService : IPathSuggestionService
     {
@@ -25,5 +25,4 @@ namespace MLauncherApp.Service
             return numbers.Where(x => x.Contains(filter));
         }
     }
-
 }
