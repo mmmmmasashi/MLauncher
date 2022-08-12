@@ -33,7 +33,7 @@ namespace MLauncherAppTest
             _repositoryMoc.Setup(repo => repo.Search(It.IsAny<string>())).Returns(new List<FilePath>());
 
             //listコマンド用にパスを用意しておく
-            _repositoryMoc.Setup(repo => repo.FilePath).Returns(new FilePath("path_list.txt"));
+            _repositoryMoc.Setup(repo => repo.ListCommandFile).Returns(new FilePath("path_list.txt"));
 
             _vm = new MainWindowViewModel(_serviceMoc.Object, _runnerServiceMoc.Object, _repositoryMoc.Object, _dialogServiceMoc.Object, _suggestionService.Object);
         }
@@ -52,7 +52,7 @@ namespace MLauncherAppTest
         [Fact]
         public void スラッシュlistで全登録済パスを記録したテキストファイルを開く()
         {
-            _repositoryMoc.Setup(repo => repo.FilePath).Returns(new FilePath("path_list.txt"));
+            _repositoryMoc.Setup(repo => repo.ListCommandFile).Returns(new FilePath("path_list.txt"));
 
             _vm.TextBoxText = "/list";
             _vm.RunCommand.Execute();

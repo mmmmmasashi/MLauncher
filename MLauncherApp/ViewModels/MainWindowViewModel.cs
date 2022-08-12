@@ -98,7 +98,7 @@ namespace MLauncherApp.ViewModels
             //特殊コマンド
             if (TextBoxText == "/list")
             {
-                _runnerService.Run(_repository.FilePath);
+                _runnerService.Run(_repository.ListCommandFile);
                 return;
             }
 

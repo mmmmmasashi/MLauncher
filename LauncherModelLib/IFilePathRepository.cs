@@ -8,8 +8,7 @@ namespace LauncherModelLib
 {
     public interface IFilePathRepository
     {
-        FilePath FilePath { get; }
-
+        FilePath ListCommandFile { get; }
         void Save(FilePath filePath);
         List<FilePath> Search(string text);
     }
