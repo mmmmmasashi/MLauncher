@@ -6,7 +6,8 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         prism:ViewModelLocator.AutoWireViewModel="True"
         xmlns:editors="http://wpfcontrols.com/"
-        Title="{Binding Title}"  Width="500" SizeToContent="Height" ResizeMode="NoResize" TitleCharacterCasing="Normal">
+        Title="{Binding Title}"  Width="500" SizeToContent="Height" ResizeMode="NoResize" TitleCharacterCasing="Normal"
+        FocusManager.FocusedElement="{Binding ElementName=MainTextBox}">
     <Grid>
         <editors:AutoCompleteTextBox x:Name="MainTextBox" Text="{Binding TextBoxText, UpdateSourceTrigger=PropertyChanged}"
                                      Height="24" VerticalContentAlignment="Center" AllowDrop="True"
