@@ -15,5 +15,9 @@ namespace MLauncherApp.Views
             InitializeComponent();
         }
 
+        private void ConfirmControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            OKButton.Focus();
+        }
     }
 }
