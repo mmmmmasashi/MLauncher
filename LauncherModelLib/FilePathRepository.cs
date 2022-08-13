@@ -14,6 +14,8 @@ namespace LauncherModelLib
 
         public FilePath ListCommandFile => new FilePath(_savedFilePath);
 
+        public Action? UpdatedCallBack { get; internal set; }//保持しているファイルパス一覧が更新されたときに、利用者に通知する
+
         public FilePathRepository(string savedFilePath)
         {
             this._savedFilePath = savedFilePath;
@@ -26,6 +28,11 @@ namespace LauncherModelLib
             
             _filePathList.Add(filePath);
             File.AppendAllText(_savedFilePath, filePath.Path + "\r\n");
+
+            if(UpdatedCallBack != null)
+            {
+                UpdatedCallBack();
+            }
         }
 
         public List<FilePath> Load()
