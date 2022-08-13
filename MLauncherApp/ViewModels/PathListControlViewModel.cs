@@ -38,7 +38,9 @@ namespace MLauncherApp.ViewModels
 
         public PathListControlViewModel(IFilePathRepository filePathRepository)
         {
+            filePathRepository.UpdateEvent += ReloadFilePath;
             _filePathRepository = filePathRepository;
+
 
             RunParentOfSelectedItemCommand = new DelegateCommand(() =>
             {
@@ -63,6 +65,17 @@ namespace MLauncherApp.ViewModels
             DeletePathCommand = new DelegateCommand(RequestDelete);
 
             CancelCommand = new DelegateCommand(() => RequestClose.Invoke(new DialogResult(ButtonResult.Cancel)));
+        }
+
+        private void ReloadFilePath(object sender, EventArgs e)
+        {
+            var masterFilePathList = _filePathRepository.Load();
+
+            //RepositoryとFilterキーワードから再生成する方法も考えたが、
+            //全候補の表示で本Viewが呼び出されたときに困るため、マスターとの積集合を取ることにした
+            var newFiles = masterFilePathList.Intersect(PathList).ToList();
+            PathList.Clear();
+            PathList.AddRange(newFiles);
         }
 
         private void RequestDelete()

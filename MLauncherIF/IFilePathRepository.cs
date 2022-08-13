@@ -11,6 +11,6 @@ namespace MLauncherIF
         void Save(FilePath filePath);
         List<FilePath> Load();
         void Delete(FilePath filePath);
-        public Action? UpdatedCallBack { get; set; }
+        public EventHandler UpdateEvent { get; set; }//保持しているファイルパス一覧が更新されたときに、利用者に通知する
     }
 }

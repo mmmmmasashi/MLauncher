@@ -13,7 +13,6 @@ namespace LauncherModelLib
         private List<FilePath> _filePathList = new List<FilePath>();
 
         public EventHandler UpdateEvent { get; set; }//保持しているファイルパス一覧が更新されたときに、利用者に通知する
-        public Action? UpdatedCallBack { get; set; }
 
         public FilePathRepository(string savedFilePath)
         {
@@ -24,15 +23,13 @@ namespace LauncherModelLib
         public void Save(FilePath filePath)
         {
             if (_filePathList.Contains(filePath)) return;
-            
+
             _filePathList.Add(filePath);
             SaveAllImp();
 
-            if(UpdatedCallBack != null)
-            {
-                UpdatedCallBack();
-            }
+            NotifyUpdated();
         }
+
 
         public List<FilePath> Load()
         {
@@ -45,15 +42,20 @@ namespace LauncherModelLib
         {
             _filePathList.Remove(filePath);
             SaveAllImp();
-            if (UpdatedCallBack != null)
-            {
-                UpdatedCallBack();
-            }
+            NotifyUpdated();
         }
 
         private void SaveAllImp()
         {
             File.WriteAllLines(_savedFilePath, _filePathList.Select(filePath => filePath.Path), Encoding.UTF8);
+        }
+
+        private void NotifyUpdated()
+        {
+            if (UpdateEvent != null)
+            {
+                UpdateEvent(this, new EventArgs());
+            }
         }
     }
 }

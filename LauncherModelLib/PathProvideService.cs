@@ -17,8 +17,13 @@ namespace LauncherModelLib
         public PathProvideService(FilePathRepository repository)
         {
             this._repository = repository;
-            _repository.UpdatedCallBack += ReloadCandidates;
+            _repository.UpdateEvent += ReloadCandidates;
             _masterCandidates = _repository.Load();
+        }
+
+        private void ReloadCandidates(object? sender, EventArgs e)
+        {
+            ReloadCandidates();
         }
 
         /// <summary>
