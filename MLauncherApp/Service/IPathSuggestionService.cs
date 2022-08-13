@@ -1,16 +1,13 @@
 ﻿using AutoCompleteTextBox.Editors;
+using LauncherModelLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MLauncherIF
+namespace MLauncherApp.Service
 {
-    //MLauncherIFは、循環参照解消用のInterfaceのプロジェクト。
-    //MLauncherがもとめるIFを定義するライブラリ。
-    //Interface以外は置かないこと
-
     public interface IPathSuggestionService : ISuggestionProvider
     {
         List<FilePath> GetPathSuggestions(string filter);

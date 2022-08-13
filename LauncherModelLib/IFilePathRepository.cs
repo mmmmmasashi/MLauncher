@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MLauncherIF
+namespace LauncherModelLib
 {
     public interface IFilePathRepository
     {

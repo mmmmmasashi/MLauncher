@@ -4,16 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MLauncherIF
+namespace LauncherModelLib
 {
-    /// <summary>
-    /// ViewがFilePath情報を求めているわけだから、ここでもいいのか？
-    /// 
-    /// <経緯>
-    /// Modelに置いてあったIFilePathRepositoryがFilePathに依存しているのでModelのライブラリからここに移動してきた。
-    /// ただ、個々が適切な置き場ではない気がしている。
-    /// リファクタリングの途中過程として移動
-    /// </summary>
     public class FilePath
     {
         public string Path { get; }

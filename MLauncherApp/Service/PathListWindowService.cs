@@ -1,6 +1,6 @@
-﻿using MLauncherApp.ViewModels;
+﻿using LauncherModelLib;
+using MLauncherApp.ViewModels;
 using MLauncherApp.Views;
-using MLauncherIF;
 using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;

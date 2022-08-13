@@ -2,7 +2,6 @@ using AutoCompleteTextBox.Editors;
 using LauncherModelLib;
 using MLauncherApp.Service;
 using MLauncherApp.ViewModels;
-using MLauncherIF;
 using Moq;
 using Prism.Services.Dialogs;
 using System;

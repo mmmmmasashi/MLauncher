@@ -1,4 +1,4 @@
-﻿using MLauncherIF;
+﻿using LauncherModelLib;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,11 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LauncherModelLib
+namespace MLauncherApp.Service
 {
     public class PathProvideService : IPathSuggestionService
     {
-        readonly string[] Separators = new string[] { " ", "　"};
+        readonly string[] Separators = new string[] { " ", "　" };
         readonly private FilePathRepository _repository;
         private IEnumerable<FilePath> _masterCandidates;
 
@@ -36,7 +36,7 @@ namespace LauncherModelLib
         {
             IEnumerable<FilePath> candidates = new List<FilePath>(_masterCandidates);
             var keywords = filter.Split(Separators, StringSplitOptions.None);
-            
+
             foreach (var keyword in keywords)
             {
                 candidates = candidates.Where(candidate => candidate.Contains(keyword));
