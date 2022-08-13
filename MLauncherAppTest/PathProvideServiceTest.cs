@@ -10,7 +10,7 @@ namespace MLauncherAppTest
 {
     public class PathProvideServiceTest
     {
-        IPathSuggestionService _service;
+        IPathCandidateFilter _service;
 
         public PathProvideServiceTest()
         {
@@ -27,13 +27,13 @@ namespace MLauncherAppTest
             repository.Save(new FilePath(@"C:\directory2\filepath1.txt"));
             repository.Save(new FilePath(@"C:\directory2\filepath2.txt"));
 
-            _service = new PathProvideService(repository);
+            _service = new PathCandidateFilter(repository);
         }
 
         [Fact]
         public void 文字列で完全一致検索ができて_一致したファイルパスを返す()
         {
-            var matchedPath = _service.GetPathSuggestions("filepath3");
+            var matchedPath = _service.Filter("filepath3");
 
             Assert.Single(matchedPath);
             Assert.Equal(new FilePath(@"C:\directory\filepath3.txt"), matchedPath.First());
@@ -42,7 +42,7 @@ namespace MLauncherAppTest
         [Fact]
         public void 半角スペースで区切ってAND検索ができる()
         {
-            var matchedPath = _service.GetPathSuggestions("directory2 filepath1");
+            var matchedPath = _service.Filter("directory2 filepath1");
             Assert.Single(matchedPath);
             Assert.Equal(new FilePath(@"C:\directory2\filepath1.txt"), matchedPath.First());
         }
@@ -50,7 +50,7 @@ namespace MLauncherAppTest
         [Fact]
         public void 全角スペースで区切ってAND検索ができる()
         {
-            var matchedPath = _service.GetPathSuggestions("directory2　filepath1");
+            var matchedPath = _service.Filter("directory2　filepath1");
             Assert.Single(matchedPath);
             Assert.Equal(new FilePath(@"C:\directory2\filepath1.txt"), matchedPath.First());
         }
@@ -58,7 +58,7 @@ namespace MLauncherAppTest
         [Fact]
         public void 存在しない場合は空リスト()
         {
-            var result = _service.GetPathSuggestions("not_existing_text");
+            var result = _service.Filter("not_existing_text");
             Assert.Empty(result);
         }
 
@@ -66,10 +66,10 @@ namespace MLauncherAppTest
         public void 不具合検査_検索するとヒットした候補だけに候補が減ってしまう問題()
         {
             //一度検索すると
-            var matchedPath = _service.GetPathSuggestions("filepath1");
+            var matchedPath = _service.Filter("filepath1");
 
             //それ以外の候補がヒットしなくなっていた
-            Assert.NotEmpty(_service.GetPathSuggestions("filepath2"));
+            Assert.NotEmpty(_service.Filter("filepath2"));
         }
     }
 }

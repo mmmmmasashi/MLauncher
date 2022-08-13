@@ -18,7 +18,7 @@ namespace MLauncherApp.ViewModels
         private IDialogService _dialogService;
         private IMessageService _messageService;
         private IRunnerService _runnerService;
-        private IPathSuggestionService _pathSuggestionService;
+        private IPathCandidateFilter _pathCandidateFilter;
         private IFilePathRepository _repository;
         private PathListWindowService _pathListWindowService;
 
@@ -35,7 +35,7 @@ namespace MLauncherApp.ViewModels
             get { return _textBoxTest; }
             set { SetProperty(ref _textBoxTest, value); }
         }
-        public ISuggestionProvider PathSuggestionProvider { get; }
+        public ISuggestionProvider AutoCompleteProvider { get; }
         public DelegateCommand<DragEventArgs> DragEnterCommand { get; }
         public DelegateCommand<DragEventArgs> DropCommand      { get; }
         public DelegateCommand RunCommand { get; }
@@ -44,10 +44,10 @@ namespace MLauncherApp.ViewModels
         public MainWindowViewModel(
             IMessageService messageService, IRunnerService runnerService, 
             IFilePathRepository filePathRepository, IDialogService dialogService,
-            IPathSuggestionService pathSuggestionProvider)
+            IPathCandidateFilter pathCandidateFilter)
         {
-            _pathSuggestionService = pathSuggestionProvider;
-            PathSuggestionProvider = new PathSuggestionProviderForView(pathSuggestionProvider);
+            _pathCandidateFilter = pathCandidateFilter;
+            AutoCompleteProvider = new AutoCompleteProvider(pathCandidateFilter);
 
             _dialogService = dialogService;
             _messageService = messageService;
@@ -106,7 +106,7 @@ namespace MLauncherApp.ViewModels
             }
 
             //ヒットなし
-            var matchedPathList = _pathSuggestionService.GetPathSuggestions(TextBoxText);
+            var matchedPathList = _pathCandidateFilter.Filter(TextBoxText);
             bool noHit = matchedPathList.Count == 0;
             if (noHit)
             {

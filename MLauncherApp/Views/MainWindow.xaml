@@ -11,7 +11,7 @@
     <Grid>
         <editors:AutoCompleteTextBox x:Name="MainTextBox" Text="{Binding TextBoxText, UpdateSourceTrigger=PropertyChanged}"
                                      Height="24" VerticalContentAlignment="Center" AllowDrop="True"
-                                     Provider="{Binding PathSuggestionProvider}"
+                                     Provider="{Binding AutoCompleteProvider}"
                                      Watermark="検索文字列を入力して下さい">
             <editors:AutoCompleteTextBox.LoadingContent>
                 <TextBlock

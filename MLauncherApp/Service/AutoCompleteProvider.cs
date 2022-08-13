@@ -9,18 +9,18 @@ using System.Threading.Tasks;
 
 namespace MLauncherApp.Service
 {
-    internal class PathSuggestionProviderForView : ISuggestionProvider
+    internal class AutoCompleteProvider : ISuggestionProvider
     {
-        private IPathSuggestionService pathSuggestionProvider;
+        private IPathCandidateFilter pathSuggestionProvider;
 
-        public PathSuggestionProviderForView(IPathSuggestionService pathSuggestionProvider)
+        public AutoCompleteProvider(IPathCandidateFilter pathSuggestionProvider)
         {
             this.pathSuggestionProvider = pathSuggestionProvider;
         }
 
         public IEnumerable GetSuggestions(string filter)
         {
-            return pathSuggestionProvider.GetPathSuggestions(filter).Select(path => path.Path);
+            return pathSuggestionProvider.Filter(filter).Select(path => path.Path);
         }
     }
 }

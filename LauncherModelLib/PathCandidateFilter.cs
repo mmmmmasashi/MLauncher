@@ -6,22 +6,17 @@ using System.Threading.Tasks;
 
 namespace LauncherModelLib
 {
-    public class PathProvideService : IPathSuggestionService
+    public class PathCandidateFilter : IPathCandidateFilter
     {
         readonly string[] Separators = new string[] { " ", "　" };
         readonly private FilePathRepository _repository;
         private IEnumerable<FilePath> _masterCandidates;
 
-        public PathProvideService(FilePathRepository repository)
+        public PathCandidateFilter(FilePathRepository repository)
         {
             this._repository = repository;
             _repository.UpdateEvent += ReloadCandidates;
             _masterCandidates = _repository.Load();
-        }
-
-        private void ReloadCandidates(object? sender, EventArgs e)
-        {
-            ReloadCandidates();
         }
 
         /// <summary>
@@ -30,10 +25,10 @@ namespace LauncherModelLib
         /// 詳細仕様↓
         /// ・半角スペースで分割してAND検索ができる
         /// </summary>
-        public List<FilePath> GetPathSuggestions(string filter)
+        public List<FilePath> Filter(string query)
         {
             IEnumerable<FilePath> candidates = new List<FilePath>(_masterCandidates);
-            var keywords = filter.Split(Separators, StringSplitOptions.None);
+            var keywords = query.Split(Separators, StringSplitOptions.None);
 
             foreach (var keyword in keywords)
             {
@@ -42,9 +37,10 @@ namespace LauncherModelLib
             return candidates.ToList();
         }
 
-        private void ReloadCandidates()
+        private void ReloadCandidates(object? sender, EventArgs e)
         {
             _masterCandidates = _repository.Load();
         }
+
     }
 }

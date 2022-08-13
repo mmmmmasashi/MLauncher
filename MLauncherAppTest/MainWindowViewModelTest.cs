@@ -16,7 +16,7 @@ namespace MLauncherAppTest
         private Mock<IMessageService> _serviceMoc;
         private Mock<IRunnerService> _runnerServiceMoc;
         private Mock<IFilePathRepository> _repositoryMoc;
-        private Mock<IPathSuggestionService> _suggestionService;
+        private Mock<IPathCandidateFilter> _suggestionService;
 
         private MainWindowViewModel _vm;
 
@@ -26,11 +26,11 @@ namespace MLauncherAppTest
             _serviceMoc = new Mock<IMessageService>();
             _runnerServiceMoc = new Mock<IRunnerService>();
             _repositoryMoc = new Mock<IFilePathRepository>();
-            _suggestionService = new Mock<IPathSuggestionService>();
+            _suggestionService = new Mock<IPathCandidateFilter>();
 
             //Setupで上書きしなければ、何も空のリポジトリとしておく
             _repositoryMoc.Setup(repo => repo.Load()).Returns(new List<FilePath>());
-            _suggestionService.Setup(service => service.GetPathSuggestions(It.IsAny<string>())).Returns(new List<FilePath>());
+            _suggestionService.Setup(service => service.Filter(It.IsAny<string>())).Returns(new List<FilePath>());
 
             _vm = new MainWindowViewModel(_serviceMoc.Object, _runnerServiceMoc.Object, _repositoryMoc.Object, _dialogServiceMoc.Object, _suggestionService.Object);
         }
@@ -38,7 +38,7 @@ namespace MLauncherAppTest
         [Fact]
         public void リストに存在しない名前を検索した時_存在しませんとエラーメッセージが出る()
         {
-            _suggestionService.Setup(suggestion => suggestion.GetPathSuggestions("not_exist_name")).Returns(new List<FilePath>());
+            _suggestionService.Setup(suggestion => suggestion.Filter("not_exist_name")).Returns(new List<FilePath>());
 
             _vm.TextBoxText = "not_exist_name";
             _vm.RunCommand.Execute();
@@ -49,7 +49,7 @@ namespace MLauncherAppTest
         [Fact]
         public void 一つしか候補がない状態でEnterを押すとそのファイルを開く()
         {
-            _suggestionService.Setup(suggestion => suggestion.GetPathSuggestions("target"))
+            _suggestionService.Setup(suggestion => suggestion.Filter("target"))
                 .Returns(new List<FilePath>()
                 {
                     new FilePath(@"C:\Dir\target.txt"),
@@ -65,7 +65,7 @@ namespace MLauncherAppTest
         public void ヒットしたパスがファイルパスの時に_CtrlとEnterを同時押しすると親ディレクトリを開く()
         {
 
-            _suggestionService.Setup(suggestion => suggestion.GetPathSuggestions("target"))
+            _suggestionService.Setup(suggestion => suggestion.Filter("target"))
                 .Returns(new List<FilePath>()
                 {
                     new FilePath(@"C:\Dir\target.txt"),
@@ -80,7 +80,7 @@ namespace MLauncherAppTest
         [Fact]
         public void ヒットしたパスがディレクトリパスの時に_CtrlとEnterを同時押しすると親ディレクトリを開く()
         {
-            _suggestionService.Setup(suggestion => suggestion.GetPathSuggestions("target"))
+            _suggestionService.Setup(suggestion => suggestion.Filter("target"))
                 .Returns(new List<FilePath>()
                 {
                     new FilePath(@"C:\Dir\SubDir"),
@@ -96,7 +96,7 @@ namespace MLauncherAppTest
         public void 複数候補がある時はファイルパスリストウィンドウを開く()
         {
             //Nameで検索したらName1.txt, Name2.txtにヒットするケース
-            _suggestionService.Setup(suggestion => suggestion.GetPathSuggestions("Name"))
+            _suggestionService.Setup(suggestion => suggestion.Filter("Name"))
                 .Returns(new List<FilePath>()
                 {
                     new FilePath(@"C:\Dir\Name1.txt"),
