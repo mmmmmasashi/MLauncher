@@ -8,10 +8,12 @@ namespace LauncherModelLib
 {
     public class PathJudgeService : IPathJudgeService
     {
+        /// <summary>
+        /// TODO:将来的にはURL等にも対応する。その場合に更新していく
+        /// </summary>
         public bool Exists(string path)
         {
-            if (File.Exists(path)) return true;
-            return false;
+            return (File.Exists(path) || Directory.Exists(path));
         }
     }
 }

@@ -12,6 +12,7 @@ namespace LauncherModelLibTest
     {
         string TestDir = "PathJudgeServiceTestDir";
         string TestFile = @"PathJudgeServiceTestDir\FileName.txt";
+        PathJudgeService judge;
 
         public PathJudgeServiceTest()
         {
@@ -22,26 +23,33 @@ namespace LauncherModelLibTest
             
             Directory.CreateDirectory(TestDir);
             File.WriteAllText(TestFile, "some_text");
+
+            judge = new PathJudgeService();
+
         }
 
         [Fact]
         public void ローカルに存在するファイルであればTrueを返す()
         {
-            var judge = new PathJudgeService();
             Assert.True(judge.Exists(TestFile));
         }
 
         [Fact]
         public void ローカルに存在しないファイルであればFalseを返す()
         {
-            var judge = new PathJudgeService();
             Assert.False(judge.Exists("FileNotExist"));
         }
 
-        [Fact (Skip ="他のテストが通ってから")]
+        [Fact]
         public void ローカルに存在するフォルダであればTrueを返す()
         {
-            throw new NotImplementedException();
+            Assert.True(judge.Exists(TestDir));
+        }
+
+        [Fact]
+        public void ローカルに存在しないフォルダであればFalseを返す()
+        {
+            Assert.False(judge.Exists("Directory_not_found"));
         }
 
     }
