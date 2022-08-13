@@ -42,9 +42,17 @@ namespace LauncherModelLibTest
         }
 
         [Fact]
-        public void 半角スペースでAND検索ができる()
+        public void 半角スペースで区切ってAND検索ができる()
         {
             var matchedPath = _service.GetPathSuggestions("directory2 filepath1");
+            Assert.Single(matchedPath);
+            Assert.Equal(new FilePath(@"C:\directory2\filepath1.txt"), matchedPath.First());
+        }
+
+        [Fact]
+        public void 全角スペースで区切ってAND検索ができる()
+        {
+            var matchedPath = _service.GetPathSuggestions("directory2　filepath1");
             Assert.Single(matchedPath);
             Assert.Equal(new FilePath(@"C:\directory2\filepath1.txt"), matchedPath.First());
         }

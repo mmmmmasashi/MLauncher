@@ -10,7 +10,7 @@ namespace LauncherModelLib
 {
     public class PathProvideService : IPathSuggestionService
     {
-        readonly string[] Separators = new string[] { " " };
+        readonly string[] Separators = new string[] { " ", "　"};
         readonly private FilePathRepository _repository;
 
         public PathProvideService(FilePathRepository repository)
@@ -20,6 +20,7 @@ namespace LauncherModelLib
 
         /// <summary>
         /// フィルター文字列で部分一致で絞り込む。
+        /// 
         /// 詳細仕様↓
         /// ・半角スペースで分割してAND検索ができる
         /// </summary>
