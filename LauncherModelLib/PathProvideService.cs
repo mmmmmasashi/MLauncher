@@ -17,8 +17,8 @@ namespace LauncherModelLib
         public PathProvideService(FilePathRepository repository)
         {
             this._repository = repository;
-            _repository.UpdatedCallBack += LoadCandidates;
-            LoadCandidates();
+            _repository.UpdatedCallBack += ReloadCandidates;
+            _masterCandidates = _repository.Load();
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace LauncherModelLib
             return filePathList.Select(path => path.Path);
         }
 
-        private void LoadCandidates()
+        private void ReloadCandidates()
         {
             _masterCandidates = _repository.Load();
         }
