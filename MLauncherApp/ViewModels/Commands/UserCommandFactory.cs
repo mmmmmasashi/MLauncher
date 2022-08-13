@@ -68,5 +68,18 @@ namespace MLauncherApp.ViewModels.Commands
             throw new InvalidProgramException("来ないはず");
         }
 
+        internal IUserCommand CreateRegisterCommand(string filePath)
+        {
+            //存在するファイルパスの場合
+            if (filePathRepository.Load().Contains(new FilePath(filePath)))
+            {
+                return new AlreadyRegisteredCommand(dialogService);
+            }
+            else
+            {
+                return new RegisterPathCommand(filePath, filePathRepository, dialogService);
+            }
+        }
+
     }
 }

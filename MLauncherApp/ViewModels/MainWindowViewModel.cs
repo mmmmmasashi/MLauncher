@@ -82,7 +82,8 @@ namespace MLauncherApp.ViewModels
 
             foreach (var text in textArray)
             {
-                _repository.Save(new FilePath(text));
+                var command = _commandFactory.CreateRegisterCommand(text);
+                command.Execute();
             }
         }
 
