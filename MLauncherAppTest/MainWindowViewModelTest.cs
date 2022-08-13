@@ -33,17 +33,15 @@ namespace MLauncherAppTest
             _vm = new MainWindowViewModel(_runnerServiceMoc.Object, _repositoryMoc.Object, _dialogServiceMoc.Object, _suggestionService.Object);
         }
 
-        [Fact]
-        public void リストに存在しない名前を検索した時_存在しませんとエラーメッセージが出る()
+        [Fact (Skip ="リファクタリングをしてから")]
+        public void リストに存在しない名前を入力した時_ファイルパスとして登録するか確認DLGが出て登録する()
         {
-            _suggestionService.Setup(suggestion => suggestion.Filter("not_exist_name")).Returns(new List<FilePath>());
-
-            _vm.TextBoxText = "not_exist_name";
+            _vm.TextBoxText = "\"" + @"C:\Directory\new_file.txt" + "\"";//パスとしてコピーした時の、ダブルクォーテーションで囲まれたパス
             _vm.RunCommand.Execute();
 
             var parameter = new DialogParameters();
-            parameter.Add("Message", "一致するパスが存在しません");
-            _dialogServiceMoc.Verify(service => service.ShowDialog("MessageControl", parameter, null), Times.Once);
+            parameter.Add("Message", $"以下のパスを登録しますか？\r\n{_vm.TextBoxText}");
+            _dialogServiceMoc.Verify(service => service.ShowDialog("ConfirmControl", parameter, null), Times.Once);
         }
 
         [Fact]
@@ -146,8 +144,15 @@ namespace MLauncherAppTest
         [Fact]
         public void Enterを押すとテキストボックスはクリアされる_処理が完了するため()
         {
-            _vm.TextBoxText = "some_text";
+            _suggestionService.Setup(suggestion => suggestion.Filter("target"))
+                .Returns(new List<FilePath>()
+                {
+                    new FilePath(@"C:\Dir\target.txt"),
+                });
+
+            _vm.TextBoxText = "target";
             _vm.RunCommand.Execute();
+
             Assert.Equal("", _vm.TextBoxText);
         }
     }

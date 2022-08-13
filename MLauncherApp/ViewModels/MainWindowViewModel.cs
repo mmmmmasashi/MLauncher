@@ -1,6 +1,7 @@
 ﻿using AutoCompleteTextBox.Editors;
 using LauncherModelLib;
 using MLauncherApp.Service;
+using MLauncherApp.ViewModels.Commands;
 using MLauncherApp.Views;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -17,6 +18,7 @@ namespace MLauncherApp.ViewModels
     {
         private IDialogService _dialogService;
         private IRunnerService _runnerService;
+        private UserCommandFactory _commandFactory;
         private IPathCandidateFilter _pathCandidateFilter;
         private IFilePathRepository _repository;
         private PathListWindowService _pathListWindowService;
@@ -59,6 +61,9 @@ namespace MLauncherApp.ViewModels
             DropCommand         = new DelegateCommand<DragEventArgs>(DropEvent);
             RunCommand = new DelegateCommand(() => Execute(false));
             RunParentCommand = new DelegateCommand(() => Execute(true));
+            
+            _commandFactory = new UserCommandFactory(filePathRepository, pathCandidateFilter, dialogService, runnerService, _pathListWindowService);
+
         }
 
         private void MouseOverEvent(DragEventArgs e)
@@ -83,51 +88,14 @@ namespace MLauncherApp.ViewModels
         /// <param name="callParent">指定したパスの親のパスを起動するオプション</param>
         private void Execute(bool parentCall)
         {
-            ProcessUserInput(parentCall);
+            IUserCommand command = _commandFactory.Create(TextBoxText, parentCall);
+            command.Execute();
             ClearTextBox();
         }
 
         private void ClearTextBox()
         {
             TextBoxText = "";
-        }
-
-        private void ProcessUserInput(bool parentCall)
-        {
-            if (TextBoxText == null) return;
-
-            //特殊コマンド
-            if (TextBoxText == "/all")
-            {
-                _pathListWindowService.ShowDialog(_repository.Load());
-                return;
-            }
-
-            //ヒットなし
-            var matchedPathList = _pathCandidateFilter.Filter(TextBoxText);
-            bool noHit = matchedPathList.Count == 0;
-            if (noHit)
-            {
-                _dialogService.ShowDialog(
-                    nameof(MessageControl),
-                    DialogParametersService.Create(nameof(MessageControlViewModel.Message), "一致するパスが存在しません"),
-                    null
-                );
-                return;
-            }
-
-            //唯一ヒット
-            bool onlyOnePathHit = matchedPathList.Count == 1;
-            if (onlyOnePathHit)
-            {
-                FilePath matchedPath = matchedPathList.First();
-                var targetFilePath = (parentCall) ? matchedPath.ParentPath : matchedPath;
-                _runnerService.Run(targetFilePath);
-                return;
-            }
-
-            //複数ヒット
-            _pathListWindowService.ShowDialog(matchedPathList);
         }
     }
 }
