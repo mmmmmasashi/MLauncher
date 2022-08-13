@@ -1,4 +1,6 @@
-﻿# TODO
+﻿# 今やってること
+
+# TODO
 - 候補を選択してない状態でEnterを押してもListWindowが起動しない
     - 調査メモ
         - InputBindingsではなくKeyをIteraction Triggersで取得すればイベントを検知できる。

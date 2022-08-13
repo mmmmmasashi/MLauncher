@@ -15,16 +15,18 @@ namespace MLauncherAppTest
 {
     public class UserCommandFactoryTest
     {
+        private Mock<IPathJudgeService> pathJudgeService;
         private UserCommandFactory _factory;
+        private Mock<IPathCandidateFilter> pathCandidateFilter;
 
         public UserCommandFactoryTest()
         {
             var filePathRepository = new Mock<IFilePathRepository>();
-            var pathCandidateFilter = new Mock<IPathCandidateFilter>();
+            pathCandidateFilter = new Mock<IPathCandidateFilter>();
             var dialogService = new Mock<IDialogService>();
             var runnerService = new Mock<IRunnerService>();
             var pathListWindowService = new Mock<IPathListWindowService>();
-            var pathJudgeService = new Mock<IPathJudgeService>();
+            pathJudgeService = new Mock<IPathJudgeService>();
 
             _factory = new UserCommandFactory(
                 filePathRepository.Object,
@@ -40,6 +42,20 @@ namespace MLauncherAppTest
         {
             IUserCommand command = _factory.Create("", false);
             Assert.IsType<DoNothingCommand>(command);
+        }
+
+        [Fact]
+        public void 未登録のパスを入力したら登録するか聞く()
+        {
+            //検索してもヒットしない
+            pathCandidateFilter.Setup(filter => filter.Filter(@"C:\Dir\FileExists.txt")).Returns(new List<FilePath>());
+
+            //しかし存在しているファイルパスの場合
+            pathJudgeService.Setup(service => service.Exists(new FilePath((@"C:\Dir\FileExists.txt")))).Returns(true);
+
+            //登録コマンドとなる
+            IUserCommand command = _factory.Create(@"C:\Dir\FileExists.txt", false);
+            Assert.IsType<RegisterPathCommand>(command);
         }
     }
 }
