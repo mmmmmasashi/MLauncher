@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MLauncherApp.Service
 {
-    internal class PathListWindowService
+    internal class PathListWindowService : IPathListWindowService
     {
         private IDialogService _dialogService;
         private IRunnerService _runnerService;
@@ -21,7 +21,7 @@ namespace MLauncherApp.Service
             _runnerService = runnerService;
         }
 
-        internal void ShowDialog(IEnumerable<FilePath> candidates)
+        public void ShowDialog(IEnumerable<FilePath> candidates)
         {
             var parameters = DialogParametersService.Create(nameof(PathListControlViewModel.PathList), candidates);
             _dialogService.ShowDialog(nameof(PathListControl), parameters, (result) =>

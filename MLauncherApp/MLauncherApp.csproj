@@ -13,4 +13,13 @@
   <ItemGroup>
     <ProjectReference Include="..\LauncherModelLib\LauncherModelLib.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>MLauncherAppTest</_Parameter1>
+    </AssemblyAttribute>
+    <!--Moqがinternalなinterfaceにアクセスできるように付ける 参考:https://stackoverflow.com/questions/17569746/mocking-internal-classes-with-moq-for-unit-testing-->
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>DynamicProxyGenAssembly2</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
 </Project>

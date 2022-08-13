@@ -11,9 +11,9 @@ namespace MLauncherApp.ViewModels.Commands.Imp
     internal class ShowCandidatesCommand : IUserCommand
     {
         private List<FilePath> _matchedPathList;
-        private PathListWindowService _pathListWindowService;
+        private IPathListWindowService _pathListWindowService;
 
-        public ShowCandidatesCommand(List<FilePath> matchedPathList, PathListWindowService pathListWindowService)
+        public ShowCandidatesCommand(List<FilePath> matchedPathList, IPathListWindowService pathListWindowService)
         {
             this._matchedPathList = matchedPathList;
             this._pathListWindowService = pathListWindowService;

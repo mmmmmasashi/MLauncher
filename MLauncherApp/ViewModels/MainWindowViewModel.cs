@@ -21,7 +21,7 @@ namespace MLauncherApp.ViewModels
         private UserCommandFactory _commandFactory;
         private IPathCandidateFilter _pathCandidateFilter;
         private IFilePathRepository _repository;
-        private PathListWindowService _pathListWindowService;
+        private IPathListWindowService _pathListWindowService;
         private IPathJudgeService _pathJudgeService;
         private string _title = "MLauncher";
         public string Title

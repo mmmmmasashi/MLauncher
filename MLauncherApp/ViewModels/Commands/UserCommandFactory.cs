@@ -14,20 +14,18 @@ namespace MLauncherApp.ViewModels.Commands
 {
     internal class UserCommandFactory
     {
-        private readonly Dictionary<string, IUserCommand> _specialCommandDictionary;
-
         private IFilePathRepository filePathRepository;
         private IPathCandidateFilter pathCandidateFilter;
         private IDialogService dialogService;
         private IRunnerService runnerService;
 
         private IUserCommand ShowAll;
-        private PathListWindowService pathListWindowService;
+        private IPathListWindowService pathListWindowService;
         private IPathJudgeService pathJudgeService;
 
         public UserCommandFactory(IFilePathRepository filePathRepository, 
             IPathCandidateFilter pathCandidateFilter, IDialogService dialogService, 
-            IRunnerService runnerService, PathListWindowService pathListWindowService,
+            IRunnerService runnerService, IPathListWindowService pathListWindowService,
             IPathJudgeService pathJudgeService)
         {
             this.filePathRepository = filePathRepository;
@@ -36,19 +34,12 @@ namespace MLauncherApp.ViewModels.Commands
             this.runnerService = runnerService;
             this.pathListWindowService = pathListWindowService;
             this.pathJudgeService = pathJudgeService;
-
-            ShowAll = new ShowAllCommand(pathListWindowService, filePathRepository);
-
-            _specialCommandDictionary = new Dictionary<string, IUserCommand>()
-            {
-                { "/all", ShowAll },
-            };
         }
 
         internal IUserCommand Create(string userInput, bool parentCall)
         {
-            if (userInput == null) return new DoNothingCommand();
-            if (_specialCommandDictionary.ContainsKey(userInput)) return _specialCommandDictionary[userInput];
+            if (userInput == null || userInput == "") return new DoNothingCommand();
+            if (userInput == "/all") return new ShowAllCommand(pathListWindowService, filePathRepository);
 
             var matchedPathList = pathCandidateFilter.Filter(userInput);
 
