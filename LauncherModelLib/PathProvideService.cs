@@ -12,7 +12,7 @@ namespace LauncherModelLib
     {
         readonly string[] Separators = new string[] { " ", "　"};
         readonly private FilePathRepository _repository;
-        private IEnumerable<FilePath> candidates;
+        private IEnumerable<FilePath> _masterCandidates;
 
         public PathProvideService(FilePathRepository repository)
         {
@@ -29,6 +29,7 @@ namespace LauncherModelLib
         /// </summary>
         public List<FilePath> GetPathSuggestions(string filter)
         {
+            IEnumerable<FilePath> candidates = new List<FilePath>(_masterCandidates);
             var keywords = filter.Split(Separators, StringSplitOptions.None);
             
             foreach (var keyword in keywords)
@@ -46,7 +47,7 @@ namespace LauncherModelLib
 
         private void LoadCandidates()
         {
-            candidates = _repository.Load();
+            _masterCandidates = _repository.Load();
         }
     }
 }

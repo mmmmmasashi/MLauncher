@@ -63,5 +63,15 @@ namespace LauncherModelLibTest
             var result = _service.GetPathSuggestions("not_existing_text");
             Assert.Empty(result);
         }
+
+        [Fact]
+        public void 不具合検査_検索するとヒットした候補だけに候補が減ってしまう問題()
+        {
+            //一度検索すると
+            var matchedPath = _service.GetPathSuggestions("filepath1");
+
+            //それ以外の候補がヒットしなくなっていた
+            Assert.NotEmpty(_service.GetPathSuggestions("filepath2"));
+        }
     }
 }
