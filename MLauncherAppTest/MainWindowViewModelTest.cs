@@ -33,7 +33,20 @@ namespace MLauncherAppTest
             _vm = new MainWindowViewModel(_runnerServiceMoc.Object, _repositoryMoc.Object, _dialogServiceMoc.Object, _suggestionService.Object);
         }
 
-        [Fact (Skip ="リファクタリングをしてから")]
+        [Fact]
+        public void リストに存在しない名前を入力した時_ファイルパスでなければ_存在しませんとエラーメッセージが出る()
+        {
+            _suggestionService.Setup(suggestion => suggestion.Filter("not_exist_name")).Returns(new List<FilePath>());
+
+            _vm.TextBoxText = "not_exist_name";
+            _vm.RunCommand.Execute();
+
+            var parameter = new DialogParameters();
+            parameter.Add("Message", "一致するパスが存在しません");
+            _dialogServiceMoc.Verify(service => service.ShowDialog("MessageControl", parameter, null), Times.Once);
+        }
+
+        [Fact (Skip ="上のテストが通ってから実装予定")]
         public void リストに存在しない名前を入力した時_ファイルパスとして登録するか確認DLGが出て登録する()
         {
             _vm.TextBoxText = "\"" + @"C:\Directory\new_file.txt" + "\"";//パスとしてコピーした時の、ダブルクォーテーションで囲まれたパス

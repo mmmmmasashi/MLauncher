@@ -4,6 +4,7 @@ using MLauncherApp.ViewModels.Commands.Imp;
 using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,7 +50,12 @@ namespace MLauncherApp.ViewModels.Commands
             var matchedPathList = pathCandidateFilter.Filter(userInput);
 
             //ヒットなし
-            if (matchedPathList.Count == 0) return new RegisterPathCommand(userInput, filePathRepository, dialogService);
+            if (matchedPathList.Count == 0)
+            {
+                if (!File.Exists(userInput)) return new NotFoundDialogCommand(dialogService);
+                throw new NotImplementedException();
+                //return new RegisterPathCommand(userInput, filePathRepository, dialogService);
+            }
 
             //一つだけヒット
             if (matchedPathList.Count == 1) return new RunCommand(matchedPathList.First(), parentCall, runnerService);
@@ -59,5 +65,6 @@ namespace MLauncherApp.ViewModels.Commands
 
             throw new InvalidProgramException("来ないはず");
         }
+
     }
 }
