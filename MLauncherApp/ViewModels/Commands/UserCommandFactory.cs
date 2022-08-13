@@ -55,7 +55,8 @@ namespace MLauncherApp.ViewModels.Commands
             //ヒットなし
             if (matchedPathList.Count == 0)
             {
-                if (pathJudgeService.Exists(userInput)) return new RegisterPathCommand(userInput, filePathRepository, dialogService);
+                if (pathJudgeService.Exists(new FilePath(userInput))) 
+                    return new RegisterPathCommand(userInput, filePathRepository, dialogService);
                 return new NotFoundDialogCommand(dialogService);
             }
 

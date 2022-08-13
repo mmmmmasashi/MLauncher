@@ -11,9 +11,10 @@ namespace LauncherModelLib
         /// <summary>
         /// TODO:将来的にはURL等にも対応する。その場合に更新していく
         /// </summary>
-        public bool Exists(string path)
+        public bool Exists(FilePath path)
         {
-            return (File.Exists(path) || Directory.Exists(path));
+            //TODO:このクラスとIFごと削除？
+            return path.Exists;
         }
     }
 }

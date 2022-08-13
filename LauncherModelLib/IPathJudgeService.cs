@@ -8,6 +8,6 @@ namespace LauncherModelLib
 {
     public interface IPathJudgeService
     {
-        bool Exists(string path);
+        bool Exists(FilePath path);
     }
 }

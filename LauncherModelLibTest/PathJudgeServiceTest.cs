@@ -31,26 +31,31 @@ namespace LauncherModelLibTest
         [Fact]
         public void ローカルに存在するファイルであればTrueを返す()
         {
-            Assert.True(judge.Exists(TestFile));
+            Assert.True(judge.Exists(new FilePath(TestFile)));
         }
 
         [Fact]
         public void ローカルに存在しないファイルであればFalseを返す()
         {
-            Assert.False(judge.Exists("FileNotExist"));
+            Assert.False(judge.Exists(new FilePath("FileNotExist")));
         }
 
         [Fact]
         public void ローカルに存在するフォルダであればTrueを返す()
         {
-            Assert.True(judge.Exists(TestDir));
+            Assert.True(judge.Exists(new FilePath(TestDir)));
         }
 
         [Fact]
         public void ローカルに存在しないフォルダであればFalseを返す()
         {
-            Assert.False(judge.Exists("Directory_not_found"));
+            Assert.False(judge.Exists(new FilePath("Directory_not_found")));
         }
 
+        [Fact]
+        public void ダブルクォーテーションで囲まれている場合はそれを除外して判断する()
+        {
+            Assert.True(judge.Exists(new FilePath("\"PathJudgeServiceTestDir\\FileName.txt\"")));
+        }
     }
 }

@@ -43,7 +43,7 @@ namespace MLauncherAppTest
         [Fact]
         public void リストに存在しない名前を入力した時_ファイルパスでなければ_存在しませんとエラーメッセージが出る()
         {
-            _pathService.Setup(pathService => pathService.Exists("not_exist_name")).Returns(false);
+            _pathService.Setup(pathService => pathService.Exists(new FilePath("not_exist_name"))).Returns(false);
 
             _suggestionService.Setup(suggestion => suggestion.Filter("not_exist_name")).Returns(new List<FilePath>());
 
@@ -59,7 +59,7 @@ namespace MLauncherAppTest
         public void リストに存在しない名前を入力した時_ファイルパスとして登録するか確認DLGが出て登録する()
         {
             //新しいファイルが存在すると返すように用意
-            _pathService.Setup(pathService => pathService.Exists(@"C:\Directory\new_file.txt")).Returns(true);
+            _pathService.Setup(pathService => pathService.Exists(new FilePath(@"C:\Directory\new_file.txt"))).Returns(true);
 
             //メッセージ付きで呼ばれることをチェック
             _dialogServiceMoc.Setup(service => service.ShowDialog(
