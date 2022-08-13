@@ -33,9 +33,6 @@ namespace MLauncherAppTest
             _repositoryMoc.Setup(repo => repo.Load()).Returns(new List<FilePath>());
             _suggestionService.Setup(service => service.GetPathSuggestions(It.IsAny<string>())).Returns(new List<FilePath>());
 
-            //listコマンド用にパスを用意しておく
-            _repositoryMoc.Setup(repo => repo.ListCommandFile).Returns(new FilePath("path_list.txt"));
-
             _vm = new MainWindowViewModel(_serviceMoc.Object, _runnerServiceMoc.Object, _repositoryMoc.Object, _dialogServiceMoc.Object, _suggestionService.Object);
         }
 
@@ -48,17 +45,6 @@ namespace MLauncherAppTest
             _vm.RunCommand.Execute();
 
             _serviceMoc.Verify(x => x.ShowMessageBox("一致するパスが存在しません"), Times.Once);
-        }
-
-        [Fact]
-        public void スラッシュlistで全登録済パスを記録したテキストファイルを開く()
-        {
-            _repositoryMoc.Setup(repo => repo.ListCommandFile).Returns(new FilePath("path_list.txt"));
-
-            _vm.TextBoxText = "/list";
-            _vm.RunCommand.Execute();
-
-            _runnerServiceMoc.Verify(x => x.Run(new FilePath("path_list.txt")), Times.Once);
         }
 
         [Fact]
@@ -128,6 +114,34 @@ namespace MLauncherAppTest
                     It.IsAny<Action<IDialogResult>>()
                     ),
                 Times.Once);
+        }
+
+        [Fact]
+        public void スラッシュallで全登録済パスを記録したテキストファイルを開く()
+        {
+            _repositoryMoc.Setup(repo => repo.Load()).Returns(new List<FilePath>()
+            {
+                new FilePath("file1.txt"),
+                new FilePath("file2.txt"),
+            });
+
+            _dialogServiceMoc.Setup(service => service.ShowDialog(
+                "PathListControl",
+                It.IsAny<IDialogParameters>(),
+                It.IsAny<Action<IDialogResult>>()))
+                .Callback<string, IDialogParameters, Action<IDialogResult>>((name, parameters, dialogResult) =>
+                {
+                    IEnumerable<FilePath> paths = parameters.GetValue<IEnumerable<FilePath>>("PathList");
+                    Assert.Equal(new List<FilePath>()
+                    {
+                                    new FilePath("file1.txt"),
+                                    new FilePath("file2.txt"),
+                    }, paths);
+                });
+
+            _vm.TextBoxText = "/all";
+            _vm.RunCommand.Execute();
+
         }
 
         [Fact]

@@ -12,8 +12,6 @@ namespace LauncherModelLib
         private string _savedFilePath;
         private List<FilePath> _filePathList = new List<FilePath>();
 
-        public FilePath ListCommandFile => new FilePath(_savedFilePath);
-
         public Action? UpdatedCallBack { get; internal set; }//保持しているファイルパス一覧が更新されたときに、利用者に通知する
 
         public FilePathRepository(string savedFilePath)

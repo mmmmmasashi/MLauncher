@@ -96,9 +96,17 @@ namespace MLauncherApp.ViewModels
             if (TextBoxText == null) return;
 
             //特殊コマンド
-            if (TextBoxText == "/list")
+            if (TextBoxText == "/all")
             {
-                _runnerService.Run(_repository.ListCommandFile);
+                var allFilesParameters = DialogParametersService.Create(nameof(PathListControlViewModel.PathList), _repository.Load());
+                _dialogService.ShowDialog(nameof(PathListControl), allFilesParameters, (result) =>
+                {
+                    if (result.Result == ButtonResult.OK)
+                    {
+                        var filePathSelected = result.Parameters.GetValue<FilePath>(nameof(PathListControlViewModel.SelectedPathItem));
+                        _runnerService.Run(filePathSelected);
+                    }
+                });
                 return;
             }
 

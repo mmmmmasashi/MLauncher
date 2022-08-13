@@ -8,7 +8,6 @@ namespace MLauncherIF
 {
     public interface IFilePathRepository
     {
-        FilePath ListCommandFile { get; }
         void Save(FilePath filePath);
         List<FilePath> Load();
     }
