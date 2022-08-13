@@ -10,6 +10,6 @@ namespace MLauncherIF
     {
         FilePath ListCommandFile { get; }
         void Save(FilePath filePath);
-        List<FilePath> Search(string text);
+        List<FilePath> Load();
     }
 }

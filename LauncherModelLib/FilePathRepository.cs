@@ -28,15 +28,7 @@ namespace LauncherModelLib
             File.AppendAllText(_savedFilePath, filePath.Path + "\r\n");
         }
 
-        /// <summary>
-        /// 検索文字列を含むパスを返す。
-        /// </summary>
-        public List<FilePath> Search(string text)
-        {
-            return _filePathList.Where(filePath => filePath.Contains(text)).ToList();
-        }
-
-        private List<FilePath> Load()
+        public List<FilePath> Load()
         {
             if (!File.Exists(_savedFilePath)) return new List<FilePath>();
             var lines = File.ReadAllLines(_savedFilePath);

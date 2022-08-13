@@ -10,19 +10,22 @@ namespace LauncherModelLib
 {
     public class PathProvideService : IPathSuggestionService
     {
-        private readonly List<string> numbers = new();
+        readonly private FilePathRepository _repository;
 
-        public PathProvideService()
+        public PathProvideService(FilePathRepository repository)
         {
-            for (int i = 0; i < 10000; i++)
-            {
-                numbers.Add(i.ToString());
-            }
+            this._repository = repository;
+        }
+
+        public List<FilePath> GetPathSuggestions(string filter)
+        {
+            List<FilePath> candidates = _repository.Load();
+            return candidates.Where(candidate => candidate.Contains(filter)).ToList();
         }
 
         public IEnumerable GetSuggestions(string filter)
         {
-            return numbers.Where(x => x.Contains(filter));
+            return (IEnumerable)GetPathSuggestions(filter);
         }
     }
 }

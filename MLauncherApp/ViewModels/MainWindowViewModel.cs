@@ -103,8 +103,7 @@ namespace MLauncherApp.ViewModels
             }
 
             //通常ケース
-
-            List<FilePath> matchedPathList = _repository.Search(TextBoxText);
+            var matchedPathList = PathSuggestionProvider.GetPathSuggestions(TextBoxText);
             bool noHit = matchedPathList.Count == 0;
             if (noHit)
             {

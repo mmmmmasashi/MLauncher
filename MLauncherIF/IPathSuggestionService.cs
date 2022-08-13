@@ -13,5 +13,6 @@ namespace MLauncherIF
 
     public interface IPathSuggestionService : ISuggestionProvider
     {
+        List<FilePath> GetPathSuggestions(string filter);
     }
 }
