@@ -1,4 +1,6 @@
 ﻿using LauncherModelLib;
+using MLauncherApp.Service;
+using MLauncherApp.Views;
 using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
@@ -23,13 +25,20 @@ namespace MLauncherApp.ViewModels.Commands.Imp
 
         void IUserCommand.Execute()
         {
-            throw new NotImplementedException();
-            //    _dialogService.ShowDialog(
-            //        nameof(MessageControl),
-            //        DialogParametersService.Create(nameof(MessageControlViewModel.Message), "一致するパスが存在しません"),
-            //        null
-            //    );
-            //    return;
+            _dialogService.ShowDialog(
+                nameof(ConfirmControl),
+                DialogParametersService.Create(
+                    nameof(ConfirmControlViewModel.Message), $"以下のパスを登録しますか？\r\n{_userInput}"
+                ),
+                (result) =>
+                {
+                    if (result.Result == ButtonResult.OK)
+                    {
+                        _filePathRepository.Save(new FilePath(_userInput));
+                    }
+                }
+            );
+            return;
         }
     }
 }

@@ -29,6 +29,7 @@ namespace MLauncherApp
             containerRegistry.RegisterInstance<IFilePathRepository>(repository);
             containerRegistry.RegisterInstance<IPathCandidateFilter>(new PathCandidateFilter(repository));
             containerRegistry.RegisterSingleton<IRunnerService, RunnerService>();
+            containerRegistry.RegisterSingleton<IPathJudgeService, PathJudgeService>();
 
             containerRegistry.RegisterDialog<PathListControl>();
 

@@ -22,7 +22,7 @@ namespace MLauncherApp.ViewModels
         private IPathCandidateFilter _pathCandidateFilter;
         private IFilePathRepository _repository;
         private PathListWindowService _pathListWindowService;
-
+        private IPathJudgeService _pathJudgeService;
         private string _title = "MLauncher";
         public string Title
         {
@@ -45,7 +45,7 @@ namespace MLauncherApp.ViewModels
         public MainWindowViewModel(
             IRunnerService runnerService, 
             IFilePathRepository filePathRepository, IDialogService dialogService,
-            IPathCandidateFilter pathCandidateFilter)
+            IPathCandidateFilter pathCandidateFilter, IPathJudgeService pathJudgeService)
         {
             _pathCandidateFilter = pathCandidateFilter;
             AutoCompleteProvider = new AutoCompleteProvider(pathCandidateFilter);
@@ -54,6 +54,7 @@ namespace MLauncherApp.ViewModels
             _runnerService  = runnerService;
             _repository = filePathRepository;
             _pathListWindowService = new PathListWindowService(dialogService, runnerService);
+            _pathJudgeService = pathJudgeService;
 
             TextBoxText = "";
 
@@ -62,7 +63,10 @@ namespace MLauncherApp.ViewModels
             RunCommand = new DelegateCommand(() => Execute(false));
             RunParentCommand = new DelegateCommand(() => Execute(true));
             
-            _commandFactory = new UserCommandFactory(filePathRepository, pathCandidateFilter, dialogService, runnerService, _pathListWindowService);
+            _commandFactory = new UserCommandFactory(
+                filePathRepository, pathCandidateFilter, 
+                dialogService, runnerService, 
+                _pathListWindowService, pathJudgeService);
 
         }
 

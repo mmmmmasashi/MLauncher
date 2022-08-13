@@ -23,16 +23,19 @@ namespace MLauncherApp.ViewModels.Commands
 
         private IUserCommand ShowAll;
         private PathListWindowService pathListWindowService;
+        private IPathJudgeService pathJudgeService;
 
         public UserCommandFactory(IFilePathRepository filePathRepository, 
             IPathCandidateFilter pathCandidateFilter, IDialogService dialogService, 
-            IRunnerService runnerService, PathListWindowService pathListWindowService)
+            IRunnerService runnerService, PathListWindowService pathListWindowService,
+            IPathJudgeService pathJudgeService)
         {
             this.filePathRepository = filePathRepository;
             this.pathCandidateFilter = pathCandidateFilter;
             this.dialogService = dialogService;
             this.runnerService = runnerService;
             this.pathListWindowService = pathListWindowService;
+            this.pathJudgeService = pathJudgeService;
 
             ShowAll = new ShowAllCommand(pathListWindowService, filePathRepository);
 
@@ -52,9 +55,8 @@ namespace MLauncherApp.ViewModels.Commands
             //ヒットなし
             if (matchedPathList.Count == 0)
             {
-                if (!File.Exists(userInput)) return new NotFoundDialogCommand(dialogService);
-                throw new NotImplementedException();
-                //return new RegisterPathCommand(userInput, filePathRepository, dialogService);
+                if (pathJudgeService.Exists(userInput)) return new RegisterPathCommand(userInput, filePathRepository, dialogService);
+                return new NotFoundDialogCommand(dialogService);
             }
 
             //一つだけヒット

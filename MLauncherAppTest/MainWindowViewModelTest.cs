@@ -16,6 +16,7 @@ namespace MLauncherAppTest
         private Mock<IRunnerService> _runnerServiceMoc;
         private Mock<IFilePathRepository> _repositoryMoc;
         private Mock<IPathCandidateFilter> _suggestionService;
+        private Mock<IPathJudgeService> _pathService;
 
         private MainWindowViewModel _vm;
 
@@ -25,17 +26,25 @@ namespace MLauncherAppTest
             _runnerServiceMoc = new Mock<IRunnerService>();
             _repositoryMoc = new Mock<IFilePathRepository>();
             _suggestionService = new Mock<IPathCandidateFilter>();
+            _pathService = new Mock<IPathJudgeService>();
 
             //Setupで上書きしなければ、何も空のリポジトリとしておく
             _repositoryMoc.Setup(repo => repo.Load()).Returns(new List<FilePath>());
             _suggestionService.Setup(service => service.Filter(It.IsAny<string>())).Returns(new List<FilePath>());
 
-            _vm = new MainWindowViewModel(_runnerServiceMoc.Object, _repositoryMoc.Object, _dialogServiceMoc.Object, _suggestionService.Object);
+            _vm = new MainWindowViewModel(
+                _runnerServiceMoc.Object,
+                _repositoryMoc.Object,
+                _dialogServiceMoc.Object,
+                _suggestionService.Object,
+                _pathService.Object);
         }
 
         [Fact]
         public void リストに存在しない名前を入力した時_ファイルパスでなければ_存在しませんとエラーメッセージが出る()
         {
+            _pathService.Setup(pathService => pathService.Exists("not_exist_name")).Returns(false);
+
             _suggestionService.Setup(suggestion => suggestion.Filter("not_exist_name")).Returns(new List<FilePath>());
 
             _vm.TextBoxText = "not_exist_name";
@@ -46,15 +55,36 @@ namespace MLauncherAppTest
             _dialogServiceMoc.Verify(service => service.ShowDialog("MessageControl", parameter, null), Times.Once);
         }
 
-        [Fact (Skip ="上のテストが通ってから実装予定")]
+        [Fact]
         public void リストに存在しない名前を入力した時_ファイルパスとして登録するか確認DLGが出て登録する()
         {
-            _vm.TextBoxText = "\"" + @"C:\Directory\new_file.txt" + "\"";//パスとしてコピーした時の、ダブルクォーテーションで囲まれたパス
+            //新しいファイルが存在すると返すように用意
+            _pathService.Setup(pathService => pathService.Exists(@"C:\Directory\new_file.txt")).Returns(true);
+
+            //メッセージ付きで呼ばれることをチェック
+            _dialogServiceMoc.Setup(service => service.ShowDialog(
+                "ConfirmControl",
+                It.IsAny<IDialogParameters>(),
+                It.IsAny<Action<IDialogResult>>()
+                )).Callback<string, IDialogParameters, Action<IDialogResult>>((name, parameters, callback) =>
+                {
+                    Assert.Equal("以下のパスを登録しますか？\r\n" + @"C:\Directory\new_file.txt", parameters.GetValue<string>("Message"));
+                    callback(new DialogResult(ButtonResult.OK));
+                });
+
+            _vm.TextBoxText = @"C:\Directory\new_file.txt";
+
             _vm.RunCommand.Execute();
 
-            var parameter = new DialogParameters();
-            parameter.Add("Message", $"以下のパスを登録しますか？\r\n{_vm.TextBoxText}");
-            _dialogServiceMoc.Verify(service => service.ShowDialog("ConfirmControl", parameter, null), Times.Once);
+            _dialogServiceMoc.Verify(service => service.ShowDialog(
+                "ConfirmControl", 
+                It.IsAny<IDialogParameters>(),
+                It.IsAny<Action<IDialogResult>>()
+                ),
+                Times.Once);
+
+            //新規に登録されていること
+            _repositoryMoc.Verify(repo => repo.Save(new FilePath(@"C:\Directory\new_file.txt")));
         }
 
         [Fact]
