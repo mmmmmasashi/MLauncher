@@ -3,7 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"             
              prism:ViewModelLocator.AutoWireViewModel="True" Loaded="ConfirmControl_Loaded">
-    <Grid>
+    <UserControl.Resources>
+        <ResourceDictionary Source="Styles.xaml"/>
+    </UserControl.Resources>
+    <Grid Margin="{StaticResource BaseMargin}">
         <StackPanel>
             <TextBlock Text="{Binding Message}"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">

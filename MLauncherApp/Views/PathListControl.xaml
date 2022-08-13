@@ -6,7 +6,10 @@
     <UserControl.InputBindings>
         <KeyBinding Key="Esc" Command="{Binding CancelCommand}"/>
     </UserControl.InputBindings>
-    <Grid>
+    <UserControl.Resources>
+        <ResourceDictionary Source="Styles.xaml"/>
+    </UserControl.Resources>
+    <Grid Margin="{StaticResource BaseMargin}">
         <StackPanel>
             <TextBlock Text="複数のパスがヒットしました。選択してください。"/>
             <DataGrid ItemsSource="{Binding PathList, Mode=OneWay}" AutoGenerateColumns="False" 
