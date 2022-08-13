@@ -8,13 +8,12 @@ using Xunit;
 
 namespace LauncherModelLibTest
 {
-    public class PathJudgeServiceTest
+    public class FilePath_存在有無テスト
     {
         string TestDir = "PathJudgeServiceTestDir";
         string TestFile = @"PathJudgeServiceTestDir\FileName.txt";
-        PathJudgeService judge;
 
-        public PathJudgeServiceTest()
+        public FilePath_存在有無テスト()
         {
             if (Directory.Exists(TestDir))
             {
@@ -23,39 +22,36 @@ namespace LauncherModelLibTest
             
             Directory.CreateDirectory(TestDir);
             File.WriteAllText(TestFile, "some_text");
-
-            judge = new PathJudgeService();
-
         }
 
         [Fact]
         public void ローカルに存在するファイルであればTrueを返す()
         {
-            Assert.True(judge.Exists(new FilePath(TestFile)));
+            Assert.True(new FilePath(TestFile).Exists);
         }
 
         [Fact]
         public void ローカルに存在しないファイルであればFalseを返す()
         {
-            Assert.False(judge.Exists(new FilePath("FileNotExist")));
+            Assert.False(new FilePath("FileNotExist").Exists);
         }
 
         [Fact]
         public void ローカルに存在するフォルダであればTrueを返す()
         {
-            Assert.True(judge.Exists(new FilePath(TestDir)));
+            Assert.True(new FilePath(TestDir).Exists);
         }
 
         [Fact]
         public void ローカルに存在しないフォルダであればFalseを返す()
         {
-            Assert.False(judge.Exists(new FilePath("Directory_not_found")));
+            Assert.False(new FilePath("Directory_not_found").Exists);
         }
 
         [Fact]
         public void ダブルクォーテーションで囲まれている場合はそれを除外して判断する()
         {
-            Assert.True(judge.Exists(new FilePath("\"PathJudgeServiceTestDir\\FileName.txt\"")));
+            Assert.True(new FilePath("\"PathJudgeServiceTestDir\\FileName.txt\"").Exists);
         }
     }
 }

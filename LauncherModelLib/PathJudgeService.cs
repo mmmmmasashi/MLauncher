@@ -6,14 +6,16 @@ using System.Threading.Tasks;
 
 namespace LauncherModelLib
 {
+    /// <summary>
+    /// 不要かもしれない。
+    /// 実装過程で生まれて不要になったので消そうと思ったが、
+    /// FilePathの存在有無をテストする際にMockを使っており、
+    /// そのために残している。
+    /// </summary>
     public class PathJudgeService : IPathJudgeService
     {
-        /// <summary>
-        /// TODO:将来的にはURL等にも対応する。その場合に更新していく
-        /// </summary>
         public bool Exists(FilePath path)
         {
-            //TODO:このクラスとIFごと削除？
             return path.Exists;
         }
     }
