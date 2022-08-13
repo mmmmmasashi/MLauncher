@@ -25,7 +25,7 @@ namespace LauncherModelLib
 
         public IEnumerable GetSuggestions(string filter)
         {
-            return (IEnumerable)GetPathSuggestions(filter);
+            return GetPathSuggestions(filter);
         }
     }
 }
