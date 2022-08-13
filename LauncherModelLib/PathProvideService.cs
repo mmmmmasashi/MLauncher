@@ -10,6 +10,7 @@ namespace LauncherModelLib
 {
     public class PathProvideService : IPathSuggestionService
     {
+        readonly string[] Separators = new string[] { " " };
         readonly private FilePathRepository _repository;
 
         public PathProvideService(FilePathRepository repository)
@@ -17,10 +18,22 @@ namespace LauncherModelLib
             this._repository = repository;
         }
 
+        /// <summary>
+        /// フィルター文字列で部分一致で絞り込む。
+        /// 詳細仕様↓
+        /// ・半角スペースで分割してAND検索ができる
+        /// </summary>
         public List<FilePath> GetPathSuggestions(string filter)
         {
-            List<FilePath> candidates = _repository.Load();
-            return candidates.Where(candidate => candidate.Contains(filter)).ToList();
+            IEnumerable<FilePath> candidates = _repository.Load();
+
+            var keywords = filter.Split(Separators, StringSplitOptions.None);
+            
+            foreach (var keyword in keywords)
+            {
+                candidates = candidates.Where(candidate => candidate.Contains(keyword));
+            }
+            return candidates.ToList();
         }
 
         public IEnumerable GetSuggestions(string filter)

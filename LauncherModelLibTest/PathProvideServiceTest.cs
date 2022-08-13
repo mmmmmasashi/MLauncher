@@ -25,6 +25,9 @@ namespace LauncherModelLibTest
             var repository = new FilePathRepository(@"TestDir\SavedFile.txt");
             repository.Save(new FilePath(@"C:\directory\filepath1.txt"));
             repository.Save(new FilePath(@"C:\directory\filepath2.txt"));
+            repository.Save(new FilePath(@"C:\directory\filepath3.txt"));
+            repository.Save(new FilePath(@"C:\directory2\filepath1.txt"));
+            repository.Save(new FilePath(@"C:\directory2\filepath2.txt"));
 
             _service = new PathProvideService(repository);
         }
@@ -32,10 +35,18 @@ namespace LauncherModelLibTest
         [Fact]
         public void 文字列で完全一致検索ができて_一致したファイルパスを返す()
         {
-            var matchedPath = _service.GetPathSuggestions("filepath2");
+            var matchedPath = _service.GetPathSuggestions("filepath3");
 
             Assert.Single(matchedPath);
-            Assert.Equal(new FilePath(@"C:\directory\filepath2.txt"), matchedPath.First());
+            Assert.Equal(new FilePath(@"C:\directory\filepath3.txt"), matchedPath.First());
+        }
+
+        [Fact]
+        public void 半角スペースでAND検索ができる()
+        {
+            var matchedPath = _service.GetPathSuggestions("directory2 filepath1");
+            Assert.Single(matchedPath);
+            Assert.Equal(new FilePath(@"C:\directory2\filepath1.txt"), matchedPath.First());
         }
 
         [Fact]
