@@ -3,6 +3,9 @@ using LauncherModelLib;
 using MLauncherApp.Service;
 using MLauncherApp.Views;
 using Prism.Ioc;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 
 namespace MLauncherApp

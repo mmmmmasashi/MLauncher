@@ -1,12 +1,10 @@
-﻿using LauncherModelLib;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MLauncherApp.Service
+namespace LauncherModelLib
 {
     public class PathProvideService : IPathSuggestionService
     {
@@ -42,12 +40,6 @@ namespace MLauncherApp.Service
                 candidates = candidates.Where(candidate => candidate.Contains(keyword));
             }
             return candidates.ToList();
-        }
-
-        public IEnumerable GetSuggestions(string filter)
-        {
-            List<FilePath> filePathList = GetPathSuggestions(filter);
-            return filePathList.Select(path => path.Path);
         }
 
         private void ReloadCandidates()

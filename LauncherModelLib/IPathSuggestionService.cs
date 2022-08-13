@@ -1,14 +1,12 @@
-﻿using AutoCompleteTextBox.Editors;
-using LauncherModelLib;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MLauncherApp.Service
+namespace LauncherModelLib
 {
-    public interface IPathSuggestionService : ISuggestionProvider
+    public interface IPathSuggestionService
     {
         List<FilePath> GetPathSuggestions(string filter);
     }
