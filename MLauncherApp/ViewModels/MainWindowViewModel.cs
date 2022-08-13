@@ -18,6 +18,7 @@ namespace MLauncherApp.ViewModels
         private IDialogService _dialogService;
         private IMessageService _messageService;
         private IRunnerService _runnerService;
+        private IPathSuggestionService _pathSuggestionService;
         private IFilePathRepository _repository;
         private PathListWindowService _pathListWindowService;
 
@@ -34,7 +35,7 @@ namespace MLauncherApp.ViewModels
             get { return _textBoxTest; }
             set { SetProperty(ref _textBoxTest, value); }
         }
-        public IPathSuggestionService PathSuggestionProvider { get; }
+        public ISuggestionProvider PathSuggestionProvider { get; }
         public DelegateCommand<DragEventArgs> DragEnterCommand { get; }
         public DelegateCommand<DragEventArgs> DropCommand      { get; }
         public DelegateCommand RunCommand { get; }
@@ -43,9 +44,10 @@ namespace MLauncherApp.ViewModels
         public MainWindowViewModel(
             IMessageService messageService, IRunnerService runnerService, 
             IFilePathRepository filePathRepository, IDialogService dialogService,
-            IPathSuggestionService suggestionProvider)
+            IPathSuggestionService pathSuggestionProvider)
         {
-            PathSuggestionProvider = suggestionProvider;
+            _pathSuggestionService = pathSuggestionProvider;
+            PathSuggestionProvider = new PathSuggestionProviderForView(pathSuggestionProvider);
 
             _dialogService = dialogService;
             _messageService = messageService;
@@ -104,7 +106,7 @@ namespace MLauncherApp.ViewModels
             }
 
             //ヒットなし
-            var matchedPathList = PathSuggestionProvider.GetPathSuggestions(TextBoxText);
+            var matchedPathList = _pathSuggestionService.GetPathSuggestions(TextBoxText);
             bool noHit = matchedPathList.Count == 0;
             if (noHit)
             {
