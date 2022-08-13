@@ -29,6 +29,8 @@ namespace MLauncherApp
 
             containerRegistry.RegisterDialog<PathListControl>();
 
+            containerRegistry.RegisterDialogWindow<DialogWindow>();
+
         }
     }
 }

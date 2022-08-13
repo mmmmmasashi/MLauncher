@@ -1,0 +1,10 @@
+﻿<mah:MetroWindow x:Class="MLauncherApp.Views.DialogWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             prism:ViewModelLocator.AutoWireViewModel="True" TitleCharacterCasing="Normal" SizeToContent="WidthAndHeight">
+    <Grid>
+            
+    </Grid>
+</mah:MetroWindow>
