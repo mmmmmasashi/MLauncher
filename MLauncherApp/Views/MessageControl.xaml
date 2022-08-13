@@ -1,0 +1,12 @@
+﻿<UserControl x:Class="MLauncherApp.Views.MessageControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"             
+             prism:ViewModelLocator.AutoWireViewModel="True" Loaded="MessageControl_Loaded">
+    <Grid>
+        <StackPanel>
+            <TextBlock Text="{Binding Message}"/>
+            <Button Command="{Binding OKCommand}" Content="OK" x:Name="OKButton"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

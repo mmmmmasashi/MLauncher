@@ -16,7 +16,6 @@ namespace MLauncherApp.ViewModels
     public class MainWindowViewModel : BindableBase
     {
         private IDialogService _dialogService;
-        private IMessageService _messageService;
         private IRunnerService _runnerService;
         private IPathCandidateFilter _pathCandidateFilter;
         private IFilePathRepository _repository;
@@ -42,7 +41,7 @@ namespace MLauncherApp.ViewModels
         public DelegateCommand RunParentCommand { get; }
 
         public MainWindowViewModel(
-            IMessageService messageService, IRunnerService runnerService, 
+            IRunnerService runnerService, 
             IFilePathRepository filePathRepository, IDialogService dialogService,
             IPathCandidateFilter pathCandidateFilter)
         {
@@ -50,7 +49,6 @@ namespace MLauncherApp.ViewModels
             AutoCompleteProvider = new AutoCompleteProvider(pathCandidateFilter);
 
             _dialogService = dialogService;
-            _messageService = messageService;
             _runnerService  = runnerService;
             _repository = filePathRepository;
             _pathListWindowService = new PathListWindowService(dialogService, runnerService);
@@ -110,7 +108,11 @@ namespace MLauncherApp.ViewModels
             bool noHit = matchedPathList.Count == 0;
             if (noHit)
             {
-                _messageService.ShowMessageBox("一致するパスが存在しません");
+                _dialogService.ShowDialog(
+                    nameof(MessageControl),
+                    DialogParametersService.Create(nameof(MessageControlViewModel.Message), "一致するパスが存在しません"),
+                    null
+                );
                 return;
             }
 

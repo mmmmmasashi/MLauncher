@@ -13,7 +13,6 @@ namespace MLauncherAppTest
     public class MainWindowViewModelTest
     {
         private Mock<IDialogService> _dialogServiceMoc;
-        private Mock<IMessageService> _serviceMoc;
         private Mock<IRunnerService> _runnerServiceMoc;
         private Mock<IFilePathRepository> _repositoryMoc;
         private Mock<IPathCandidateFilter> _suggestionService;
@@ -23,7 +22,6 @@ namespace MLauncherAppTest
         public MainWindowViewModelTest()
         {
             _dialogServiceMoc = new Mock<IDialogService>();
-            _serviceMoc = new Mock<IMessageService>();
             _runnerServiceMoc = new Mock<IRunnerService>();
             _repositoryMoc = new Mock<IFilePathRepository>();
             _suggestionService = new Mock<IPathCandidateFilter>();
@@ -32,7 +30,7 @@ namespace MLauncherAppTest
             _repositoryMoc.Setup(repo => repo.Load()).Returns(new List<FilePath>());
             _suggestionService.Setup(service => service.Filter(It.IsAny<string>())).Returns(new List<FilePath>());
 
-            _vm = new MainWindowViewModel(_serviceMoc.Object, _runnerServiceMoc.Object, _repositoryMoc.Object, _dialogServiceMoc.Object, _suggestionService.Object);
+            _vm = new MainWindowViewModel(_runnerServiceMoc.Object, _repositoryMoc.Object, _dialogServiceMoc.Object, _suggestionService.Object);
         }
 
         [Fact]
@@ -43,7 +41,9 @@ namespace MLauncherAppTest
             _vm.TextBoxText = "not_exist_name";
             _vm.RunCommand.Execute();
 
-            _serviceMoc.Verify(x => x.ShowMessageBox("ˆê’v‚·‚éƒpƒX‚ª‘¶Ý‚µ‚Ü‚¹‚ñ"), Times.Once);
+            var parameter = new DialogParameters();
+            parameter.Add("Message", "ˆê’v‚·‚éƒpƒX‚ª‘¶Ý‚µ‚Ü‚¹‚ñ");
+            _dialogServiceMoc.Verify(service => service.ShowDialog("MessageControl", parameter, null), Times.Once);
         }
 
         [Fact]
