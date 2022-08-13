@@ -1,5 +1,10 @@
 ﻿# TODO
-- 候補にヒットしない文字列で直接検索できない(Enterを押しても無視される)
-    - Suggestが未実装だから？
+- 候補を選択してない状態でEnterを押してもListWindowが起動しない
+    - 調査メモ
+        - InputBindingsではなくKeyをIteraction Triggersで取得すればイベントを検知できる。
+        - しかし、変換の確定のためのEnterでも検知してしまう。
+            - いい方法が思いついてない
+                - [やろうと思えばできそう](http://www.madeinclinic.jp/c/20180421/)
+            - migemoで半角英数字で検索する仕様にしたらこの問題は生じないが…
 - MLauncher --> ModelLibへの依存を切れたりする？
 - ListのWindowも、Ctrl押しながらで、もとのリストを残す仕様にする？
