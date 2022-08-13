@@ -27,13 +27,19 @@ namespace MLauncherApp.ViewModels
 
         public string Title => "パス選択";
         public DelegateCommand RunSelectedItemCommand { get; }
+
+        private readonly IFilePathRepository _filePathRepository;
+
         public DelegateCommand RunParentOfSelectedItemCommand { get; }
         public DelegateCommand CancelCommand { get; }
 
         public DelegateCommand LoadedCommand { get; }
+        public DelegateCommand DeletePathCommand { get; }
 
-        public PathListControlViewModel()
+        public PathListControlViewModel(IFilePathRepository filePathRepository)
         {
+            _filePathRepository = filePathRepository;
+
             RunParentOfSelectedItemCommand = new DelegateCommand(() =>
             {
                 if (SelectedPathItem == null) return;
@@ -53,8 +59,16 @@ namespace MLauncherApp.ViewModels
                     SelectedPathItem = PathList.First();
                 }
             });
-            
+
+            DeletePathCommand = new DelegateCommand(RequestDelete);
+
             CancelCommand = new DelegateCommand(() => RequestClose.Invoke(new DialogResult(ButtonResult.Cancel)));
+        }
+
+        private void RequestDelete()
+        {
+            if (SelectedPathItem == null) return;
+            _filePathRepository.Delete(SelectedPathItem);
         }
 
         /// <summary>

@@ -18,11 +18,13 @@ namespace MLauncherAppTest
     /// </summary>
     public class PathListControlViewModelTest
     {
+        private Mock<IFilePathRepository> _repository;
         private PathListControlViewModel vm;
 
         public PathListControlViewModelTest()
         {
-            vm = new PathListControlViewModel();
+            _repository = new Mock<IFilePathRepository>();
+            vm = new PathListControlViewModel(_repository.Object);
         }
 
         [Fact]
@@ -51,6 +53,14 @@ namespace MLauncherAppTest
             });
 
             vm.RunParentOfSelectedItemCommand.Execute();
+        }
+
+        [Fact]
+        public void ファイルパスを選択した状態でDeleteを押すと_そのファイルパスが削除される()
+        {
+            vm.SelectedPathItem = new FilePath("filepath.txt");
+            vm.DeletePathCommand.Execute();
+            _repository.Verify(repo => repo.Delete(new FilePath("filepath.txt")), Times.Once);
         }
 
     }

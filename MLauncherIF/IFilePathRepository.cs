@@ -10,5 +10,7 @@ namespace MLauncherIF
     {
         void Save(FilePath filePath);
         List<FilePath> Load();
+        void Delete(FilePath filePath);
+        public Action? UpdatedCallBack { get; set; }
     }
 }

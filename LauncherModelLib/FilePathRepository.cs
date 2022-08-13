@@ -12,7 +12,8 @@ namespace LauncherModelLib
         private string _savedFilePath;
         private List<FilePath> _filePathList = new List<FilePath>();
 
-        public Action? UpdatedCallBack { get; internal set; }//保持しているファイルパス一覧が更新されたときに、利用者に通知する
+        public EventHandler UpdateEvent { get; set; }//保持しているファイルパス一覧が更新されたときに、利用者に通知する
+        public Action? UpdatedCallBack { get; set; }
 
         public FilePathRepository(string savedFilePath)
         {
@@ -25,7 +26,7 @@ namespace LauncherModelLib
             if (_filePathList.Contains(filePath)) return;
             
             _filePathList.Add(filePath);
-            File.AppendAllText(_savedFilePath, filePath.Path + "\r\n");
+            SaveAllImp();
 
             if(UpdatedCallBack != null)
             {
@@ -38,6 +39,21 @@ namespace LauncherModelLib
             if (!File.Exists(_savedFilePath)) return new List<FilePath>();
             var lines = File.ReadAllLines(_savedFilePath);
             return lines.Select(line => new FilePath(line)).ToList();
+        }
+
+        public void Delete(FilePath filePath)
+        {
+            _filePathList.Remove(filePath);
+            SaveAllImp();
+            if (UpdatedCallBack != null)
+            {
+                UpdatedCallBack();
+            }
+        }
+
+        private void SaveAllImp()
+        {
+            File.WriteAllLines(_savedFilePath, _filePathList.Select(filePath => filePath.Path), Encoding.UTF8);
         }
     }
 }

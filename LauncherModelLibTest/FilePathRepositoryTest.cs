@@ -54,5 +54,15 @@ namespace LauncherModelLibTest
             Assert.Equal(2, _repository.Load().Count);
         }
 
+        [Fact]
+        public void 削除が可能()
+        {
+            Assert.Equal(2, _repository.Load().Count);
+            _repository.Delete(new FilePath(@"C:\directory\filepath2.txt"));
+            Assert.Single(_repository.Load());
+            Assert.Equal(new FilePath(@"C:\directory\filepath1.txt"), _repository.Load().First());
+
+        }
+
     }
 }
