@@ -39,7 +39,8 @@ namespace LauncherModelLib
 
         public IEnumerable GetSuggestions(string filter)
         {
-            return GetPathSuggestions(filter);
+            List<FilePath> filePathList = GetPathSuggestions(filter);
+            return filePathList.Select(path => path.Path);
         }
     }
 }
