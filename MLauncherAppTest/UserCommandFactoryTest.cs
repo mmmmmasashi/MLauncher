@@ -17,11 +17,12 @@ namespace MLauncherAppTest
     {
         private Mock<IPathJudgeService> pathJudgeService;
         private UserCommandFactory _factory;
+        private Mock<IFilePathRepository> filePathRepository;
         private Mock<IPathCandidateFilter> pathCandidateFilter;
 
         public UserCommandFactoryTest()
         {
-            var filePathRepository = new Mock<IFilePathRepository>();
+            filePathRepository = new Mock<IFilePathRepository>();
             pathCandidateFilter = new Mock<IPathCandidateFilter>();
             var dialogService = new Mock<IDialogService>();
             var runnerService = new Mock<IRunnerService>();
@@ -53,9 +54,29 @@ namespace MLauncherAppTest
             //しかし存在しているファイルパスの場合
             pathJudgeService.Setup(service => service.Exists(new FilePath((@"C:\Dir\FileExists.txt")))).Returns(true);
 
+            //登録はされていない
+            filePathRepository.Setup(repo => repo.Load()).Returns(new List<FilePath>() { });
+
             //登録コマンドとなる
             IUserCommand command = _factory.Create(@"C:\Dir\FileExists.txt", false);
             Assert.IsType<RegisterPathCommand>(command);
+        }
+
+        [Fact]
+        public void 既に登録済のパスを入力したら_登録済ですとDLGで表示する()
+        {
+            //検索してもヒットしない
+            pathCandidateFilter.Setup(filter => filter.Filter(@"C:\Dir\FileExists.txt")).Returns(new List<FilePath>());
+
+            //しかし存在しているファイルパスであり
+            pathJudgeService.Setup(service => service.Exists(new FilePath((@"C:\Dir\FileExists.txt")))).Returns(true);
+
+            //登録はすでにされている時
+            filePathRepository.Setup(repo => repo.Load()).Returns(new List<FilePath>() { new FilePath(@"C:\Dir\FileExists.txt") });
+
+            //登録済と通知するコマンドとなる
+            IUserCommand command = _factory.Create(@"C:\Dir\FileExists.txt", false);
+            Assert.IsType<AlreadyRegisteredCommand>(command);
         }
     }
 }

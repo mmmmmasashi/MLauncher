@@ -19,7 +19,6 @@ namespace MLauncherApp.ViewModels.Commands
         private IDialogService dialogService;
         private IRunnerService runnerService;
 
-        private IUserCommand ShowAll;
         private IPathListWindowService pathListWindowService;
         private IPathJudgeService pathJudgeService;
 
@@ -46,9 +45,18 @@ namespace MLauncherApp.ViewModels.Commands
             //ヒットなし
             if (matchedPathList.Count == 0)
             {
-                if (pathJudgeService.Exists(new FilePath(userInput))) 
+                //存在しないファイルパスの場合は、検索して見つからなかったということ
+                if (!pathJudgeService.Exists(new FilePath(userInput))) return new NotFoundDialogCommand(dialogService);
+
+                //存在するファイルパスの場合
+                if (filePathRepository.Load().Contains(new FilePath(userInput)))
+                {
+                    return new AlreadyRegisteredCommand(dialogService);
+                }
+                else
+                {
                     return new RegisterPathCommand(userInput, filePathRepository, dialogService);
-                return new NotFoundDialogCommand(dialogService);
+                }
             }
 
             //一つだけヒット
