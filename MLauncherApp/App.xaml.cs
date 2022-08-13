@@ -23,6 +23,7 @@ namespace MLauncherApp
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterDialog<MessageControl>();
+            containerRegistry.RegisterDialog<ConfirmControl>();
 
             const string RegisteredPathTextFile = "path_list.txt";//TODO:可変にする。今は固定でexeの隣に保存している
             var repository = new FilePathRepository(RegisteredPathTextFile);
