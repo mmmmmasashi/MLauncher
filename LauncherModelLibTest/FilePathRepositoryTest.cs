@@ -29,7 +29,6 @@ namespace LauncherModelLibTest
             Assert.Equal(2, _repository.Load().Count);
         }
 
-
         [Fact]
         public void リポジトリはファイルで永続化されている()
         {
