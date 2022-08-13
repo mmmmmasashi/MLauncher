@@ -20,6 +20,7 @@ namespace MLauncherApp.ViewModels
         private IMessageService _messageService;
         private IRunnerService _runnerService;
         private IFilePathRepository _repository;
+        private PathListWindowService _pathListWindowService;
 
         private string _title = "MLauncher";
         public string Title
@@ -51,6 +52,7 @@ namespace MLauncherApp.ViewModels
             _messageService = messageService;
             _runnerService  = runnerService;
             _repository = filePathRepository;
+            _pathListWindowService = new PathListWindowService(dialogService, runnerService);
 
             TextBoxText = "";
 
@@ -98,19 +100,11 @@ namespace MLauncherApp.ViewModels
             //特殊コマンド
             if (TextBoxText == "/all")
             {
-                var allFilesParameters = DialogParametersService.Create(nameof(PathListControlViewModel.PathList), _repository.Load());
-                _dialogService.ShowDialog(nameof(PathListControl), allFilesParameters, (result) =>
-                {
-                    if (result.Result == ButtonResult.OK)
-                    {
-                        var filePathSelected = result.Parameters.GetValue<FilePath>(nameof(PathListControlViewModel.SelectedPathItem));
-                        _runnerService.Run(filePathSelected);
-                    }
-                });
+                _pathListWindowService.ShowDialog(_repository.Load());
                 return;
             }
 
-            //通常ケース
+            //ヒットなし
             var matchedPathList = PathSuggestionProvider.GetPathSuggestions(TextBoxText);
             bool noHit = matchedPathList.Count == 0;
             if (noHit)
@@ -119,6 +113,7 @@ namespace MLauncherApp.ViewModels
                 return;
             }
 
+            //唯一ヒット
             bool onlyOnePathHit = matchedPathList.Count == 1;
             if (onlyOnePathHit)
             {
@@ -129,15 +124,7 @@ namespace MLauncherApp.ViewModels
             }
 
             //複数ヒット
-            var parameters = DialogParametersService.Create(nameof(PathListControlViewModel.PathList), matchedPathList);
-            _dialogService.ShowDialog(nameof(PathListControl), parameters, (result) =>
-            {
-                if (result.Result == ButtonResult.OK)
-                {
-                    var filePathSelected = result.Parameters.GetValue<FilePath>(nameof(PathListControlViewModel.SelectedPathItem));
-                    _runnerService.Run(filePathSelected);
-                }
-            });
+            _pathListWindowService.ShowDialog(matchedPathList);
         }
     }
 }
