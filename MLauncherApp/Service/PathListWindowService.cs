@@ -23,7 +23,16 @@ namespace MLauncherApp.Service
 
         public void ShowDialog(IEnumerable<FilePath> candidates)
         {
-            var parameters = DialogParametersService.Create(nameof(PathListControlViewModel.PathList), candidates);
+            ShowDialog(candidates, "複数のパスがヒットしました。選択してください。");
+        }
+
+        public void ShowDialog(IEnumerable<FilePath> candidates, string message)
+        {
+            var parameters = DialogParametersService.Create(
+                nameof(PathListControlViewModel.PathList), candidates,
+                nameof(PathListControlViewModel.Message), message
+            );
+
             _dialogService.ShowDialog(nameof(PathListControl), parameters, (result) =>
             {
                 if (result.Result == ButtonResult.OK)

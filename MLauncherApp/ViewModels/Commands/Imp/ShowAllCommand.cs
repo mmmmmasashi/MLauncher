@@ -21,7 +21,7 @@ namespace MLauncherApp.ViewModels.Commands.Imp
 
         void IUserCommand.Execute()
         {
-            _pathListWindowService.ShowDialog(_repository.Load());
+            _pathListWindowService.ShowDialog(_repository.Load(), "全登録済パスリスト");
         }
     }
 }

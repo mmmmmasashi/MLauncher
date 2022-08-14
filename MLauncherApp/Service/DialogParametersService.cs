@@ -18,6 +18,15 @@ namespace MLauncherApp.Service
             return parameters;
         }
 
+        internal static DialogParameters Create(string key1, object value1, string key2, object value2)
+        {
+            var parameters = new DialogParameters();
+            parameters.Add(key1, value1);
+            parameters.Add(key2, value2);
+            return parameters;
+        }
+
+
         internal static IDialogParameters CreateForMessageControl(string message)
         {
             return Create(nameof(MessageControlViewModel.Message), message);

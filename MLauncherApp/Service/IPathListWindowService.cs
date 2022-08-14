@@ -10,5 +10,6 @@ namespace MLauncherApp.Service
     internal interface IPathListWindowService
     {
         void ShowDialog(IEnumerable<FilePath> candidates);
+        void ShowDialog(IEnumerable<FilePath> candidates, string message);
     }
 }

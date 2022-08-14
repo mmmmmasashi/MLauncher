@@ -13,6 +13,13 @@ namespace MLauncherApp.ViewModels
 {
     public class PathListControlViewModel : BindableBase, IDialogAware
     {
+        private string _message;
+        public string Message
+        {
+            get { return _message; }
+            set { SetProperty(ref _message, value); }
+        }
+
         public ObservableCollection<FilePath> PathList { get; } = new ObservableCollection<FilePath>();
         
         private FilePath _selectedPathItem;
@@ -111,6 +118,7 @@ namespace MLauncherApp.ViewModels
         public void OnDialogOpened(IDialogParameters parameters)
         {
             PathList.AddRange(parameters.GetValue<List<FilePath>>(nameof(PathList)));
+            Message = parameters.GetValue<string>(nameof(Message));
         }
     }
 }

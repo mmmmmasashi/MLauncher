@@ -11,7 +11,7 @@
     </UserControl.Resources>
     <Grid Margin="{StaticResource BaseMargin}">
         <StackPanel>
-            <TextBlock Text="複数のパスがヒットしました。選択してください。"/>
+            <TextBlock Text="{Binding Message}"/>
             <DataGrid ItemsSource="{Binding PathList, Mode=OneWay}" AutoGenerateColumns="False" 
                       SelectedItem="{Binding SelectedPathItem}" x:Name="MainDataGrid"
                       CanUserDeleteRows="False">
