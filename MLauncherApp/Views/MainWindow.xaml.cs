@@ -28,19 +28,12 @@ namespace MLauncherApp.Views
         private const int HOTKEY_ID = 9000;
 
         //Modifiers:
-        private const uint MOD_NONE = 0x0000; //(none)
-        private const uint MOD_ALT = 0x0001; //ALT
         private const uint MOD_CONTROL = 0x0002; //CTRL
         private const uint MOD_SHIFT = 0x0004; //SHIFT
-        private const uint MOD_WIN = 0x0008; //WINDOWS
-
         private const uint VK_Z = 0x5A;
-        private const uint VK_CAPITAL = 0x14;
-        private const uint VK_HOME = 0x24;
 
         private IntPtr _windowHandle;
         private HwndSource _source;
-
 
         public MainWindow()
         {
@@ -56,7 +49,10 @@ namespace MLauncherApp.Views
             _source.AddHook(HwndHook);
 
             var isSuccess = RegisterHotKey(_windowHandle, HOTKEY_ID, MOD_CONTROL | MOD_SHIFT, VK_Z); //Ctrl + Shift + Z
-            Trace.WriteLine($"isSuccess:{isSuccess}");
+            if (!isSuccess)
+            {
+                throw new Exception("ホットキーの登録に失敗しました");
+            }
         }
 
         private IntPtr HwndHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
