@@ -1,6 +1,8 @@
 ﻿# 今やってること
-https://social.technet.microsoft.com/wiki/contents/articles/30568.wpf-implementing-global-hot-keys.aspx
+- 削除しますか？と確認してから削除してほしい
+- 
 # TODO
+- 選択中のアイテムを複数まとめて削除したい
 - 候補を選択してない状態でEnterを押してもListWindowが起動しない
     - 調査メモ
         - InputBindingsではなくKeyをIteraction Triggersで取得すればイベントを検知できる。
@@ -11,5 +13,4 @@ https://social.technet.microsoft.com/wiki/contents/articles/30568.wpf-implementi
 - ListのWindowも、Ctrl押しながらで、もとのリストを残す仕様にする？
 - URLに対応する
 - パーセンテージエンコーディングに対応したい
-- ファイルリストから不要な登録を削除したい
 -存在しないファイルをまとめて削除する(存在しないファイルのリストを表示する？)

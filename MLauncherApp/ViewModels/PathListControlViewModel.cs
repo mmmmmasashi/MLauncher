@@ -1,5 +1,6 @@
 ﻿using LauncherModelLib;
 using MLauncherApp.Service;
+using MLauncherApp.Views;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
@@ -35,6 +36,7 @@ namespace MLauncherApp.ViewModels
         public DelegateCommand RunSelectedItemCommand { get; }
 
         private readonly IFilePathRepository _filePathRepository;
+        private readonly IDialogService _dialogService;
 
         public DelegateCommand RunParentOfSelectedItemCommand { get; }
         public DelegateCommand CancelCommand { get; }
@@ -42,11 +44,12 @@ namespace MLauncherApp.ViewModels
         public DelegateCommand LoadedCommand { get; }
         public DelegateCommand DeletePathCommand { get; }
 
-        public PathListControlViewModel(IFilePathRepository filePathRepository)
+        public PathListControlViewModel(IFilePathRepository filePathRepository, IDialogService dialogService)
         {
-            filePathRepository.UpdateEvent += ReloadFilePath;
             _filePathRepository = filePathRepository;
+            _dialogService = dialogService;
 
+            filePathRepository.UpdateEvent += ReloadFilePath;
 
             RunParentOfSelectedItemCommand = new DelegateCommand(() =>
             {
@@ -84,10 +87,26 @@ namespace MLauncherApp.ViewModels
             PathList.AddRange(newFiles);
         }
 
+        /// <summary>
+        /// 選択中のパスを確認してから削除する
+        /// </summary>
         private void RequestDelete()
         {
             if (SelectedPathItem == null) return;
-            _filePathRepository.Delete(SelectedPathItem);
+
+            _dialogService.ShowDialog(
+                nameof(ConfirmControl),
+                DialogParametersService.Create(
+                    nameof(ConfirmControlViewModel.Message), $"以下のパスを削除しますか？\r\n{SelectedPathItem.Path}"
+                ),
+                (result) =>
+                {
+                    if (result.Result == ButtonResult.OK)
+                    {
+                        _filePathRepository.Delete(SelectedPathItem);
+                    }
+                }
+            );
         }
 
         /// <summary>
