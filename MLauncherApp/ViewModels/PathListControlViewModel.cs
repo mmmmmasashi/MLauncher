@@ -94,19 +94,13 @@ namespace MLauncherApp.ViewModels
         {
             if (SelectedPathItem == null) return;
 
-            _dialogService.ShowDialog(
-                nameof(ConfirmControl),
-                DialogParametersService.Create(
-                    nameof(ConfirmControlViewModel.Message), $"以下のパスを削除しますか？\r\n{SelectedPathItem.Path}"
-                ),
-                (result) =>
-                {
-                    if (result.Result == ButtonResult.OK)
-                    {
-                        _filePathRepository.Delete(SelectedPathItem);
-                    }
-                }
-            );
+            var service = new ConfirmDialogService(_dialogService);
+            var isOK = service.Confirm($"以下のパスを削除しますか？\r\n{SelectedPathItem.Path}");
+            
+            if (isOK)
+            {
+                _filePathRepository.Delete(SelectedPathItem);
+            }
         }
 
         /// <summary>

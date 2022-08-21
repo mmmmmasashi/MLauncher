@@ -14,30 +14,19 @@ namespace MLauncherApp.ViewModels.Commands.Imp
     {
         private string _userInput;
         private IFilePathRepository _filePathRepository;
-        private IDialogService _dialogService;
+        private IConfirmDialogService _confirmDialogService;
 
         public RegisterPathCommand(string userInput, IFilePathRepository filePathRepository, IDialogService dialogService)
         {
             this._userInput = userInput;
             this._filePathRepository = filePathRepository;
-            this._dialogService = dialogService;
+            this._confirmDialogService = new ConfirmDialogService(dialogService);
         }
 
         void IUserCommand.Execute()
         {
-            _dialogService.ShowDialog(
-                nameof(ConfirmControl),
-                DialogParametersService.Create(
-                    nameof(ConfirmControlViewModel.Message), $"以下のパスを登録しますか？\r\n{_userInput}"
-                ),
-                (result) =>
-                {
-                    if (result.Result == ButtonResult.OK)
-                    {
-                        _filePathRepository.Save(new FilePath(_userInput));
-                    }
-                }
-            );
+            var isOK = _confirmDialogService.Confirm($"以下のパスを登録しますか？\r\n{_userInput}");
+            if (isOK) _filePathRepository.Save(new FilePath(_userInput));
             return;
         }
     }
