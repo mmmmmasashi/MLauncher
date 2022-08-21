@@ -29,6 +29,7 @@ namespace LauncherModelLib.HotKey
         const uint MOD_CONTROL = 0x0002; //CTRL
         const uint MOD_SHIFT = 0x0004; //SHIFT
         const uint VK_Z = 0x5A;
+        const int WM_HOTKEY = 0x0312;
 
         internal HotKeyHandle(Action callBack, IntPtr windowHandle)
         {
@@ -47,10 +48,9 @@ namespace LauncherModelLib.HotKey
             }
         }
 
-        internal IntPtr Hook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        private IntPtr Hook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            const int WM_HOTKEY = 0x0312;
-
+            //自分へのコールバックメッセージかチェック
             if (msg != WM_HOTKEY) return IntPtr.Zero;
             if (wParam.ToInt32() != HOTKEY_ID) return IntPtr.Zero;
 
@@ -59,6 +59,7 @@ namespace LauncherModelLib.HotKey
 
             if (modifier == (MOD_CONTROL | MOD_SHIFT) && key == VK_Z)
             {
+                //自分むけの場合はコールバック実行
                 _callBack();
             }
 

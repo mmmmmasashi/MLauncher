@@ -10,10 +10,11 @@ namespace LauncherModelLib.HotKey
 {
     public static class GlobalHotKeyFactory
     {
+        private static bool isRegistered = false;
         public static IDisposable Register(IntPtr windowHandle, Action callBack)
         {
-            //TODO:二回呼ばれないようにする
-            //TODO:定義を整理する
+            if (isRegistered) throw new InvalidProgramException("二度登録されるケースは想定外");//ホットキーの設定変更のユースケースでは、登録解除に対応する必要があるかも
+
             HotKeyHandle handle = new HotKeyHandle(callBack, windowHandle);
             return handle;
         }
