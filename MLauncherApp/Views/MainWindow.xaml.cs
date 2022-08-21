@@ -27,12 +27,12 @@ namespace MLauncherApp.Views
             base.OnSourceInitialized(e);
 
             IntPtr windowHandle = new WindowInteropHelper(this).Handle;
-            _hotKeyHandle = GlobalHotKeyFactory.Register(windowHandle, CallBackMethod);
+            _hotKeyHandle = GlobalHotKeyFactory.Register(windowHandle, ActivateHotKeyCallBack);
         }
 
-        private void CallBackMethod()
+        private void ActivateHotKeyCallBack()
         {
-            Trace.WriteLine("CALLED!");
+            this.Activate();
         }
 
         protected override void OnClosed(EventArgs e)
