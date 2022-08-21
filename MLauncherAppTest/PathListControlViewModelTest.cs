@@ -19,13 +19,14 @@ namespace MLauncherAppTest
     public class PathListControlViewModelTest
     {
         private Mock<IFilePathRepository> _repository;
+        private readonly Mock<IDialogService> _dialogService;
         private PathListControlViewModel vm;
 
         public PathListControlViewModelTest()
         {
             _repository = new Mock<IFilePathRepository>();
-            var dialogService = new Mock<IDialogService>();
-            vm = new PathListControlViewModel(_repository.Object, dialogService.Object);
+            _dialogService = new Mock<IDialogService>();
+            vm = new PathListControlViewModel(_repository.Object, _dialogService.Object);
         }
 
         [Fact]
@@ -59,8 +60,11 @@ namespace MLauncherAppTest
         [Fact]
         public void ファイルパスを選択した状態でDeleteを押すと_そのファイルパスが削除される()
         {
+            _dialogService.Setup(service => service.ShowDialog("ConfirmControl", It.IsAny<IDialogParameters>(), It.IsAny<Action<IDialogResult>>()))
+                .Callback<string, IDialogParameters, Action<IDialogResult>>((name, parameters, resultAction) => resultAction(new DialogResult(ButtonResult.OK)));
             vm.SelectedPathItem = new FilePath("filepath.txt");
             vm.DeletePathCommand.Execute();
+            _dialogService.Verify(service => service.ShowDialog("ConfirmControl", It.IsAny<IDialogParameters>(), It.IsAny<Action<IDialogResult>>()));
             _repository.Verify(repo => repo.Delete(new FilePath("filepath.txt")), Times.Once);
         }
 
