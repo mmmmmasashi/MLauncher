@@ -1,5 +1,5 @@
 ﻿# 今やってること
-
+https://social.technet.microsoft.com/wiki/contents/articles/30568.wpf-implementing-global-hot-keys.aspx
 # TODO
 - 候補を選択してない状態でEnterを押してもListWindowが起動しない
     - 調査メモ
