@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using LauncherModelLib.Path;
+using System.Text;
 
 namespace LauncherModelLib
 {

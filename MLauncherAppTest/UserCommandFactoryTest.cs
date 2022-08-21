@@ -1,4 +1,5 @@
 ﻿using LauncherModelLib;
+using LauncherModelLib.Path;
 using MLauncherApp.Service;
 using MLauncherApp.ViewModels.Commands;
 using MLauncherApp.ViewModels.Commands.Imp;

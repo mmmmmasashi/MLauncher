@@ -1,4 +1,5 @@
 ﻿using LauncherModelLib;
+using LauncherModelLib.Path;
 using System;
 using Xunit;
 

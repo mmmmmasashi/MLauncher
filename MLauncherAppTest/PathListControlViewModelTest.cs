@@ -1,4 +1,5 @@
 ﻿using LauncherModelLib;
+using LauncherModelLib.Path;
 using MLauncherApp.ViewModels;
 using MLauncherApp.Views;
 using Moq;
@@ -23,7 +24,8 @@ namespace MLauncherAppTest
         public PathListControlViewModelTest()
         {
             _repository = new Mock<IFilePathRepository>();
-            vm = new PathListControlViewModel(_repository.Object);
+            var dialogService = new Mock<IDialogService>();
+            vm = new PathListControlViewModel(_repository.Object, dialogService.Object);
         }
 
         [Fact]

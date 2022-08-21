@@ -1,5 +1,6 @@
 using AutoCompleteTextBox.Editors;
 using LauncherModelLib;
+using LauncherModelLib.Path;
 using MLauncherApp.Service;
 using MLauncherApp.ViewModels;
 using Moq;

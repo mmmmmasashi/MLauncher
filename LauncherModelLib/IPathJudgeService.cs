@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LauncherModelLib.Path;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace LauncherModelLib
 {
     public interface IPathJudgeService
     {
-        bool Exists(FilePath path);
+        bool Exists(IPath path);
     }
 }

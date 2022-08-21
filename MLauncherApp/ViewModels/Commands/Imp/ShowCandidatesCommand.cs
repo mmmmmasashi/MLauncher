@@ -1,4 +1,4 @@
-﻿using LauncherModelLib;
+﻿using LauncherModelLib.Path;
 using MLauncherApp.Service;
 using System;
 using System.Collections.Generic;

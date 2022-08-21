@@ -4,21 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LauncherModelLib
+namespace LauncherModelLib.Path
 {
-    public class FilePath
+    public class FilePath : IPath
     {
         private readonly string DoubleQuatation = "\"";
         public string Path { get; }
         public FilePath ParentPath { get => new FilePath(Directory.GetParent(Path)!.FullName); }
-        public bool Exists { get => (File.Exists(Path) || Directory.Exists(Path)); }
+        public bool Exists { get => File.Exists(Path) || Directory.Exists(Path); }
 
         public FilePath(string path)
         {
             //Windowsのエクスプローラーでパスをコピーすると、ダブルクォーテーションで囲まれたパスが取得されるので
             //それは削除する
             path = RemoveDoubleQuatationIfWrapped(path);
-            this.Path = path;
+            Path = path;
         }
 
         /// <summary>
