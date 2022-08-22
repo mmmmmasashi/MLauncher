@@ -1,5 +1,6 @@
 ﻿using AutoCompleteTextBox.Editors;
 using LauncherModelLib;
+using LauncherModelLib.Infra;
 using MLauncherApp.Service;
 using MLauncherApp.Views;
 using Prism.Ioc;
@@ -26,8 +27,8 @@ namespace MLauncherApp
             containerRegistry.RegisterDialog<ConfirmControl>();
 
             const string RegisteredPathTextFile = "path_list.txt";//TODO:可変にする。今は固定でexeの隣に保存している
-            var repository = new FilePathRepository(RegisteredPathTextFile);
-            containerRegistry.RegisterInstance<IFilePathRepository>(repository);
+            var repository = new PathRepository(RegisteredPathTextFile);
+            containerRegistry.RegisterInstance<IPathRepository>(repository);
             containerRegistry.RegisterInstance<IPathCandidateFilter>(new PathCandidateFilter(repository));
             containerRegistry.RegisterSingleton<IRunnerService, RunnerService>();
             containerRegistry.RegisterSingleton<IPathJudgeService, PathJudgeService>();

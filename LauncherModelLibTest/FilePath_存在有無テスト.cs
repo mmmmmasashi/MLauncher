@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
-using LauncherModelLib.Path;
+using LauncherModelLib.PathModel;
 
 namespace LauncherModelLibTest
 {

@@ -1,4 +1,4 @@
-﻿using LauncherModelLib.Path;
+﻿using LauncherModelLib.PathModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ namespace MLauncherApp.Service
 {
     internal interface IPathListWindowService
     {
-        void ShowDialog(IEnumerable<FilePath> candidates);
-        void ShowDialog(IEnumerable<FilePath> candidates, string message);
+        void ShowDialog(IEnumerable<IPath> candidates);
+        void ShowDialog(IEnumerable<IPath> candidates, string message);
     }
 }

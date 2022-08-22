@@ -1,5 +1,6 @@
 ﻿using LauncherModelLib;
-using LauncherModelLib.Path;
+using LauncherModelLib.Infra;
+using LauncherModelLib.PathModel;
 using MLauncherApp.Service;
 using MLauncherApp.ViewModels.Commands;
 using MLauncherApp.ViewModels.Commands.Imp;
@@ -18,12 +19,12 @@ namespace MLauncherAppTest
     {
         private Mock<IPathJudgeService> pathJudgeService;
         private UserCommandFactory _factory;
-        private Mock<IFilePathRepository> filePathRepository;
+        private Mock<IPathRepository> filePathRepository;
         private Mock<IPathCandidateFilter> pathCandidateFilter;
 
         public UserCommandFactoryTest()
         {
-            filePathRepository = new Mock<IFilePathRepository>();
+            filePathRepository = new Mock<IPathRepository>();
             pathCandidateFilter = new Mock<IPathCandidateFilter>();
             var dialogService = new Mock<IDialogService>();
             var runnerService = new Mock<IRunnerService>();
@@ -50,13 +51,13 @@ namespace MLauncherAppTest
         public void 未登録のパスを入力したら登録するか聞く()
         {
             //検索してもヒットしない
-            pathCandidateFilter.Setup(filter => filter.Filter(@"C:\Dir\FileExists.txt")).Returns(new List<FilePath>());
+            pathCandidateFilter.Setup(filter => filter.Filter(@"C:\Dir\FileExists.txt")).Returns(new List<IPath>());
 
             //しかし存在しているファイルパスの場合
             pathJudgeService.Setup(service => service.Exists(new FilePath((@"C:\Dir\FileExists.txt")))).Returns(true);
 
             //登録はされていない
-            filePathRepository.Setup(repo => repo.Load()).Returns(new List<FilePath>() { });
+            filePathRepository.Setup(repo => repo.Load()).Returns(new List<IPath>() { });
 
             //登録コマンドとなる
             IUserCommand command = _factory.Create(@"C:\Dir\FileExists.txt", false);
@@ -67,13 +68,13 @@ namespace MLauncherAppTest
         public void 既に登録済のパスを入力したら_登録済ですとDLGで表示する()
         {
             //検索してもヒットしない
-            pathCandidateFilter.Setup(filter => filter.Filter(@"C:\Dir\FileExists.txt")).Returns(new List<FilePath>());
+            pathCandidateFilter.Setup(filter => filter.Filter(@"C:\Dir\FileExists.txt")).Returns(new List<IPath>());
 
             //しかし存在しているファイルパスであり
             pathJudgeService.Setup(service => service.Exists(new FilePath((@"C:\Dir\FileExists.txt")))).Returns(true);
 
             //登録はすでにされている時
-            filePathRepository.Setup(repo => repo.Load()).Returns(new List<FilePath>() { new FilePath(@"C:\Dir\FileExists.txt") });
+            filePathRepository.Setup(repo => repo.Load()).Returns(new List<IPath>() { new FilePath(@"C:\Dir\FileExists.txt") });
 
             //登録済と通知するコマンドとなる
             IUserCommand command = _factory.Create(@"C:\Dir\FileExists.txt", false);

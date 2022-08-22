@@ -4,16 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LauncherModelLib.Path
+namespace LauncherModelLib.PathModel
 {
-    public class FilePath : IPath
+    internal class FilePath : IPath
     {
         private readonly string DoubleQuatation = "\"";
         public string Path { get; }
-        public FilePath ParentPath { get => new FilePath(Directory.GetParent(Path)!.FullName); }
+        public IPath ParentPath { get => PathFactory.Create(Directory.GetParent(Path)!.FullName); }
         public bool Exists { get => File.Exists(Path) || Directory.Exists(Path); }
 
-        public FilePath(string path)
+        internal FilePath(string path)
         {
             //Windowsのエクスプローラーでパスをコピーすると、ダブルクォーテーションで囲まれたパスが取得されるので
             //それは削除する
@@ -44,9 +44,5 @@ namespace LauncherModelLib.Path
             return HashCode.Combine(Path);
         }
 
-        public bool Contains(string text)
-        {
-            return Path.Contains(text);
-        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using LauncherModelLib;
-using LauncherModelLib.Path;
+using LauncherModelLib.Infra;
+using LauncherModelLib.PathModel;
 using MLauncherApp.Service;
 using MLauncherApp.ViewModels.Commands.Imp;
 using Prism.Services.Dialogs;
@@ -15,7 +16,7 @@ namespace MLauncherApp.ViewModels.Commands
 {
     internal class UserCommandFactory
     {
-        private IFilePathRepository filePathRepository;
+        private IPathRepository filePathRepository;
         private IPathCandidateFilter pathCandidateFilter;
         private IDialogService dialogService;
         private IRunnerService runnerService;
@@ -23,7 +24,7 @@ namespace MLauncherApp.ViewModels.Commands
         private IPathListWindowService pathListWindowService;
         private IPathJudgeService pathJudgeService;
 
-        public UserCommandFactory(IFilePathRepository filePathRepository, 
+        public UserCommandFactory(IPathRepository filePathRepository, 
             IPathCandidateFilter pathCandidateFilter, IDialogService dialogService, 
             IRunnerService runnerService, IPathListWindowService pathListWindowService,
             IPathJudgeService pathJudgeService)
@@ -47,10 +48,10 @@ namespace MLauncherApp.ViewModels.Commands
             if (matchedPathList.Count == 0)
             {
                 //存在しないファイルパスの場合は、検索して見つからなかったということ
-                if (!pathJudgeService.Exists(new FilePath(userInput))) return new NotFoundDialogCommand(dialogService);
+                if (!pathJudgeService.Exists(PathFactory.Create(userInput))) return new NotFoundDialogCommand(dialogService);
 
                 //存在するファイルパスの場合
-                if (filePathRepository.Load().Contains(new FilePath(userInput)))
+                if (filePathRepository.Load().Contains(PathFactory.Create(userInput)))
                 {
                     return new AlreadyRegisteredCommand(dialogService);
                 }
@@ -72,7 +73,7 @@ namespace MLauncherApp.ViewModels.Commands
         internal IUserCommand CreateRegisterCommand(string filePath)
         {
             //存在するファイルパスの場合
-            if (filePathRepository.Load().Contains(new FilePath(filePath)))
+            if (filePathRepository.Load().Contains(PathFactory.Create(filePath)))
             {
                 return new AlreadyRegisteredCommand(dialogService);
             }

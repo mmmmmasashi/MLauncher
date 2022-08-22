@@ -1,4 +1,4 @@
-﻿using LauncherModelLib;
+﻿using LauncherModelLib.Infra;
 using MLauncherApp.Service;
 using System;
 using System.Collections.Generic;
@@ -11,9 +11,9 @@ namespace MLauncherApp.ViewModels.Commands.Imp
     internal class ShowAllCommand : IUserCommand
     {
         private IPathListWindowService _pathListWindowService;
-        private IFilePathRepository _repository;
+        private IPathRepository _repository;
 
-        public ShowAllCommand(IPathListWindowService pathListWindowService, LauncherModelLib.IFilePathRepository filePathRepository)
+        public ShowAllCommand(IPathListWindowService pathListWindowService, IPathRepository filePathRepository)
         {
             this._pathListWindowService = pathListWindowService;
             this._repository = filePathRepository;

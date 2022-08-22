@@ -1,5 +1,5 @@
-﻿using LauncherModelLib;
-using LauncherModelLib.Path;
+﻿using LauncherModelLib.Infra;
+using LauncherModelLib.PathModel;
 using MLauncherApp.Service;
 using MLauncherApp.Views;
 using Prism.Commands;
@@ -22,10 +22,10 @@ namespace MLauncherApp.ViewModels
             set { SetProperty(ref _message, value); }
         }
 
-        public ObservableCollection<FilePath> PathList { get; } = new ObservableCollection<FilePath>();
+        public ObservableCollection<IPath> PathList { get; } = new ObservableCollection<IPath>();
         
-        private FilePath _selectedPathItem;
-        public FilePath SelectedPathItem
+        private IPath _selectedPathItem;
+        public IPath SelectedPathItem
         {
             get { return _selectedPathItem; }
             set { SetProperty(ref _selectedPathItem, value); }
@@ -36,7 +36,7 @@ namespace MLauncherApp.ViewModels
         public string Title => "パス選択";
         public DelegateCommand RunSelectedItemCommand { get; }
 
-        private readonly IFilePathRepository _filePathRepository;
+        private readonly IPathRepository _filePathRepository;
         private readonly IDialogService _dialogService;
 
         public DelegateCommand RunParentOfSelectedItemCommand { get; }
@@ -45,7 +45,7 @@ namespace MLauncherApp.ViewModels
         public DelegateCommand LoadedCommand { get; }
         public DelegateCommand DeletePathCommand { get; }
 
-        public PathListControlViewModel(IFilePathRepository filePathRepository, IDialogService dialogService)
+        public PathListControlViewModel(IPathRepository filePathRepository, IDialogService dialogService)
         {
             _filePathRepository = filePathRepository;
             _dialogService = dialogService;
@@ -108,7 +108,7 @@ namespace MLauncherApp.ViewModels
         /// 指定されたパスを呼び元に返してこのウィンドウはクローズする
         /// </summary>
         /// <param name="filePath"></param>
-        private void ReturnPath(FilePath filePath)
+        private void ReturnPath(IPath filePath)
         {
             if (filePath == null) return;
 

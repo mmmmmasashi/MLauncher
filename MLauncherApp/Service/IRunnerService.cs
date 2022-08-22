@@ -1,9 +1,9 @@
-﻿using LauncherModelLib.Path;
+﻿using LauncherModelLib.PathModel;
 
 namespace MLauncherApp.Service
 {
     public interface IRunnerService
     {
-        public void Run(FilePath matchedPath);
+        public void Run(IPath matchedPath);
     }
 }

@@ -1,22 +1,22 @@
-﻿using LauncherModelLib.Path;
+﻿using LauncherModelLib.PathModel;
 using System.Text;
 
-namespace LauncherModelLib
+namespace LauncherModelLib.Infra
 {
-    public class FilePathRepository : IFilePathRepository
+    public class PathRepository : IPathRepository
     {
         private string _savedFilePath;
-        private List<FilePath> _filePathList = new List<FilePath>();
+        private List<IPath> _filePathList = new List<IPath>();
 
         public EventHandler UpdateEvent { get; set; }//保持しているファイルパス一覧が更新されたときに、利用者に通知する
 
-        public FilePathRepository(string savedFilePath)
+        public PathRepository(string savedFilePath)
         {
-            this._savedFilePath = savedFilePath;
+            _savedFilePath = savedFilePath;
             _filePathList = Load();
         }
 
-        public void Save(FilePath filePath)
+        public void Save(IPath filePath)
         {
             if (_filePathList.Contains(filePath)) return;
 
@@ -27,14 +27,14 @@ namespace LauncherModelLib
         }
 
 
-        public List<FilePath> Load()
+        public List<IPath> Load()
         {
-            if (!File.Exists(_savedFilePath)) return new List<FilePath>();
+            if (!File.Exists(_savedFilePath)) return new List<IPath>();
             var lines = File.ReadAllLines(_savedFilePath);
-            return lines.Select(line => new FilePath(line)).ToList();
+            return lines.Select(line => PathFactory.Create(line)).ToList<IPath>();
         }
 
-        public void Delete(FilePath filePath)
+        public void Delete(IPath filePath)
         {
             _filePathList.Remove(filePath);
             SaveAllImp();

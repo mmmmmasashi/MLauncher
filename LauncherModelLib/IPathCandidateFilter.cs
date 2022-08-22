@@ -1,4 +1,4 @@
-﻿using LauncherModelLib.Path;
+﻿using LauncherModelLib.PathModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +12,6 @@ namespace LauncherModelLib
     /// </summary>
     public interface IPathCandidateFilter
     {
-        List<FilePath> Filter(string query);
+        List<IPath> Filter(string query);
     }
 }

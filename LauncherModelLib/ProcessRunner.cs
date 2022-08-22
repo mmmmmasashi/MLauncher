@@ -1,4 +1,4 @@
-﻿using LauncherModelLib.Path;
+﻿using LauncherModelLib.PathModel;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,7 +10,7 @@ namespace LauncherModelLib
 {
     public class ProcessRunner
     {
-        public static void Run(FilePath matchedPath)
+        public static void Run(IPath matchedPath)
         {
             if (matchedPath == null) return;
 

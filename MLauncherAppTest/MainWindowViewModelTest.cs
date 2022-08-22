@@ -1,6 +1,7 @@
 using AutoCompleteTextBox.Editors;
 using LauncherModelLib;
-using LauncherModelLib.Path;
+using LauncherModelLib.Infra;
+using LauncherModelLib.PathModel;
 using MLauncherApp.Service;
 using MLauncherApp.ViewModels;
 using Moq;
@@ -15,7 +16,7 @@ namespace MLauncherAppTest
     {
         private Mock<IDialogService> _dialogServiceMoc;
         private Mock<IRunnerService> _runnerServiceMoc;
-        private Mock<IFilePathRepository> _repositoryMoc;
+        private Mock<IPathRepository> _repositoryMoc;
         private Mock<IPathCandidateFilter> _suggestionService;
         private Mock<IPathJudgeService> _pathService;
 
@@ -25,13 +26,13 @@ namespace MLauncherAppTest
         {
             _dialogServiceMoc = new Mock<IDialogService>();
             _runnerServiceMoc = new Mock<IRunnerService>();
-            _repositoryMoc = new Mock<IFilePathRepository>();
+            _repositoryMoc = new Mock<IPathRepository>();
             _suggestionService = new Mock<IPathCandidateFilter>();
             _pathService = new Mock<IPathJudgeService>();
 
             //Setupで上書きしなければ、何も空のリポジトリとしておく
-            _repositoryMoc.Setup(repo => repo.Load()).Returns(new List<FilePath>());
-            _suggestionService.Setup(service => service.Filter(It.IsAny<string>())).Returns(new List<FilePath>());
+            _repositoryMoc.Setup(repo => repo.Load()).Returns(new List<IPath>());
+            _suggestionService.Setup(service => service.Filter(It.IsAny<string>())).Returns(new List<IPath>());
 
             _vm = new MainWindowViewModel(
                 _runnerServiceMoc.Object,
@@ -46,7 +47,7 @@ namespace MLauncherAppTest
         {
             _pathService.Setup(pathService => pathService.Exists(new FilePath("not_exist_name"))).Returns(false);
 
-            _suggestionService.Setup(suggestion => suggestion.Filter("not_exist_name")).Returns(new List<FilePath>());
+            _suggestionService.Setup(suggestion => suggestion.Filter("not_exist_name")).Returns(new List<IPath>());
 
             _vm.TextBoxText = "not_exist_name";
             _vm.RunCommand.Execute();
@@ -92,7 +93,7 @@ namespace MLauncherAppTest
         public void 一つしか候補がない状態でEnterを押すとそのファイルを開く()
         {
             _suggestionService.Setup(suggestion => suggestion.Filter("target"))
-                .Returns(new List<FilePath>()
+                .Returns(new List<IPath>()
                 {
                     new FilePath(@"C:\Dir\target.txt"),
                 });
@@ -108,7 +109,7 @@ namespace MLauncherAppTest
         {
 
             _suggestionService.Setup(suggestion => suggestion.Filter("target"))
-                .Returns(new List<FilePath>()
+                .Returns(new List<IPath>()
                 {
                     new FilePath(@"C:\Dir\target.txt"),
                 });
@@ -123,7 +124,7 @@ namespace MLauncherAppTest
         public void ヒットしたパスがディレクトリパスの時に_CtrlとEnterを同時押しすると親ディレクトリを開く()
         {
             _suggestionService.Setup(suggestion => suggestion.Filter("target"))
-                .Returns(new List<FilePath>()
+                .Returns(new List<IPath>()
                 {
                     new FilePath(@"C:\Dir\SubDir"),
                 });
@@ -139,7 +140,7 @@ namespace MLauncherAppTest
         {
             //Nameで検索したらName1.txt, Name2.txtにヒットするケース
             _suggestionService.Setup(suggestion => suggestion.Filter("Name"))
-                .Returns(new List<FilePath>()
+                .Returns(new List<IPath>()
                 {
                     new FilePath(@"C:\Dir\Name1.txt"),
                     new FilePath(@"C:\Dir\Name2.txt"),
@@ -160,7 +161,7 @@ namespace MLauncherAppTest
         [Fact]
         public void スラッシュallで全登録済パスを記録したテキストファイルを開く()
         {
-            _repositoryMoc.Setup(repo => repo.Load()).Returns(new List<FilePath>()
+            _repositoryMoc.Setup(repo => repo.Load()).Returns(new List<IPath>()
             {
                 new FilePath("file1.txt"),
                 new FilePath("file2.txt"),
@@ -172,8 +173,8 @@ namespace MLauncherAppTest
                 It.IsAny<Action<IDialogResult>>()))
                 .Callback<string, IDialogParameters, Action<IDialogResult>>((name, parameters, dialogResult) =>
                 {
-                    IEnumerable<FilePath> paths = parameters.GetValue<IEnumerable<FilePath>>("PathList");
-                    Assert.Equal(new List<FilePath>()
+                    IEnumerable<IPath> paths = parameters.GetValue<IEnumerable<IPath>>("PathList");
+                    Assert.Equal(new List<IPath>()
                     {
                                     new FilePath("file1.txt"),
                                     new FilePath("file2.txt"),
@@ -189,7 +190,7 @@ namespace MLauncherAppTest
         public void Enterを押すとテキストボックスはクリアされる_処理が完了するため()
         {
             _suggestionService.Setup(suggestion => suggestion.Filter("target"))
-                .Returns(new List<FilePath>()
+                .Returns(new List<IPath>()
                 {
                     new FilePath(@"C:\Dir\target.txt"),
                 });

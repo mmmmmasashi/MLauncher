@@ -1,5 +1,6 @@
 ﻿using AutoCompleteTextBox.Editors;
 using LauncherModelLib;
+using LauncherModelLib.Infra;
 using MLauncherApp.Service;
 using MLauncherApp.ViewModels.Commands;
 using MLauncherApp.Views;
@@ -20,7 +21,7 @@ namespace MLauncherApp.ViewModels
         private IRunnerService _runnerService;
         private UserCommandFactory _commandFactory;
         private IPathCandidateFilter _pathCandidateFilter;
-        private IFilePathRepository _repository;
+        private IPathRepository _repository;
         private IPathListWindowService _pathListWindowService;
         private IPathJudgeService _pathJudgeService;
         private string _title = "MLauncher";
@@ -44,7 +45,7 @@ namespace MLauncherApp.ViewModels
 
         public MainWindowViewModel(
             IRunnerService runnerService, 
-            IFilePathRepository filePathRepository, IDialogService dialogService,
+            IPathRepository filePathRepository, IDialogService dialogService,
             IPathCandidateFilter pathCandidateFilter, IPathJudgeService pathJudgeService)
         {
             _pathCandidateFilter = pathCandidateFilter;

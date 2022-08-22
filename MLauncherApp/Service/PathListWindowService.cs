@@ -1,4 +1,4 @@
-﻿using LauncherModelLib.Path;
+﻿using LauncherModelLib.PathModel;
 using MLauncherApp.ViewModels;
 using MLauncherApp.Views;
 using Prism.Services.Dialogs;
@@ -21,12 +21,12 @@ namespace MLauncherApp.Service
             _runnerService = runnerService;
         }
 
-        public void ShowDialog(IEnumerable<FilePath> candidates)
+        public void ShowDialog(IEnumerable<IPath> candidates)
         {
             ShowDialog(candidates, "複数のパスがヒットしました。選択してください。");
         }
 
-        public void ShowDialog(IEnumerable<FilePath> candidates, string message)
+        public void ShowDialog(IEnumerable<IPath> candidates, string message)
         {
             var parameters = DialogParametersService.Create(
                 nameof(PathListControlViewModel.PathList), candidates,

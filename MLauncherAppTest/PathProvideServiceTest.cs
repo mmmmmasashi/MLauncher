@@ -5,7 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using LauncherModelLib.Path;
+using LauncherModelLib.PathModel;
+using LauncherModelLib.Infra;
 
 namespace MLauncherAppTest
 {
@@ -21,7 +22,7 @@ namespace MLauncherAppTest
             }
             Directory.CreateDirectory(@"TestDir");
 
-            var repository = new FilePathRepository(@"TestDir\SavedFile.txt");
+            var repository = new PathRepository(@"TestDir\SavedFile.txt");
             repository.Save(new FilePath(@"C:\directory\filepath1.txt"));
             repository.Save(new FilePath(@"C:\directory\filepath2.txt"));
             repository.Save(new FilePath(@"C:\directory\filepath3.txt"));

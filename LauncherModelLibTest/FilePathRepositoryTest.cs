@@ -1,5 +1,5 @@
-﻿using LauncherModelLib;
-using LauncherModelLib.Path;
+﻿using LauncherModelLib.Infra;
+using LauncherModelLib.PathModel;
 using System;
 using Xunit;
 
@@ -8,7 +8,7 @@ namespace LauncherModelLibTest
 
     public class FilePathRepositoryTest
     {
-        IFilePathRepository _repository;
+        IPathRepository _repository;
 
         public FilePathRepositoryTest()
         {
@@ -18,7 +18,7 @@ namespace LauncherModelLibTest
             }
             Directory.CreateDirectory(@"TestForFilePathRepo");
 
-            _repository = new FilePathRepository(@"TestForFilePathRepo\RepositoryTest.txt");
+            _repository = new PathRepository(@"TestForFilePathRepo\RepositoryTest.txt");
             _repository.Save(new FilePath(@"C:\directory\filepath1.txt"));
             _repository.Save(new FilePath(@"C:\directory\filepath2.txt"));
         }
@@ -32,7 +32,7 @@ namespace LauncherModelLibTest
         [Fact]
         public void リポジトリはファイルで永続化されている()
         {
-            var anotherRepository = new FilePathRepository(@"TestForFilePathRepo\RepositoryTest.txt");
+            var anotherRepository = new PathRepository(@"TestForFilePathRepo\RepositoryTest.txt");
             var all = anotherRepository.Load();
             Assert.Equal(2, all.Count);
             Assert.Equal(new FilePath(@"C:\directory\filepath1.txt"), all[0]);

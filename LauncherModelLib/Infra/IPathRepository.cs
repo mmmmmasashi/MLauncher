@@ -1,17 +1,17 @@
-﻿using LauncherModelLib.Path;
+﻿using LauncherModelLib.PathModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LauncherModelLib
+namespace LauncherModelLib.Infra
 {
-    public interface IFilePathRepository
+    public interface IPathRepository
     {
-        void Save(FilePath filePath);
-        List<FilePath> Load();
-        void Delete(FilePath filePath);
+        void Save(IPath filePath);
+        List<IPath> Load();
+        void Delete(IPath filePath);
         public EventHandler UpdateEvent { get; set; }//保持しているファイルパス一覧が更新されたときに、利用者に通知する
     }
 }

@@ -1,5 +1,5 @@
-﻿using LauncherModelLib;
-using LauncherModelLib.Path;
+﻿using LauncherModelLib.Infra;
+using LauncherModelLib.PathModel;
 using MLauncherApp.ViewModels;
 using MLauncherApp.Views;
 using Moq;
@@ -18,13 +18,13 @@ namespace MLauncherAppTest
     /// </summary>
     public class PathListControlViewModelTest
     {
-        private Mock<IFilePathRepository> _repository;
+        private Mock<IPathRepository> _repository;
         private readonly Mock<IDialogService> _dialogService;
         private PathListControlViewModel vm;
 
         public PathListControlViewModelTest()
         {
-            _repository = new Mock<IFilePathRepository>();
+            _repository = new Mock<IPathRepository>();
             _dialogService = new Mock<IDialogService>();
             vm = new PathListControlViewModel(_repository.Object, _dialogService.Object);
         }
