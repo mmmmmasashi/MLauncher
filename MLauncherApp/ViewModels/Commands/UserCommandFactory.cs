@@ -65,7 +65,7 @@ namespace MLauncherApp.ViewModels.Commands
             //一つだけヒット
             if (matchedPathList.Count == 1) return new RunCommand(matchedPathList.First(), parentCall, runnerService);
 
-            ////複数ヒット
+            //複数ヒット
             if (matchedPathList.Count > 1) return new ShowCandidatesCommand(matchedPathList, pathListWindowService);
 
             throw new InvalidProgramException("来ないはず");

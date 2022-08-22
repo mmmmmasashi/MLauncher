@@ -20,7 +20,7 @@ namespace MLauncherApp.Service
 
         public IEnumerable GetSuggestions(string filter)
         {
-            return pathSuggestionProvider.Filter(filter).Select(path => path.Path);
+            return pathSuggestionProvider.Filter(filter).Select(path => path.PathToRead);
         }
     }
 }

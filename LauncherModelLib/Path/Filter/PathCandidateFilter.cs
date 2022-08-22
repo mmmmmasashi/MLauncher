@@ -34,7 +34,7 @@ namespace LauncherModelLib.Path.Filter
 
             foreach (var keyword in keywords)
             {
-                candidates = candidates.Where(candidate => candidate.Path.Contains(keyword));
+                candidates = candidates.Where(candidate => candidate.PathToRead.Contains(keyword));
             }
             return candidates.ToList();
         }

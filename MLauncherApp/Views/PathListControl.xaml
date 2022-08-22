@@ -22,7 +22,7 @@
                     <MouseBinding Command="{Binding RunSelectedItemCommand}" Gesture="LeftDoubleClick"/>
                 </DataGrid.InputBindings>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="パス" Binding="{Binding Path, Mode=OneWay}"/>
+                    <DataGridTextColumn Header="パス" Binding="{Binding PathToRead, Mode=OneWay}"/>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>
