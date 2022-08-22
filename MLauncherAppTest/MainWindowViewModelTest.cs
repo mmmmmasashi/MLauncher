@@ -1,7 +1,6 @@
 using AutoCompleteTextBox.Editors;
 using LauncherModelLib;
-using LauncherModelLib.Infra;
-using LauncherModelLib.PathModel;
+using LauncherModelLib.Path.Infra;
 using MLauncherApp.Service;
 using MLauncherApp.ViewModels;
 using Moq;
@@ -9,6 +8,8 @@ using Prism.Services.Dialogs;
 using System;
 using System.Windows.Input;
 using Xunit;
+using LauncherModelLib.Path.Paths;
+using LauncherModelLib.Path.Filter;
 
 namespace MLauncherAppTest
 {

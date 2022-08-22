@@ -1,5 +1,5 @@
-﻿using LauncherModelLib.Infra;
-using LauncherModelLib.PathModel;
+﻿using LauncherModelLib.Path.Infra;
+using LauncherModelLib.Path.Paths;
 using System;
 using Xunit;
 

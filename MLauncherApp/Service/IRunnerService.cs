@@ -1,4 +1,4 @@
-﻿using LauncherModelLib.PathModel;
+﻿using LauncherModelLib.Path.Paths;
 
 namespace MLauncherApp.Service
 {

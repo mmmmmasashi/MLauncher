@@ -1,5 +1,4 @@
-﻿using LauncherModelLib.Infra;
-using LauncherModelLib.PathModel;
+﻿using LauncherModelLib.Path.Infra;
 using MLauncherApp.Service;
 using MLauncherApp.Views;
 using Prism.Commands;
@@ -10,6 +9,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
+using LauncherModelLib.Path.Paths;
 
 namespace MLauncherApp.ViewModels
 {

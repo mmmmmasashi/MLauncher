@@ -1,5 +1,4 @@
-﻿using LauncherModelLib.Infra;
-using LauncherModelLib.PathModel;
+﻿using LauncherModelLib.Path.Infra;
 using MLauncherApp.ViewModels;
 using MLauncherApp.Views;
 using Moq;
@@ -10,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using LauncherModelLib.Path.Paths;
 
 namespace MLauncherAppTest
 {

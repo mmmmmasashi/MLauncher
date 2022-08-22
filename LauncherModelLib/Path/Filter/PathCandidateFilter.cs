@@ -1,12 +1,12 @@
-﻿using LauncherModelLib.Infra;
-using LauncherModelLib.PathModel;
+﻿using LauncherModelLib.Path.Infra;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LauncherModelLib.Path.Paths;
 
-namespace LauncherModelLib
+namespace LauncherModelLib.Path.Filter
 {
     public class PathCandidateFilter : IPathCandidateFilter
     {
@@ -16,7 +16,7 @@ namespace LauncherModelLib
 
         public PathCandidateFilter(PathRepository repository)
         {
-            this._repository = repository;
+            _repository = repository;
             _repository.UpdateEvent += ReloadCandidates;
             _masterCandidates = _repository.Load();
         }

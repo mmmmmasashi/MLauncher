@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LauncherModelLib.PathModel
+namespace LauncherModelLib.Path.Paths
 {
     public static class PathFactory
     {

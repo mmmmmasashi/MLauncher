@@ -1,4 +1,4 @@
-﻿using LauncherModelLib.PathModel;
+﻿using LauncherModelLib.Path.Paths;
 using MLauncherApp.ViewModels;
 using MLauncherApp.Views;
 using Prism.Services.Dialogs;

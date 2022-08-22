@@ -1,6 +1,7 @@
 ﻿using AutoCompleteTextBox.Editors;
 using LauncherModelLib;
-using LauncherModelLib.Infra;
+using LauncherModelLib.Path.Filter;
+using LauncherModelLib.Path.Infra;
 using MLauncherApp.Service;
 using MLauncherApp.Views;
 using Prism.Ioc;

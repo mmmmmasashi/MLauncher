@@ -1,11 +1,11 @@
-﻿using LauncherModelLib.PathModel;
+﻿using LauncherModelLib.Path.Paths;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LauncherModelLib.Infra
+namespace LauncherModelLib.Path.Infra
 {
     public interface IPathRepository
     {

@@ -1,4 +1,5 @@
-﻿using LauncherModelLib.PathModel;
+﻿using LauncherModelLib.Path.Paths;
+using LauncherModelLib.Path.Paths;
 using System;
 using System.Collections.Generic;
 using System.Linq;

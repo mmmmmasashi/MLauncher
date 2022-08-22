@@ -1,6 +1,5 @@
 ﻿using LauncherModelLib;
-using LauncherModelLib.Infra;
-using LauncherModelLib.PathModel;
+using LauncherModelLib.Path.Infra;
 using MLauncherApp.Service;
 using MLauncherApp.ViewModels.Commands;
 using MLauncherApp.ViewModels.Commands.Imp;
@@ -12,6 +11,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using LauncherModelLib.Path.Paths;
+using LauncherModelLib.Path.Filter;
 
 namespace MLauncherAppTest
 {

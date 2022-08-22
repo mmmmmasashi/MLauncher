@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using LauncherModelLib.PathModel;
-using LauncherModelLib.Infra;
+using LauncherModelLib.Path.Infra;
+using LauncherModelLib.Path.Paths;
 
 namespace MLauncherApp.ViewModels.Commands.Imp
 {

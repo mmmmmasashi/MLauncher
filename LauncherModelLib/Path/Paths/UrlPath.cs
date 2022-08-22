@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LauncherModelLib.PathModel
+namespace LauncherModelLib.Path.Paths
 {
     internal class UrlPath : IPath
     {
@@ -13,12 +13,12 @@ namespace LauncherModelLib.PathModel
         public UrlPath(string path)
         {
             if (!path.StartsWith("http")) throw new ArgumentException("URLではない文字列です");
-            this._path = path;
+            _path = path;
         }
 
         public string Path => _path;
 
-        public IPath ParentPath => new UrlPath(this._path);
+        public IPath ParentPath => new UrlPath(_path);
 
         public bool Exists => true;
 

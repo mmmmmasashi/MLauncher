@@ -1,7 +1,7 @@
-﻿using LauncherModelLib.PathModel;
+﻿using LauncherModelLib.Path.Paths;
 using System.Text;
 
-namespace LauncherModelLib.Infra
+namespace LauncherModelLib.Path.Infra
 {
     public class PathRepository : IPathRepository
     {

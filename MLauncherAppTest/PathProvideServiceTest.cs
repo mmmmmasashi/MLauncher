@@ -5,8 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using LauncherModelLib.PathModel;
-using LauncherModelLib.Infra;
+using LauncherModelLib.Path.Paths;
+using LauncherModelLib.Path.Infra;
+using LauncherModelLib.Path.Filter;
 
 namespace MLauncherAppTest
 {
