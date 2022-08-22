@@ -16,10 +16,21 @@ namespace LauncherModelLib.PathModel
             this._path = path;
         }
 
-        public string Path => throw new NotImplementedException();
+        public string Path => _path;
 
-        public IPath ParentPath => throw new NotImplementedException();
+        public IPath ParentPath => new UrlPath(this._path);
 
-        public bool Exists => throw new NotImplementedException();
+        public bool Exists => true;
+
+        public override bool Equals(object? obj)
+        {
+            return obj is UrlPath path &&
+                   _path == path._path;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(_path);
+        }
     }
 }
