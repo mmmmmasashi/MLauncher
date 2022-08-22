@@ -18,7 +18,7 @@ namespace MLauncherAppTest
 {
     public class UserCommandFactoryTest
     {
-        private Mock<IPathJudgeService> pathJudgeService;
+        private Mock<IPathJudgeService> _pathJudgeService;
         private UserCommandFactory _factory;
         private Mock<IPathRepository> filePathRepository;
         private Mock<IPathCandidateFilter> pathCandidateFilter;
@@ -30,7 +30,7 @@ namespace MLauncherAppTest
             var dialogService = new Mock<IDialogService>();
             var runnerService = new Mock<IRunnerService>();
             var pathListWindowService = new Mock<IPathListWindowService>();
-            pathJudgeService = new Mock<IPathJudgeService>();
+            _pathJudgeService = new Mock<IPathJudgeService>();
 
             _factory = new UserCommandFactory(
                 filePathRepository.Object,
@@ -38,7 +38,7 @@ namespace MLauncherAppTest
                 dialogService.Object,
                 runnerService.Object,
                 pathListWindowService.Object,
-                pathJudgeService.Object);
+                _pathJudgeService.Object);
         }
 
         [Fact]
@@ -55,7 +55,7 @@ namespace MLauncherAppTest
             pathCandidateFilter.Setup(filter => filter.Filter(@"C:\Dir\FileExists.txt")).Returns(new List<IPath>());
 
             //しかし存在しているファイルパスの場合
-            pathJudgeService.Setup(service => service.Exists(new FilePath((@"C:\Dir\FileExists.txt")))).Returns(true);
+            _pathJudgeService.Setup(service => service.Exists(new FilePath((@"C:\Dir\FileExists.txt")))).Returns(true);
 
             //登録はされていない
             filePathRepository.Setup(repo => repo.Load()).Returns(new List<IPath>() { });
@@ -72,7 +72,7 @@ namespace MLauncherAppTest
             pathCandidateFilter.Setup(filter => filter.Filter(@"C:\Dir\FileExists.txt")).Returns(new List<IPath>());
 
             //しかし存在しているファイルパスであり
-            pathJudgeService.Setup(service => service.Exists(new FilePath((@"C:\Dir\FileExists.txt")))).Returns(true);
+            _pathJudgeService.Setup(service => service.Exists(new FilePath((@"C:\Dir\FileExists.txt")))).Returns(true);
 
             //登録はすでにされている時
             filePathRepository.Setup(repo => repo.Load()).Returns(new List<IPath>() { new FilePath(@"C:\Dir\FileExists.txt") });

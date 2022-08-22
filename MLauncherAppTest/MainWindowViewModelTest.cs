@@ -46,8 +46,6 @@ namespace MLauncherAppTest
         [Fact]
         public void リストに存在しない名前を入力した時_ファイルパスでなければ_存在しませんとエラーメッセージが出る()
         {
-            _pathService.Setup(pathService => pathService.Exists(new FilePath("not_exist_name"))).Returns(false);
-
             _suggestionService.Setup(suggestion => suggestion.Filter("not_exist_name")).Returns(new List<IPath>());
 
             _vm.TextBoxText = "not_exist_name";
