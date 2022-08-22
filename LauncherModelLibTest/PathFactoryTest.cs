@@ -8,7 +8,7 @@ using Xunit;
 
 namespace LauncherModelLibTest
 {
-    public class URLPathTest
+    public class PathFactoryTest
     {
         [Fact]
         public void http_スタートだとURLPathとして認識される()
@@ -21,5 +21,10 @@ namespace LauncherModelLibTest
         {
             Assert.IsType<FilePath>(PathFactory.Create(@"C:\Directory\File.txt"));
         }
+        //public string Path => throw new NotImplementedException();
+
+        //public IPath ParentPath => throw new NotImplementedException();
+
+        //public bool Exists => throw new NotImplementedException();
     }
 }
