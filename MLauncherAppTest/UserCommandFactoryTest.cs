@@ -1,5 +1,4 @@
-﻿using LauncherModelLib;
-using LauncherModelLib.Path.Infra;
+﻿using LauncherModelLib.Path.Infra;
 using MLauncherApp.Service;
 using MLauncherApp.ViewModels.Commands;
 using MLauncherApp.ViewModels.Commands.Imp;
@@ -13,6 +12,7 @@ using System.Threading.Tasks;
 using Xunit;
 using LauncherModelLib.Path.Paths;
 using LauncherModelLib.Path.Filter;
+using LauncherModelLib.Path.Existence;
 
 namespace MLauncherAppTest
 {

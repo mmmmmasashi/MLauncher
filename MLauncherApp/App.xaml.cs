@@ -1,5 +1,5 @@
 ﻿using AutoCompleteTextBox.Editors;
-using LauncherModelLib;
+using LauncherModelLib.Path.Existence;
 using LauncherModelLib.Path.Filter;
 using LauncherModelLib.Path.Infra;
 using MLauncherApp.Service;

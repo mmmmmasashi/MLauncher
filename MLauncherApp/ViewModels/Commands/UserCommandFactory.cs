@@ -1,5 +1,4 @@
-﻿using LauncherModelLib;
-using LauncherModelLib.Path.Infra;
+﻿using LauncherModelLib.Path.Infra;
 using MLauncherApp.Service;
 using MLauncherApp.ViewModels.Commands.Imp;
 using Prism.Services.Dialogs;
@@ -12,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using LauncherModelLib.Path.Paths;
 using LauncherModelLib.Path.Filter;
+using LauncherModelLib.Path.Existence;
 
 namespace MLauncherApp.ViewModels.Commands
 {

@@ -1,5 +1,4 @@
 using AutoCompleteTextBox.Editors;
-using LauncherModelLib;
 using LauncherModelLib.Path.Infra;
 using MLauncherApp.Service;
 using MLauncherApp.ViewModels;
@@ -10,6 +9,7 @@ using System.Windows.Input;
 using Xunit;
 using LauncherModelLib.Path.Paths;
 using LauncherModelLib.Path.Filter;
+using LauncherModelLib.Path.Existence;
 
 namespace MLauncherAppTest
 {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LauncherModelLib
+namespace LauncherModelLib.Path.Existence
 {
     /// <summary>
     /// 不要かもしれない。
