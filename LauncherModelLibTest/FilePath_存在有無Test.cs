@@ -9,12 +9,12 @@ using LauncherModelLib.Path.Paths;
 
 namespace LauncherModelLibTest
 {
-    public class FilePath_存在有無テスト
+    public class FilePath_存在有無Test
     {
         string TestDir = "PathJudgeServiceTestDir";
         string TestFile = @"PathJudgeServiceTestDir\FileName.txt";
 
-        public FilePath_存在有無テスト()
+        public FilePath_存在有無Test()
         {
             if (Directory.Exists(TestDir))
             {

@@ -17,6 +17,14 @@ namespace LauncherModelLib.Path.Paths
         }
 
         public string Path => _path;
+        public string PathToRead
+        {
+            get
+            {
+                return System.Web.HttpUtility.UrlDecode(Path);
+            }
+        }
+
 
         public IPath ParentPath => new UrlPath(_path);
 

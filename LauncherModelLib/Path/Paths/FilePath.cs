@@ -10,6 +10,8 @@ namespace LauncherModelLib.Path.Paths
     {
         private readonly string DoubleQuatation = "\"";
         public string Path { get; }
+        public string PathToRead { get => Path; }
+
         public IPath ParentPath { get => PathFactory.Create(Directory.GetParent(Path)!.FullName); }
         public bool Exists { get => File.Exists(Path) || Directory.Exists(Path); }
 

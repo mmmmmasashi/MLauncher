@@ -9,6 +9,7 @@ namespace LauncherModelLib.Path.Paths
     public interface IPath
     {
         string Path { get; }
+        string PathToRead { get; }
         public IPath ParentPath { get; }
         bool Exists { get; }
     }
