@@ -26,8 +26,9 @@ namespace MLauncherApp.ViewModels.Commands.Imp
 
         void IUserCommand.Execute()
         {
-            var isOK = _confirmDialogService.Confirm($"以下のパスを登録しますか？\r\n{_userInput}");
-            if (isOK) _filePathRepository.Save(PathFactory.Create(_userInput));
+            var pathNew = PathFactory.Create(_userInput);
+            var isOK = _confirmDialogService.Confirm($"以下のパスを登録しますか？\r\n{pathNew.PathToRead}");
+            if (isOK) _filePathRepository.Save(pathNew);
             return;
         }
     }
