@@ -37,7 +37,7 @@ namespace MLauncherApp.Service
             {
                 if (result.Result == ButtonResult.OK)
                 {
-                    var filePathSelected = result.Parameters.GetValue<FilePath>(nameof(PathListControlViewModel.SelectedPathItem));
+                    var filePathSelected = result.Parameters.GetValue<IPath>(nameof(PathListControlViewModel.SelectedPathItem));
                     _runnerService.Run(filePathSelected);
                 }
             });

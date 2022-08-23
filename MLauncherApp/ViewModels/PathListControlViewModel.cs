@@ -131,7 +131,7 @@ namespace MLauncherApp.ViewModels
 
         public void OnDialogOpened(IDialogParameters parameters)
         {
-            PathList.AddRange(parameters.GetValue<List<FilePath>>(nameof(PathList)));
+            PathList.AddRange(parameters.GetValue<List<IPath>>(nameof(PathList)));
             Message = parameters.GetValue<string>(nameof(Message));
         }
     }
