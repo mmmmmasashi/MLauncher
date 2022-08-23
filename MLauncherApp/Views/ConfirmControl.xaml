@@ -8,7 +8,7 @@
     </UserControl.Resources>
     <Grid Margin="{StaticResource BaseMargin}">
         <StackPanel>
-            <TextBlock Text="{Binding Message}"/>
+            <TextBlock Text="{Binding Message}" TextWrapping="Wrap"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button Command="{Binding OKCommand}" Content="OK" x:Name="OKButton"/>
                 <Button Command="{Binding CancelCommand}" Content="キャンセル"/>

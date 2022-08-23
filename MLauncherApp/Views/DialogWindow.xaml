@@ -4,7 +4,7 @@
              xmlns:prism="http://prismlibrary.com/"
              xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              prism:ViewModelLocator.AutoWireViewModel="True" TitleCharacterCasing="Normal"
-                 SizeToContent="WidthAndHeight" WindowStartupLocation="CenterOwner">
+                 SizeToContent="WidthAndHeight" WindowStartupLocation="CenterOwner" MaxWidth="600">
     <Grid>
             
     </Grid>
