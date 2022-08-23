@@ -43,6 +43,7 @@ namespace MLauncherApp.ViewModels
         public DelegateCommand<DragEventArgs> DropCommand      { get; }
         public DelegateCommand RunCommand { get; }
         public DelegateCommand RunParentCommand { get; }
+        public DelegateCommand ShowSettingCommand { get; }
 
         public MainWindowViewModel(
             IRunnerService runnerService, 
@@ -64,14 +65,14 @@ namespace MLauncherApp.ViewModels
             DropCommand         = new DelegateCommand<DragEventArgs>(DropEvent);
             RunCommand = new DelegateCommand(() => Execute(false));
             RunParentCommand = new DelegateCommand(() => Execute(true));
-            
+            ShowSettingCommand = new DelegateCommand(() => _dialogService.ShowDialog(nameof(SettingControl), null, null));
+
             _commandFactory = new UserCommandFactory(
                 filePathRepository, pathCandidateFilter, 
                 dialogService, runnerService, 
                 _pathListWindowService, pathJudgeService);
 
         }
-
         private void MouseOverEvent(DragEventArgs e)
         {
             e.Effects = DragDropEffects.Copy;

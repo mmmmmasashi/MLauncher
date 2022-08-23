@@ -44,6 +44,13 @@ namespace MLauncherAppTest
         }
 
         [Fact]
+        public void 設定ボタンを押すとSettingControlが呼ばれる()
+        {
+            _vm.ShowSettingCommand.Execute();
+            _dialogServiceMoc.Verify(service => service.ShowDialog("SettingControl", null, null), Times.Once);
+        }
+
+        [Fact]
         public void リストに存在しない名前を入力した時_ファイルパスでなければ_存在しませんとエラーメッセージが出る()
         {
             _suggestionService.Setup(suggestion => suggestion.Filter("not_exist_name")).Returns(new List<IPath>());
