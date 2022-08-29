@@ -7,9 +7,9 @@ namespace MLauncherAppTest
         [Fact]
         public void LoadするとAppSettingが取れる()
         {
-            ISettingRepository repository = new SettingRepository(@"C:\RootDir");
+            ISettingRepository repository = new SettingRepository();
             AppSetting setting = repository.Load();
-            Assert.Equal(@"C:\RootDir\path_list.txt", setting.SettingFilePath);
+            Assert.True(setting.SettingFilePath.EndsWith("path_list.txt"));
         }
     }
 }

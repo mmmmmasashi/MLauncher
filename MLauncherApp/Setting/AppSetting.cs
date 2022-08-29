@@ -2,11 +2,13 @@
 {
     public class AppSetting
     {
-        public string SettingFilePath { get; }
+        private string pathListPath;
 
-        public AppSetting()
+        public string SettingFilePath { get => pathListPath; }
+
+        public AppSetting(string pathListPath)
         {
-            this.SettingFilePath = @"C:\RootDir" + @"\path_list.txt";
+            this.pathListPath = pathListPath;
         }
     }
 }

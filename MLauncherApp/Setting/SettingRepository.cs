@@ -2,13 +2,14 @@
 {
     internal class SettingRepository : ISettingRepository
     {
-        internal SettingRepository(string rootDir)
+        internal SettingRepository()
         {
         }
 
         public AppSetting Load()
         {
-            return new AppSetting();
+            string pathListPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments) + @"\path_list.txt";
+            return new AppSetting(pathListPath);
         }
     }
 }
