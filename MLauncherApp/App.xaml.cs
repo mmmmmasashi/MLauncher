@@ -2,6 +2,7 @@
 using LauncherModelLib.Path.Existence;
 using LauncherModelLib.Path.Filter;
 using LauncherModelLib.Path.Infra;
+using LauncherModelLib.Setting;
 using MLauncherApp.Service;
 using MLauncherApp.Views;
 using Prism.Ioc;
@@ -34,6 +35,7 @@ namespace MLauncherApp
             containerRegistry.RegisterInstance<IPathCandidateFilter>(new PathCandidateFilter(repository));
             containerRegistry.RegisterSingleton<IRunnerService, RunnerService>();
             containerRegistry.RegisterSingleton<IPathJudgeService, PathJudgeService>();
+            containerRegistry.RegisterInstance<ISettingRepository>(new SettingRepository(@"."));
 
             containerRegistry.RegisterDialog<PathListControl>();
 

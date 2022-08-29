@@ -18,12 +18,13 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <TextBlock  Grid.Column="0" Text="設定ファイルパス"/>
-            <TextBox    Grid.Column="2" Text="{Binding SettingFilePath}"/>
+            <TextBox    Grid.Column="2" Text="{Binding SettingFilePath, Mode=OneWay}" IsReadOnly="True"/>
         </Grid>
-        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right">
+
+        <!--<StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right">
             <Button Content="キャンセル"     Grid.Row="1" Margin="0,0,8,0" Style="{StaticResource StandardButtonStyle}"/>
             <Button Content="保存して閉じる" Grid.Row="1" Style="{StaticResource StandardButtonStyle}"/>
-        </StackPanel>
+        </StackPanel>-->
 
     </Grid>
 </UserControl>
