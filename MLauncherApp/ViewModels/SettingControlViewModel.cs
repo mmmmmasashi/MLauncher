@@ -11,16 +11,37 @@ namespace MLauncherApp.ViewModels
     public class SettingControlViewModel : BindableBase, IDialogAware
     {
         private string _settingFilePath;
+        private readonly ISettingRepository _settingRepository;
+
         public string SettingFilePath
         {
             get { return _settingFilePath; }
             set { SetProperty(ref _settingFilePath, value); }
         }
 
-        public SettingControlViewModel(ISettingRepository settingSepository)
+        public DelegateCommand CancelCommand { get;}
+        public DelegateCommand SaveAndCloseCommand { get; }
+
+        public SettingControlViewModel(ISettingRepository settingRepository)
         {
-            AppSetting setting = settingSepository.Load();
+            _settingRepository = settingRepository;
+            AppSetting setting = settingRepository.Load();
             SettingFilePath = setting.SettingFilePath;
+
+            SaveAndCloseCommand = new DelegateCommand(SaveAndClose);
+            CancelCommand = new DelegateCommand(Cancel);
+        }
+
+        private void Cancel()
+        {
+            RequestClose.Invoke(new DialogResult(ButtonResult.Cancel));
+        }
+
+        private void SaveAndClose()
+        {
+            var newSetting = new AppSetting(SettingFilePath);
+            _settingRepository.Save(newSetting);
+            RequestClose.Invoke(new DialogResult(ButtonResult.OK));
         }
 
         public string Title => "設定";
