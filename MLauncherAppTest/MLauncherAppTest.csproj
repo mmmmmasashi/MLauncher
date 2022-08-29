@@ -26,4 +26,8 @@
     <ProjectReference Include="..\MLauncherApp\MLauncherApp.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Setting\" />
+  </ItemGroup>
+
 </Project>

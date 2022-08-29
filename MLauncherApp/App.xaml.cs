@@ -1,14 +1,10 @@
-﻿using AutoCompleteTextBox.Editors;
-using LauncherModelLib.Path.Existence;
+﻿using LauncherModelLib.Path.Existence;
 using LauncherModelLib.Path.Filter;
 using LauncherModelLib.Path.Infra;
-using LauncherModelLib.Setting;
 using MLauncherApp.Service;
+using MLauncherApp.Setting;
 using MLauncherApp.Views;
 using Prism.Ioc;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 
 namespace MLauncherApp
@@ -35,7 +31,7 @@ namespace MLauncherApp
             containerRegistry.RegisterInstance<IPathCandidateFilter>(new PathCandidateFilter(repository));
             containerRegistry.RegisterSingleton<IRunnerService, RunnerService>();
             containerRegistry.RegisterSingleton<IPathJudgeService, PathJudgeService>();
-            containerRegistry.RegisterInstance<ISettingRepository>(new SettingRepository(@"."));
+            containerRegistry.RegisterSingleton<ISettingRepository, SettingRepository>();
 
             containerRegistry.RegisterDialog<PathListControl>();
 

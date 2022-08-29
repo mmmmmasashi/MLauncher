@@ -1,12 +1,6 @@
-﻿using LauncherModelLib.Setting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
+﻿using MLauncherApp.Setting;
 
-namespace LauncherModelLibTest.Setting
+namespace MLauncherAppTest
 {
     public class SettingRepositoryTest
     {
