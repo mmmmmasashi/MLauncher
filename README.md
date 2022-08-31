@@ -22,12 +22,25 @@
 # 特徴
 - 半角英数字での検索に対応しています(migemoによる)
 - URLにもファイル/フォルダパスにも対応
-
+- パーセントエンコーディングされたURLは、エンコーディング前の日本語で検索可能です。
+	- 例)
+    	- Wikipediaの"パーセントエンコーディング"のページは以下の通りパーセンテージエンコーディングされます。
+        	- "[https://ja.wikipedia.org/wiki/%E3%83%91%E3%83%BC%E3%82%BB%E3%83%B3%E3%83%88%E3%82%A8%E3%83%B3%E3%82%B3%E3%83%BC%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0](https://ja.wikipedia.org/wiki/%E3%83%91%E3%83%BC%E3%82%BB%E3%83%B3%E3%83%88%E3%82%A8%E3%83%B3%E3%82%B3%E3%83%BC%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0)"
+		- 検索では"パーセントエンコーディング"という文字列でヒットします。
+    		- "[https://ja.wikipedia.org/wiki/パーセントエンコーディング](https://ja.wikipedia.org/wiki/パーセントエンコーディング)"
+	- 目的
+    	- SharePointなどのクラウド系サービスで、URLに日本語を含むファイルを利用する場合を想定しています。この場合、パスを示すURLがパーセンテージエンコーディングされた文字列となるため。
 
 # 利用しているOSS一覧
 | 名称 | URL |
 | --- | --- |
 | migemo | https://github.com/koron/cmigemo |
+| Prism.Unity | https://github.com/PrismLibrary/Prism |
+| MaterialDesignThemes | https://github.com/MaterialDesignInXAML/MaterialDesignInXamlToolkit|
+| MahApps.Metro | https://github.com/MahApps/MahApps.Metro |
+| AutoCompleteTextBox | https://github.com/quicoli/WPF-AutoComplete-TextBox |
+
+
 
 # License
 The source code is licensed MIT. The website content is licensed CC BY 4.0,see LICENSE.
