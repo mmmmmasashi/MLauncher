@@ -1,9 +1,10 @@
 # MLauncherとは
-ファイル/フォルダパス/URLのランチャーです。半角英数字でのローマ字検索に対応しています。
+ファイル/フォルダ/URLのランチャーです。パスを登録しておくと、検索でき、Enterで起動します(URLの場合はブラウザが起動します)
 ![](Document/demo_search.gif)
 
-※開発中の段階で、正式リリース前です。
-※追加したい機能/修正のリストは[MLauncherApp/TODO.md](MLauncherApp/TODO.md)を参照ください。
+# 注意点
+- 開発中の段階で、正式リリース前です。
+- 追加したい機能/修正のリストは[MLauncherApp/TODO.md](MLauncherApp/TODO.md)を参照ください。
 
 # 使い方
 - 基本操作
