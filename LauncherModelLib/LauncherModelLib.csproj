@@ -16,5 +16,28 @@
       <_Parameter1>MLauncherAppTest</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Migemo\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Migemo\dict\cp932\han2zen.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Migemo\dict\cp932\hira2kata.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Migemo\dict\cp932\migemo-dict">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Migemo\dict\cp932\roma2hira.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Migemo\dict\cp932\zen2han.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Migemo\migemo.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 
 </Project>
