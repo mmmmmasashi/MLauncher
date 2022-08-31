@@ -24,6 +24,17 @@ namespace MLauncherApp.Setting
             }
         }
 
+        public void Save(AppSetting appSetting)
+        {
+            _settings.SettingFilePath = appSetting.SettingFilePath;
+            _settings.IsInitialized = true;
+            _settings.Save();
+        }
+
+        /// <summary>
+        /// ドキュメント/path_list.txt がデフォルトパス
+        /// </summary>
+        /// <returns></returns>
         private AppSetting CreateDefaultSetting()
         {
             string pathListPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments) + @"\path_list.txt";
@@ -36,11 +47,5 @@ namespace MLauncherApp.Setting
             return new AppSetting(pathListPath);
         }
 
-        public void Save(AppSetting appSetting)
-        {
-            _settings.SettingFilePath = appSetting.SettingFilePath;
-            _settings.IsInitialized = true;
-            _settings.Save();
-        }
     }
 }
