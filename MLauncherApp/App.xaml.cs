@@ -25,13 +25,16 @@ namespace MLauncherApp
             containerRegistry.RegisterDialog<ConfirmControl>();
             containerRegistry.RegisterDialog<SettingControl>();
 
-            const string RegisteredPathTextFile = "path_list.txt";//TODO:可変にする。今は固定でexeの隣に保存している
-            var repository = new PathRepository(RegisteredPathTextFile);
+            var settingRespository = new SettingRepository();
+            containerRegistry.RegisterInstance<ISettingRepository>(settingRespository);
+
+            var setting = settingRespository.Load();
+            string registeredPathTextFile = setting.SettingFilePath;
+            var repository = new PathRepository(registeredPathTextFile);
             containerRegistry.RegisterInstance<IPathRepository>(repository);
             containerRegistry.RegisterInstance<IPathCandidateFilter>(new PathCandidateFilter(repository));
             containerRegistry.RegisterSingleton<IRunnerService, RunnerService>();
             containerRegistry.RegisterSingleton<IPathJudgeService, PathJudgeService>();
-            containerRegistry.RegisterSingleton<ISettingRepository, SettingRepository>();
 
             containerRegistry.RegisterDialog<PathListControl>();
 
