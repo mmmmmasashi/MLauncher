@@ -21,6 +21,7 @@
         
         <editors:AutoCompleteTextBox Grid.Column="1" x:Name="MainTextBox" Text="{Binding TextBoxText, UpdateSourceTrigger=PropertyChanged}"
                                      Height="24" VerticalContentAlignment="Center" AllowDrop="True"
+                                     PreviewKeyDown="TextBox_PreviewKeyDown"
                                      Provider="{Binding AutoCompleteProvider}"
                                      Watermark="検索文字列 or 登録したいパスを入力して下さい">
             <editors:AutoCompleteTextBox.LoadingContent>
@@ -29,10 +30,11 @@
                     FontSize="14"
                     Text="Loading..." />
             </editors:AutoCompleteTextBox.LoadingContent>
-            <editors:AutoCompleteTextBox.InputBindings>
+            <!--PreviewKeyDownに譲っている-->
+            <!--<editors:AutoCompleteTextBox.InputBindings>
                 <KeyBinding Command="{Binding RunCommand}" Gesture="Enter"/>
                 <KeyBinding Command="{Binding RunParentCommand}" Gesture="CTRL+Enter"/>
-            </editors:AutoCompleteTextBox.InputBindings>
+            </editors:AutoCompleteTextBox.InputBindings>-->
             <!--イベントをVMに飛ばす方法 https://stackoverflow.com/questions/32669964/where-to-put-events-when-using-mvvm-->
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="PreviewDragEnter">
