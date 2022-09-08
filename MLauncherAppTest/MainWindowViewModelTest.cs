@@ -96,13 +96,14 @@ namespace MLauncherAppTest
         }
 
         [Fact]
-        public void 一つしか候補がない状態でEnterを押すとそのファイルを開く()
+        public void 一つしか候補がない状態でそのファイルが存在するときEnterを押すとそのファイルを開く()
         {
             _suggestionService.Setup(suggestion => suggestion.Filter("target"))
                 .Returns(new List<IPath>()
                 {
                     new FilePath(@"C:\Dir\target.txt"),
                 });
+            _pathService.Setup(pathService => pathService.Exists(new FilePath(@"C:\Dir\target.txt"))).Returns(true);
 
             _vm.TextBoxText = "target";
             _vm.RunCommand.Execute();
@@ -111,7 +112,7 @@ namespace MLauncherAppTest
         }
 
         [Fact]
-        public void ヒットしたパスがファイルパスの時に_CtrlとEnterを同時押しすると親ディレクトリを開く()
+        public void ヒットしたパスが存在するファイルパスの時に_CtrlとEnterを同時押しすると親ディレクトリを開く()
         {
 
             _suggestionService.Setup(suggestion => suggestion.Filter("target"))
@@ -119,6 +120,7 @@ namespace MLauncherAppTest
                 {
                     new FilePath(@"C:\Dir\target.txt"),
                 });
+            _pathService.Setup(pathService => pathService.Exists(new FilePath(@"C:\Dir"))).Returns(true);
 
             _vm.TextBoxText = "target";
             _vm.RunParentCommand.Execute();
@@ -127,13 +129,16 @@ namespace MLauncherAppTest
         }
 
         [Fact]
-        public void ヒットしたパスがディレクトリパスの時に_CtrlとEnterを同時押しすると親ディレクトリを開く()
+        public void ヒットしたパスが存在するディレクトリパスの時に_CtrlとEnterを同時押しすると親ディレクトリを開く()
         {
             _suggestionService.Setup(suggestion => suggestion.Filter("target"))
                 .Returns(new List<IPath>()
                 {
                     new FilePath(@"C:\Dir\SubDir"),
                 });
+
+            _pathService.Setup(service => service.Exists(new FilePath(@"C:\Dir"))).Returns(true);
+
 
             _vm.TextBoxText = "target";
             _vm.RunParentCommand.Execute();
@@ -205,6 +210,29 @@ namespace MLauncherAppTest
             _vm.RunCommand.Execute();
 
             Assert.Equal("", _vm.TextBoxText);
+        }
+
+        [Fact]
+        public void 存在しないローカルファイルパスを指定して実行した場合_ファイルが見つかりませんとメッセージボックスが表示される()
+        {
+            _suggestionService.Setup(suggestion => suggestion.Filter(@"C:\NotFoundFile.txt"))
+                .Returns(new List<IPath>()
+                {
+                    new FilePath(@"C:\NotFoundFile.txt"),
+                });
+
+            _pathService.Setup(service => service.Exists(new FilePath(@"C:\NotFoundFile.txt"))).Returns(false);
+
+            _vm.TextBoxText = @"C:\NotFoundFile.txt";
+            _vm.RunCommand.Execute();
+
+            //メッセージが表示されること
+            var dialogParameters = new DialogParameters();
+            dialogParameters.Add("Message", "指定されたファイルが見つかりません");
+            _dialogServiceMoc.Verify(service => service.ShowDialog("MessageControl", dialogParameters, null), Times.Once);
+
+            //実行されない
+            _runnerServiceMoc.Verify(runner => runner.Run(new FilePath(@"C:\NotFoundFile.txt")), Times.Never);
         }
     }
 }

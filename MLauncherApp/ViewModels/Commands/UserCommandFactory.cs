@@ -58,7 +58,7 @@ namespace MLauncherApp.ViewModels.Commands
             if (matchedPathList.Count == 0) return new NotFoundDialogCommand(dialogService);
 
             //一つだけヒット
-            if (matchedPathList.Count == 1) return new RunCommand(matchedPathList.First(), parentCall, runnerService);
+            if (matchedPathList.Count == 1) return new RunCommand(matchedPathList.First(), parentCall, runnerService, pathJudgeService, dialogService);
 
             //複数ヒット
             if (matchedPathList.Count > 1) return new ShowCandidatesCommand(matchedPathList, pathListWindowService);
