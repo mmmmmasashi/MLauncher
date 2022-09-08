@@ -51,7 +51,7 @@ namespace MLauncherAppTest
         }
 
         [Fact]
-        public void リストに存在しない名前を入力した時_ファイルパスでなければ_存在しませんとエラーメッセージが出る()
+        public void リストに存在しない名前を入力した時は存在しませんとエラーメッセージが出る()
         {
             _suggestionService.Setup(suggestion => suggestion.Filter("not_exist_name")).Returns(new List<IPath>());
 
@@ -64,7 +64,7 @@ namespace MLauncherAppTest
         }
 
         [Fact]
-        public void リストに存在しない名前を入力した時_ファイルパスとして登録するか確認DLGが出て登録する()
+        public void regコマンドとファイルパスを入力すると登録するか確認DLGが出て登録する()
         {
             //新しいファイルが存在すると返すように用意
             _pathService.Setup(pathService => pathService.Exists(new FilePath(@"C:\Directory\new_file.txt"))).Returns(true);
@@ -80,7 +80,7 @@ namespace MLauncherAppTest
                     callback(new DialogResult(ButtonResult.OK));
                 });
 
-            _vm.TextBoxText = @"C:\Directory\new_file.txt";
+            _vm.TextBoxText = @"/reg C:\Directory\new_file.txt";
 
             _vm.RunCommand.Execute();
 

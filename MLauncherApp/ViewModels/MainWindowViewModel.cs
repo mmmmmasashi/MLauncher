@@ -118,6 +118,7 @@ namespace MLauncherApp.ViewModels
     }
 
 
+    //TODO:削除？使ってない？
     /// <summary>
     /// ホットキーの登録成功/失敗を保持するクラス
     /// </summary>

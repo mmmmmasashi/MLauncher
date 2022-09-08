@@ -43,24 +43,19 @@ namespace MLauncherApp.ViewModels.Commands
             if (userInput == null || userInput == "") return new DoNothingCommand();
             if (userInput == "/all") return new ShowAllCommand(pathListWindowService, filePathRepository);
 
+            //regコマンドは入力内容をパスとして登録する
+            if (userInput.StartsWith("/reg "))
+            {
+                //"/reg (ファイルパス)"形式を想定
+                string userInputFilePath = userInput.Substring("/reg ".Length);
+                return CreateRegisterCommand(userInputFilePath);
+            }
+
+            //以下検索
             var matchedPathList = pathCandidateFilter.Filter(userInput);
 
             //ヒットなし
-            if (matchedPathList.Count == 0)
-            {
-                //存在しないファイルパスの場合は、検索して見つからなかったということ
-                if (!pathJudgeService.Exists(PathFactory.Create(userInput))) return new NotFoundDialogCommand(dialogService);
-
-                //存在するファイルパスの場合
-                if (filePathRepository.Load().Contains(PathFactory.Create(userInput)))
-                {
-                    return new AlreadyRegisteredCommand(dialogService);
-                }
-                else
-                {
-                    return new RegisterPathCommand(userInput, filePathRepository, dialogService);
-                }
-            }
+            if (matchedPathList.Count == 0) return new NotFoundDialogCommand(dialogService);
 
             //一つだけヒット
             if (matchedPathList.Count == 1) return new RunCommand(matchedPathList.First(), parentCall, runnerService);
