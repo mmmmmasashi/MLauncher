@@ -28,8 +28,17 @@ namespace MLauncherApp.Views
         {
             base.OnSourceInitialized(e);
 
-            IntPtr windowHandle = new WindowInteropHelper(this).Handle;
-            _hotKeyHandle = GlobalHotKeyFactory.Register(windowHandle, ActivateHotKeyCallBack);
+            var vm = (MainWindowViewModel)this.DataContext;
+
+            try
+            {
+                IntPtr windowHandle = new WindowInteropHelper(this).Handle;
+                _hotKeyHandle = GlobalHotKeyFactory.Register(windowHandle, ActivateHotKeyCallBack);
+            }
+            catch (Exception hotkeyException)
+            {
+                vm.NotifyFailureOfHotkey(hotkeyException);
+            }
         }
 
         private void ActivateHotKeyCallBack()

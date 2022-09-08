@@ -25,11 +25,21 @@ namespace MLauncherApp.ViewModels
         private IPathRepository _repository;
         private IPathListWindowService _pathListWindowService;
         private IPathJudgeService _pathJudgeService;
+
         private string _title = "MLauncher";
         public string Title
         {
             get { return _title; }
             set { SetProperty(ref _title, value); }
+        }
+
+        /// <summary>
+        /// ホットキーの登録に失敗した時Viewから通知する
+        /// </summary>
+        /// <param name="hotKeyRegisterException"></param>
+        internal void NotifyFailureOfHotkey(Exception hotKeyRegisterException)
+        {
+            _dialogService.ShowDialog(nameof(MessageControl), DialogParametersService.CreateForMessageControl($"ホットキーの登録に失敗しました。({hotKeyRegisterException.Message})"), null);
         }
 
         private string _textBoxTest;
@@ -46,7 +56,7 @@ namespace MLauncherApp.ViewModels
         public DelegateCommand ShowSettingCommand { get; }
 
         public MainWindowViewModel(
-            IRunnerService runnerService, 
+            IRunnerService runnerService,
             IPathRepository filePathRepository, IDialogService dialogService,
             IPathCandidateFilter pathCandidateFilter, IPathJudgeService pathJudgeService)
         {
@@ -54,15 +64,15 @@ namespace MLauncherApp.ViewModels
             AutoCompleteProvider = new AutoCompleteProvider(pathCandidateFilter);
 
             _dialogService = dialogService;
-            _runnerService  = runnerService;
+            _runnerService = runnerService;
             _repository = filePathRepository;
             _pathListWindowService = new PathListWindowService(dialogService, runnerService);
             _pathJudgeService = pathJudgeService;
 
             TextBoxText = "";
 
-            DragEnterCommand    = new DelegateCommand<DragEventArgs>(MouseOverEvent);
-            DropCommand         = new DelegateCommand<DragEventArgs>(DropEvent);
+            DragEnterCommand = new DelegateCommand<DragEventArgs>(MouseOverEvent);
+            DropCommand = new DelegateCommand<DragEventArgs>(DropEvent);
             RunCommand = new DelegateCommand(() => Execute(false));
             RunParentCommand = new DelegateCommand(() => Execute(true));
             ShowSettingCommand = new DelegateCommand(() => _dialogService.ShowDialog(nameof(SettingControl), null, null));
@@ -104,6 +114,33 @@ namespace MLauncherApp.ViewModels
         private void ClearTextBox()
         {
             TextBoxText = "";
+        }
+    }
+
+
+    /// <summary>
+    /// ホットキーの登録成功/失敗を保持するクラス
+    /// </summary>
+    class HotKeyResult
+    {
+        internal bool IsFailed => !succeededToRegisterHotKey;
+        private bool succeededToRegisterHotKey = true;
+        private Exception _hotKeyException = null;
+
+        private HotKeyResult(bool succeededToRegisterHotKey, Exception hotKeyException = null)
+        {
+            this.succeededToRegisterHotKey = succeededToRegisterHotKey;
+            _hotKeyException = hotKeyException;
+        }
+
+        internal static HotKeyResult Failed(Exception e)
+        {
+            return new HotKeyResult(false, e);
+        }
+
+        internal static HotKeyResult Succeeded()
+        {
+            return new HotKeyResult(true, null);
         }
     }
 }
